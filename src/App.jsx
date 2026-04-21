@@ -1,10 +1,12 @@
-import { Button } from "@/components/ui/button";
+import Navbar from "./components/Navbar"
 
 function App() {
   return (
-    <div className="flex justify-center items-center h-screen">
-      <Button variant="ghost">Book Vibe is Ready! 📚</Button>
+    <div className="max-w-360 mx-auto">
+      <Navbar />
+
     </div>
+   
   );
 }
 
