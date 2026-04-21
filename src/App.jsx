@@ -1,12 +1,11 @@
-
+import { Button } from "@/components/ui/button";
 
 function App() {
   return (
-    <div>
-      <h1>Book Vibe</h1>
+    <div className="flex justify-center items-center h-screen">
+      <Button variant="ghost">Book Vibe is Ready! 📚</Button>
     </div>
   );
 }
 
 export default App;
-
