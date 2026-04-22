@@ -15,9 +15,9 @@ const navLinks = [
 
 const Navbar = () => {
   return (
-    <nav className="flex items-center justify-between px-6 md:px-10 py-4 border-b">
+    <nav className="flex items-center justify-between px-6 md:px-10 py-4 ">
       {/* Logo */}
-      <h1 className="text-2xl font-bold">Book Vibe</h1>
+      <h1 className="text-3xl font-bold">Book Vibe</h1>
 
       {/* Desktop Navigation */}
       <div className="hidden md:flex">
