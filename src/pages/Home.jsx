@@ -1,11 +1,11 @@
+import BookList from "@/components/BookList";
 import Hero from "../components/Hero";
-// import BookCard from "../components/BookCard";
 
 const Home = () => {
   return (
     <div>
       <Hero />
-      {/* <BookCard /> */}
+      <BookList />
     </div>
   );
 };
