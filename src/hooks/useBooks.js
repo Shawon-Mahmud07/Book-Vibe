@@ -12,6 +12,7 @@ const useBooks = () => {
       );
       return res.data.results;
     },
+    staleTime: 5 * 60 * 1000, // 5 মিনিট cache এ রাখবে
   });
   return { books: data, isLoading, isError };
 };
