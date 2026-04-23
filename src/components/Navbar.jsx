@@ -39,8 +39,7 @@ useEffect(() => {
 
  // Dark mode toggle
  const toggleDark = () => {
-   setIsDark(!isDark);
-   document.documentElement.classList.toggle("dark");
+   setIsDark((prev) => !prev);
  };
 
   return (

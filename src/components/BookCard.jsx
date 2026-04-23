@@ -1,3 +1,4 @@
+import { Download } from "lucide-react";
 const BookCard = ({ book }) => {
   const title = book.title;
   const author = book.authors[0]?.name || "Unknown Author";
@@ -30,12 +31,14 @@ const BookCard = ({ book }) => {
 
       {/* Tags */}
       <div className="flex gap-2 mb-2">
-        <span className="text-xs text-green-600 bg-green-50 dark:bg-green-900 dark:text-green-300 px-2 py-1 rounded-full">
-          Young Adult
-        </span>
-        <span className="text-xs text-green-600 bg-green-50 dark:bg-green-900 dark:text-green-300 px-2 py-1 rounded-full">
-          Fiction
-        </span>
+        {book.subjects.slice(0, 2).map((subject, i) => (
+          <span
+            key={i}
+            className="text-xs text-green-600 bg-green-50 dark:bg-green-900 dark:text-green-300 px-2 py-1 rounded-full"
+          >
+            {subject.length > 15 ? subject.slice(0, 15) + "…" : subject}
+          </span>
+        ))}
       </div>
 
       {/* Title */}
@@ -57,8 +60,10 @@ const BookCard = ({ book }) => {
           {subject.slice(0, 20)}
         </span>
         <div className="flex items-center gap-1">
-          <span className="text-sm font-medium text-foreground">4.5</span>
-          <span className="text-yellow-400">★</span>
+          <span className="flex items-center gap-1 text-xs text-muted-foreground">
+            <Download className="h-3 w-3" />
+            {book.download_count.toLocaleString()}
+          </span>
         </div>
       </div>
     </div>

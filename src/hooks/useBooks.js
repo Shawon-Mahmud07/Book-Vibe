@@ -8,11 +8,13 @@ const useBooks = () => {
     //Fetch books data from the Gutendex API
     queryFn: async () => {
       const res = await axios.get(
-        "https://gutendex.com/books/?languages=en&page=1",
+        "https://gutendex.com/books/?languages=en&page=1&page_size=12",
       );
-      return res.data.results;
+      return res.data.results.slice(0, 12);
     },
-    staleTime: 5 * 60 * 1000, // 5 মিনিট cache এ রাখবে
+    // Cache data for 30 minutes and garbage collect after 1 hour
+    staleTime: 30 * 60 * 1000,
+    gcTime: 60 * 60 * 1000,
   });
   return { books: data, isLoading, isError };
 };

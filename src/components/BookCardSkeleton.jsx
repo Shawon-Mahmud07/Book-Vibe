@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const BookCardSkeleton = () => {
   return (
-    <div className="bg-white rounded-2xl p-4 border">
+    <div className="bg-card rounded-2xl p-4 border border-border">
       {/* Cover Skeleton */}
       <Skeleton className="h-52 w-full rounded-xl mb-4" />
 
