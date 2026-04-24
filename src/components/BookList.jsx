@@ -27,7 +27,7 @@ const BookList = () => {
 
         {/* Data State — real books দেখাবে */}
         {!isLoading &&
-          books?.map((book) => <BookCard key={book.id} book={book} />)}
+          books?.map((book, index) => <BookCard key={book.id} book={book} index={ index} />)}
       </div>
     </section>
   );

@@ -1,12 +1,19 @@
 import { Download } from "lucide-react";
-const BookCard = ({ book }) => {
+import { motion } from "framer-motion";
+
+const MotionDiv = motion.div;
+const BookCard = ({ book, index }) => {
   const title = book.title;
   const author = book.authors[0]?.name || "Unknown Author";
   const cover = book.formats["image/jpeg"] || "";
   const subject = book.subjects[0] || "Fiction";
 
   return (
-    <div
+    <MotionDiv
+      initial={{ opacity: 0, y: 20 }} 
+      whileInView={{ opacity: 1, y: 0 }} 
+      viewport={{ once: true }} 
+      transition={{ duration: 0.4 , delay: index * 0.1 }} 
       className="
       bg-card text-card-foreground
       rounded-2xl p-4 border border-border
@@ -66,7 +73,7 @@ const BookCard = ({ book }) => {
           </span>
         </div>
       </div>
-    </div>
+    </MotionDiv>
   );
 };
 

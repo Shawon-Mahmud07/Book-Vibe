@@ -1,5 +1,21 @@
 import { BookOpen, BookMarked, Star, Clock } from "lucide-react";
+import { motion } from "framer-motion";
+const MotionDiv = motion.div;
 
+// Animation variants — reusable config
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.15,  // প্রতিটা card 0.15s পরে আসবে
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 30 },   // শুরুতে invisible
+  visible: { opacity: 1, y: 0 },   // animate হলে দেখা যাবে
+};
 const features = [
   {
     icon: <BookOpen className="w-8 h-8 text-green-500" />,
@@ -31,18 +47,32 @@ const Features = () => {
   return (
     <section className="px-6 md:px-10 py-14">
       {/* Header */}
-      <div className="text-center mb-12">
+      <MotionDiv
+        className="text-center mb-12"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
         <h2 className="text-3xl font-bold text-foreground">Why Book Vibe?</h2>
         <p className="text-muted-foreground mt-3 max-w-xl mx-auto">
           Everything you need to discover, organize, and enjoy great books.
         </p>
-      </div>
+      </MotionDiv>
 
       {/* Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <MotionDiv
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+      >
         {features.map((feature, index) => (
-          <div
+          <MotionDiv
             key={index}
+            variants={cardVariants} 
+            transition={{ duration: 0.4 }}
             className="bg-card border border-border rounded-2xl p-6
                        hover:shadow-lg hover:-translate-y-1
                        transition-all duration-300 text-center"
@@ -54,9 +84,9 @@ const Features = () => {
             <p className="text-sm text-muted-foreground leading-relaxed">
               {feature.description}
             </p>
-          </div>
+          </MotionDiv>
         ))}
-      </div>
+      </MotionDiv>
     </section>
   );
 };
