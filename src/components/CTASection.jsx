@@ -15,7 +15,7 @@ const useCountUp = (target, duration = 2) => {
       ([entry]) => {
         if (entry.isIntersecting) {
           setInView(true);
-          observer.disconnect(); // একবার দেখলেই animate হবে
+          observer.disconnect();
         }
       },
       { threshold: 0.3 },
@@ -57,7 +57,6 @@ const StatCard = ({ stat }) => {
   );
 };
 
-// Stats data — countTo হলো আসল number, prefix/suffix হলো আগে/পরে যা থাকবে
 const stats = [
   {
     countTo: 62,

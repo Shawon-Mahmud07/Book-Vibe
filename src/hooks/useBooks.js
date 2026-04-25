@@ -3,6 +3,10 @@ import axios from "axios";
 
 const API_KEY = import.meta.env.VITE_GOOGLE_BOOKS_API_KEY;
 
+if (!API_KEY) {
+  throw new Error("Google Books API key is not configured!");
+}
+
 const fetchBooks = async () => {
   // Popular modern books এর list — নাম দিয়ে সরাসরি search
   const popularBooks = [
@@ -52,12 +56,18 @@ const fetchBooks = async () => {
     });
 };
 const useBooks = () => {
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["books"],
-    queryFn: fetchBooks,
-    staleTime: 30 * 60 * 1000,
-    gcTime: 60 * 60 * 1000,
-  });
+  const {
+    data,
+    isLoading,
+    isError,
+  } = useQuery({
+      queryKey: ["books"],
+      queryFn: fetchBooks,
+      staleTime: 30 * 60 * 1000,
+      gcTime: 60 * 60 * 1000,
+      retry: 3,
+      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+    });
 
   return { books: data, isLoading, isError };
 };
