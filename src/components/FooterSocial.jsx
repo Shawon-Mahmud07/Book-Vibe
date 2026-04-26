@@ -10,25 +10,25 @@ const SocialLinks = () => {
       name: "GitHub",
       icon: FaGithub,
       href: "https://github.com",
-      color: "hover:text-foreground",
+      
     },
     {
       name: "X",
       icon: FaXTwitter,
       href: "https://x.com",
-      color: "hover:text-foreground",
+     
     },
     {
       name: "LinkedIn",
       icon: FaLinkedin,
       href: "https://linkedin.com",
-      color: "hover:text-foreground",
+      
     },
     {
       name: "Email",
       icon: MdEmail,
       href: "mailto:hello@bookvibe.com",
-      color: "hover:text-foreground",
+      
     },
   ];
 
@@ -46,7 +46,7 @@ const SocialLinks = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: index * 0.1 }}
-            className={`text-muted-foreground ${social.color} transition-colors duration-300`}
+            className={`text-muted-foreground hover:text-foreground transition-colors duration-300`}
             aria-label={social.name}
           >
             <Icon className="h-5 w-5" />

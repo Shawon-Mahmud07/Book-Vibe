@@ -28,7 +28,7 @@ const useCountUp = (target, duration = 2) => {
     if (!inView) return;
     const controls = animate(count, target, { duration });
     return () => controls.stop();
-  }, [inView, target, duration, count]);
+  }, [inView, target, duration, count ]);
 
   return { rounded, ref };
 };
@@ -106,7 +106,7 @@ const CTASection = () => {
               transition={{ duration: 0.4 }}
               className="inline-flex items-center gap-2 bg-foreground/10 text-foreground text-sm font-medium px-4 py-1.5 rounded-full mb-6"
             >
-              <Sparkles className="w-4 h-4" />
+              <Sparkles className="w-4 h-4 text-foreground" />
               100% Free, Always
             </MotionDiv>
 
