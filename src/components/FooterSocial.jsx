@@ -1,4 +1,6 @@
-import { Globe, Send, BriefcaseBusiness, Mail } from "lucide-react";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
+import { MdEmail } from "react-icons/md";
 import { motion } from "framer-motion";
 
 const MotionA = motion.a;
@@ -6,27 +8,27 @@ const SocialLinks = () => {
   const socials = [
     {
       name: "GitHub",
-      icon: Globe,
+      icon: FaGithub,
       href: "https://github.com",
       color: "hover:text-foreground",
     },
     {
-      name: "Twitter",
-      icon: Send,
-      href: "https://twitter.com",
-      color: "hover:text-sky-500",
+      name: "X",
+      icon: FaXTwitter,
+      href: "https://x.com",
+      color: "hover:text-foreground",
     },
     {
       name: "LinkedIn",
-      icon: BriefcaseBusiness,
+      icon: FaLinkedin,
       href: "https://linkedin.com",
-      color: "hover:text-blue-600",
+      color: "hover:text-foreground",
     },
     {
       name: "Email",
-      icon: Mail,
+      icon: MdEmail,
       href: "mailto:hello@bookvibe.com",
-      color: "hover:text-red-500",
+      color: "hover:text-foreground",
     },
   ];
 
