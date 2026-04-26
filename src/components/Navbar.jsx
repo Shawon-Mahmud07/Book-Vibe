@@ -25,9 +25,11 @@ const Navbar = () => {
     const saved = localStorage.getItem("theme");
     return saved === "dark";
   });
-
-  // Active link track
-  const [activePath, setActivePath] = useState(window.location.pathname);
+  
+// Track active path for link highlighting
+  const [activePath, setActivePath] = useState(
+    typeof window !== "undefined" ? window.location.pathname : "/",
+  );
 
   useEffect(() => {
     if (isDark) {

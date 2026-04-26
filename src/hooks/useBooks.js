@@ -3,11 +3,10 @@ import axios from "axios";
 
 const API_KEY = import.meta.env.VITE_GOOGLE_BOOKS_API_KEY;
 
-if (!API_KEY) {
-  throw new Error("Google Books API key is not configured!");
-}
-
 const fetchBooks = async () => {
+  if (!API_KEY) {
+    throw new Error("Google Books API key is not configured!");
+  }
   // Popular modern books এর list — নাম দিয়ে সরাসরি search
   const popularBooks = [
     "isbn:9780593139134", // The Midnight Library — Matt Haig (2020)

@@ -45,7 +45,7 @@ const NewsletterSignup = () => {
         </p>
 
         <form
-          onSubmit={handleSubmit}
+          
           className="flex flex-col sm:flex-row gap-2"
         >
           <div className="flex-1 relative">
@@ -60,6 +60,7 @@ const NewsletterSignup = () => {
             />
           </div>
           <Button
+            onClick={handleSubmit}
             type="submit"
             className="h-12 px-6 sm:px-8 bg-foreground text-background hover:bg-foreground/90 font-semibold transition-all duration-200"
             disabled={status === "loading"}

@@ -75,7 +75,7 @@ const Footer = () => {
               </a>
               , and
               <a
-                href="https://gutendex.com"
+                href="https://developers.google.com/books"
                 target="_blank"
                 rel="noreferrer"
                 className="hover:text-foreground transition-colors ml-1"
