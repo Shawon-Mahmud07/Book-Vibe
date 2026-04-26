@@ -1,26 +1,52 @@
 import { motion } from "framer-motion";
 
 const MotionDiv = motion.div;
+
 const BookCard = ({ book, index }) => {
   return (
-    <motion.div
+    <MotionDiv
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.4, delay: index * 0.1 }}
-      className="bg-card text-card-foreground rounded-2xl p-4 border border-border hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer group"
+      transition={{
+        duration: 0.4,
+        delay: index * 0.1,
+      }}
+      className="bg-card text-card-foreground rounded-2xl p-4 border border-border hover:shadow-2xl cursor-pointer group transition-shadow duration-300"
     >
-      {/* Cover Image */}
-      <div className="bg-muted rounded-xl flex justify-center items-center h-52 mb-4 overflow-hidden">
+      {/* Cover Image — 3D Effect */}
+      <div className="bg-muted rounded-xl flex justify-center items-center h-52 mb-4 overflow-hidden relative">
         {book.cover ? (
-          <img
-            src={book.cover}
-            alt={book.title}
-            className="h-full w-full object-contain rounded-xl group-hover:scale-105 transition-transform duration-300"
-          />
+          <MotionDiv
+            whileHover={{
+              rotateX: 10,
+              rotateY: -12,
+              rotateZ: 2,
+              scale: 1.1,
+            }}
+            style={{ perspective: 1200 }}
+            className="w-full h-full flex justify-center items-center"
+            transition={{ duration: 0.3 }}
+          >
+            <img
+              src={book.cover}
+              alt={book.title}
+              className="h-full w-full object-contain rounded-xl drop-shadow-lg"
+            />
+          </MotionDiv>
         ) : (
           <div className="text-muted-foreground text-sm">No Cover</div>
         )}
+
+        {/* Shine Effect */}
+        <div
+          className="
+          absolute inset-0 rounded-xl
+          bg-linear-to-br from-white/20 via-transparent to-transparent
+          opacity-0 group-hover:opacity-100
+          transition-opacity duration-300
+        "
+        />
       </div>
 
       {/* Category Tags */}
@@ -38,7 +64,14 @@ const BookCard = ({ book, index }) => {
       )}
 
       {/* Title */}
-      <h3 className="font-bold text-base mb-1 line-clamp-1 text-foreground group-hover:text-muted-foreground transition-colors duration-300">
+      <h3
+        className="
+        font-bold text-base mb-1 line-clamp-1 
+        text-foreground 
+        group-hover:text-muted-foreground 
+        transition-colors duration-300
+      "
+      >
         {book.title}
       </h3>
 
@@ -60,7 +93,7 @@ const BookCard = ({ book, index }) => {
           </span>
         )}
       </div>
-    </motion.div>
+    </MotionDiv>
   );
 };
 
