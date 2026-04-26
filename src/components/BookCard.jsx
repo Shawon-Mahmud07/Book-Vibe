@@ -14,26 +14,27 @@ const BookCard = ({ book, index }) => {
       }}
       className="bg-card text-card-foreground rounded-2xl p-4 border border-border hover:shadow-2xl cursor-pointer group transition-shadow duration-300"
     >
-      {/* Cover Image — 3D Effect */}
+      {/* Cover Image - subtle 3D tilt */}
       <div className="bg-muted rounded-xl flex justify-center items-center h-52 mb-4 overflow-hidden relative">
         {book.cover ? (
-          <MotionDiv
-            whileHover={{
-              rotateX: 10,
-              rotateY: -12,
-              rotateZ: 2,
-              scale: 1.1,
-            }}
-            style={{ perspective: 1200 }}
+          <div
             className="w-full h-full flex justify-center items-center"
-            transition={{ duration: 0.3 }}
+            style={{ perspective: 1000 }}
           >
-            <img
-              src={book.cover}
-              alt={book.title}
-              className="h-full w-full object-contain rounded-xl drop-shadow-lg"
-            />
-          </MotionDiv>
+            <MotionDiv
+              animate={{ rotateY: -16, rotateX: 4, x: -6 }}
+              whileHover={{ rotateY: -22, rotateX: 6, x: -8, scale: 1.03 }}
+              transition={{ duration: 0.35, ease: "easeOut" }}
+              style={{ transformStyle: "preserve-3d", transformPerspective: 1000 }}
+              className="relative h-[90%] w-[62%] origin-center"
+            >
+              <img
+                src={book.cover}
+                alt={book.title}
+                className="h-full w-full object-contain rounded-xs "
+              />
+            </MotionDiv>
+          </div>
         ) : (
           <div className="text-muted-foreground text-sm">No Cover</div>
         )}
@@ -57,7 +58,7 @@ const BookCard = ({ book, index }) => {
               key={i}
               className="text-xs text-foreground bg-muted px-2 py-1 rounded-full border border-border"
             >
-              {cat.length > 15 ? cat.slice(0, 15) + "…" : cat}
+              {cat.length > 15 ? `${cat.slice(0, 15)}...` : cat}
             </span>
           ))}
         </div>
@@ -66,9 +67,9 @@ const BookCard = ({ book, index }) => {
       {/* Title */}
       <h3
         className="
-        font-bold text-base mb-1 line-clamp-1 
-        text-foreground 
-        group-hover:text-muted-foreground 
+        font-bold text-base mb-1 line-clamp-1
+        text-foreground
+        group-hover:text-muted-foreground
         transition-colors duration-300
       "
       >
