@@ -31,11 +31,6 @@ const FooterLinks = () => {
       title: "Resources",
       links: [
         { 
-          name: "Gutendex API", 
-          href: "https://gutendex.com",
-          external: true
-        },
-        { 
           name: "Google Books API", 
           href: "https://developers.google.com/books",
           external: true

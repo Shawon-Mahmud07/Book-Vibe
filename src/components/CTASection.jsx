@@ -28,7 +28,7 @@ const useCountUp = (target, duration = 2) => {
     if (!inView) return;
     const controls = animate(count, target, { duration });
     return () => controls.stop();
-  }, [inView, target, duration]);
+  }, [inView, target, duration, count]);
 
   return { rounded, ref };
 };
