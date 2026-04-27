@@ -1,19 +1,48 @@
 import { motion } from "framer-motion";
+import { BookmarkPlus, BookmarkCheck } from "lucide-react";
+import useListedBooks from "@/hooks/useListedBooks";
 
 const MotionDiv = motion.div;
 
 const BookCard = ({ book, index }) => {
+  const { addBook, removeBook, isListed } = useListedBooks();
+  const listed = isListed(book.id);
+
+  const handleListToggle = (e) => {
+    e.stopPropagation();
+    if (listed) {
+      removeBook(book.id);
+    } else {
+      addBook(book);
+    }
+  };
+
   return (
     <MotionDiv
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{
-        duration: 0.4,
-        delay: index * 0.1,
-      }}
-      className="bg-card text-card-foreground rounded-2xl p-4 border border-border hover:shadow-2xl cursor-pointer group transition-shadow duration-300"
+      transition={{ duration: 0.4, delay: index * 0.1 }}
+      className="bg-card text-card-foreground rounded-2xl p-4 border border-border hover:shadow-2xl cursor-pointer group transition-shadow duration-300 relative"
     >
+      {/* Save to List button */}
+      <button
+        onClick={handleListToggle}
+        title={listed ? "Remove from list" : "Add to list"}
+        className={`absolute top-3 right-3 z-10 p-1.5 rounded-full transition-all duration-200
+          ${
+            listed
+              ? "bg-foreground text-background"
+              : "bg-muted text-muted-foreground hover:bg-foreground hover:text-background"
+          }`}
+      >
+        {listed ? (
+          <BookmarkCheck className="w-4 h-4" />
+        ) : (
+          <BookmarkPlus className="w-4 h-4" />
+        )}
+      </button>
+
       {/* Cover Image - subtle 3D tilt */}
       <div className="bg-muted rounded-xl flex justify-center items-center h-52 mb-4 overflow-hidden relative">
         {book.cover ? (
@@ -25,13 +54,16 @@ const BookCard = ({ book, index }) => {
               animate={{ rotateY: -16, rotateX: 4, x: -6 }}
               whileHover={{ rotateY: -22, rotateX: 6, x: -8, scale: 1.03 }}
               transition={{ duration: 0.35, ease: "easeOut" }}
-              style={{ transformStyle: "preserve-3d", transformPerspective: 1000 }}
+              style={{
+                transformStyle: "preserve-3d",
+                transformPerspective: 1000,
+              }}
               className="relative h-[90%] w-[62%] origin-center"
             >
               <img
                 src={book.cover}
                 alt={book.title}
-                className="h-full w-full object-contain rounded-xs "
+                className="h-full w-full object-contain rounded-xs"
               />
             </MotionDiv>
           </div>
@@ -40,14 +72,7 @@ const BookCard = ({ book, index }) => {
         )}
 
         {/* Shine Effect */}
-        <div
-          className="
-          absolute inset-0 rounded-xl
-          bg-linear-to-br from-white/20 via-transparent to-transparent
-          opacity-0 group-hover:opacity-100
-          transition-opacity duration-300
-        "
-        />
+        <div className="absolute inset-0 rounded-xl bg-linear-to-br from-white/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </div>
 
       {/* Category Tags */}
@@ -65,14 +90,7 @@ const BookCard = ({ book, index }) => {
       )}
 
       {/* Title */}
-      <h3
-        className="
-        font-bold text-base mb-1 line-clamp-1
-        text-foreground
-        group-hover:text-muted-foreground
-        transition-colors duration-300
-      "
-      >
+      <h3 className="font-bold text-base mb-1 line-clamp-1 text-foreground group-hover:text-muted-foreground transition-colors duration-300">
         {book.title}
       </h3>
 
