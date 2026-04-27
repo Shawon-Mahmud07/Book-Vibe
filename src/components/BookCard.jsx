@@ -1,20 +1,18 @@
 import { motion } from "framer-motion";
 import { BookmarkPlus, BookmarkCheck } from "lucide-react";
-import useListedBooks from "@/hooks/useListedBooks";
 
 const MotionDiv = motion.div;
 
-const BookCard = ({ book, index }) => {
-  const { addBook, removeBook, isListed } = useListedBooks();
-  const listed = isListed(book.id);
-
+const BookCard = ({
+  book,
+  index,
+  onToggle,
+  isListed,
+  showListButton = true,
+}) => {
   const handleListToggle = (e) => {
     e.stopPropagation();
-    if (listed) {
-      removeBook(book.id);
-    } else {
-      addBook(book);
-    }
+    onToggle();
   };
 
   return (
@@ -26,24 +24,26 @@ const BookCard = ({ book, index }) => {
       className="bg-card text-card-foreground rounded-2xl p-4 border border-border hover:shadow-2xl cursor-pointer group transition-shadow duration-300 relative"
     >
       {/* Save to List button */}
-      <button
-        onClick={handleListToggle}
-        title={listed ? "Remove from list" : "Add to list"}
-        className={`absolute top-3 right-3 z-10 p-1.5 rounded-full transition-all duration-200
-          ${
-            listed
-              ? "bg-foreground text-background"
-              : "bg-muted text-muted-foreground hover:bg-foreground hover:text-background"
-          }`}
-      >
-        {listed ? (
-          <BookmarkCheck className="w-7 h-7" />
-        ) : (
-          <BookmarkPlus className="w-7 h-7" />
-        )}
-      </button>
+      {showListButton && (
+        <button
+          onClick={handleListToggle}
+          title={isListed ? "Remove from list" : "Add to list"}
+          className={`absolute top-3 right-3 z-10 p-1.5 rounded-full transition-all duration-200
+            ${
+              isListed
+                ? "bg-accent-green text-white"
+                : "bg-muted text-muted-foreground hover:bg-accent-green hover:text-white"
+            }`}
+        >
+          {isListed ? (
+            <BookmarkCheck className="w-4 h-4" />
+          ) : (
+            <BookmarkPlus className="w-4 h-4" />
+          )}
+        </button>
+      )}
 
-      {/* Cover Image - subtle 3D tilt */}
+      {/* Cover Image */}
       <div className="bg-muted rounded-xl flex justify-center items-center h-52 mb-4 overflow-hidden relative">
         {book.cover ? (
           <div
@@ -70,8 +70,6 @@ const BookCard = ({ book, index }) => {
         ) : (
           <div className="text-muted-foreground text-sm">No Cover</div>
         )}
-
-        {/* Shine Effect */}
         <div className="absolute inset-0 rounded-xl bg-linear-to-br from-white/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </div>
 
@@ -90,7 +88,7 @@ const BookCard = ({ book, index }) => {
       )}
 
       {/* Title */}
-      <h3 className="font-bold text-base mb-1 line-clamp-1 text-foreground group-hover:text-muted-foreground transition-colors duration-75">
+      <h3 className="font-bold text-base mb-1 line-clamp-1 text-foreground group-hover:text-muted-foreground transition-colors duration-300">
         {book.title}
       </h3>
 

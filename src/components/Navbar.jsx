@@ -69,7 +69,7 @@ const Navbar = () => {
                     {link.name}
                     <span
                       className={`absolute -bottom-1 left-0 h-0.5 bg-foreground rounded-full transition-all duration-300
-                        ${isActive ? "w-full" : "w-0 group-hover:w-full"}`}
+                        ${isActive ? "w-full" : "w-0"}`}
                     />
                   </Link>
                 </NavigationMenuItem>

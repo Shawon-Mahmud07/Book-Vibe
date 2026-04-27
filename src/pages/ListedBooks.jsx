@@ -66,7 +66,7 @@ const ListedBooks = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {listedBooks.map((book, index) => (
             <MotionDiv key={book.id} className="relative group">
-              <BookCard book={book} index={index} />
+              <BookCard book={book} index={index} showListButton={false} />
               {/* Remove button */}
               <button
                 onClick={() => removeBook(book.id)}
