@@ -7,7 +7,7 @@ const MotionButton = motion.button;
 const BackToTopButton = () => {
   const [isVisible, setIsVisible] = useState(false);
 
-  // Show button যখন page scroll down হয়
+  // Show button after scrolling down 300px
   useEffect(() => {
     const handleScroll = () => {
       setIsVisible(window.scrollY > 300);

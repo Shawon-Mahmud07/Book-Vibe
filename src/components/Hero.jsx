@@ -5,6 +5,7 @@ import { ArrowRight, BookOpen } from "lucide-react";
 const MotionDiv = motion.div;
 const MotionH1 = motion.h1;
 const MotionP = motion.p;
+const MotionImg = motion.img;
 
 const Hero = () => {
   return (
@@ -101,7 +102,7 @@ const Hero = () => {
         <div className="absolute inset-0 bg-foreground/10 rounded-full blur-3xl scale-75" />
 
         {/* Floating animation */}
-        <motion.img
+        <MotionImg
           src="/book-hero.jpg"
           alt="Featured Book"
           className="relative w-48 md:w-64 lg:w-72 object-contain drop-shadow-2xl rounded-lg"

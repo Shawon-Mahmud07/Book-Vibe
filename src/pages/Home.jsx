@@ -11,7 +11,6 @@ const Home = () => {
       <BookList />
       <Features />
       <CTASection />
-      <Footer />
     </div>
   );
 };
