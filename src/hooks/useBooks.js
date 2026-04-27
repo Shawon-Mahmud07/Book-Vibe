@@ -5,9 +5,9 @@ const API_KEY = import.meta.env.VITE_GOOGLE_BOOKS_API_KEY;
 
 const fetchBooks = async () => {
   if (!API_KEY) {
-    throw new Error("Google Books API key is not configured!");
-  }
-  // Popular modern books এর list — নাম দিয়ে সরাসরি search
+  throw new Error("Google Books API key is not configured!");
+}
+  // 12টা জনপ্রিয় বইয়ের ISBN দিয়ে API থেকে ডেটা ফেচ করা হবে
   const popularBooks = [
     "isbn:9780593139134", // The Midnight Library — Matt Haig (2020)
     "isbn:9781250301697", // The Invisible Life of Addie LaRue — V.E. Schwab (2020)

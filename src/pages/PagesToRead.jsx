@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
-import { BookOpen, CheckCircle2, Clock, Trash2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { BookOpen, Clock, Trash2 } from "lucide-react";
 import useListedBooks from "@/hooks/useListedBooks";
 import { useMemo } from "react";
 

@@ -17,9 +17,10 @@ const useListedBooks = () => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(listedBooks));
   }, [listedBooks]);
 
+  // Add book to list (with duplicate check)
   const addBook = (book) => {
     setListedBooks((prev) => {
-      if (prev.find((b) => b.id === book.id)) return prev; // duplicate চেক
+      if (prev.find((b) => b.id === book.id)) return prev; 
       return [...prev, book];
     });
   };

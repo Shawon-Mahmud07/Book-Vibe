@@ -37,9 +37,9 @@ const BookCard = ({ book, index }) => {
           }`}
       >
         {listed ? (
-          <BookmarkCheck className="w-4 h-4" />
+          <BookmarkCheck className="w-7 h-7" />
         ) : (
-          <BookmarkPlus className="w-4 h-4" />
+          <BookmarkPlus className="w-7 h-7" />
         )}
       </button>
 
@@ -90,7 +90,7 @@ const BookCard = ({ book, index }) => {
       )}
 
       {/* Title */}
-      <h3 className="font-bold text-base mb-1 line-clamp-1 text-foreground group-hover:text-muted-foreground transition-colors duration-300">
+      <h3 className="font-bold text-base mb-1 line-clamp-1 text-foreground group-hover:text-muted-foreground transition-colors duration-75">
         {book.title}
       </h3>
 
