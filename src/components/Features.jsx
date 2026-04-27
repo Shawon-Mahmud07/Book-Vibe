@@ -80,9 +80,8 @@ const Features = () => {
                          hover:shadow-lg hover:-translate-y-1
                          transition-all duration-300 text-center"
             >
-            
               <div className="flex justify-center mb-4">
-                <Icon className="w-8 h-8 text-foreground" />
+                <Icon className="w-8 h-8 text-accent-green" />
               </div>
               <h3 className="font-bold text-lg text-foreground mb-2">
                 {feature.title}

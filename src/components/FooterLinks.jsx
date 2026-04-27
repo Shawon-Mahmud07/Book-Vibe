@@ -59,7 +59,7 @@ const FooterLinks = () => {
                   href={link.href}
                   target={link.external ? "_blank" : "_self"}
                   rel={link.external ? "noreferrer" : ""}
-                  className="text-sm text-muted-foreground hover:text-foreground hover:underline transition-colors duration-200"
+                  className="text-sm text-muted-foreground hover:text-accent-green hover:underline transition-colors duration-200"
                 >
                   {link.name}
                 </a>
@@ -69,7 +69,7 @@ const FooterLinks = () => {
         </MotionDiv>
       ))}
     </div>
-  )
+  );
 }
 
 export default FooterLinks;

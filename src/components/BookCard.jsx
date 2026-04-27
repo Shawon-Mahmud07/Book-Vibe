@@ -36,9 +36,9 @@ const BookCard = ({
             }`}
         >
           {isListed ? (
-            <BookmarkCheck className="w-4 h-4" />
+            <BookmarkCheck className="w-5 h-5" />
           ) : (
-            <BookmarkPlus className="w-4 h-4" />
+            <BookmarkPlus className="w-5 h-5" />
           )}
         </button>
       )}

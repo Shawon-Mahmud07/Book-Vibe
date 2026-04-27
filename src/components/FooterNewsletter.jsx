@@ -44,10 +44,7 @@ const NewsletterSignup = () => {
           Get weekly book recommendations delivered to your inbox
         </p>
 
-        <form
-          
-          className="flex flex-col sm:flex-row gap-2"
-        >
+        <form className="flex flex-col sm:flex-row gap-2">
           <div className="flex-1 relative">
             <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
             <input
@@ -74,7 +71,7 @@ const NewsletterSignup = () => {
           <MotionDiv
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex items-center gap-2 text-green-600 mt-3 justify-center"
+            className="flex items-center gap-2 text-accent-green mt-3 justify-center"
           >
             <Check className="h-4 w-4" />
             <span className="text-sm">Successfully subscribed!</span>

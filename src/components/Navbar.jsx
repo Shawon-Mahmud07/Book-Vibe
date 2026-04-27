@@ -64,12 +64,12 @@ const Navbar = () => {
                   <Link
                     to={link.href}
                     className={`relative text-sm font-medium transition-colors duration-200 pb-1 group
-                      ${isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}
+                      ${isActive ? "text-accent-green" : "text-muted-foreground hover:text-foreground"}`}
                   >
                     {link.name}
                     <span
                       className={`absolute -bottom-1 left-0 h-0.5 bg-foreground rounded-full transition-all duration-300
-                        ${isActive ? "w-full" : "w-0"}`}
+                        ${isActive ? "w-full bg-accent-green" : "w-0 "}`}
                     />
                   </Link>
                 </NavigationMenuItem>
