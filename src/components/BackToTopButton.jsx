@@ -20,7 +20,7 @@ const BackToTopButton = () => {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth", // ← smooth animation
+      behavior: "smooth", 
     });
   };
 
@@ -32,10 +32,10 @@ const BackToTopButton = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 20 }}
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 p-3 bg-foreground text-background rounded-full hover:bg-foreground/90 transition-colors duration-300 shadow-lg z-40"
+          className="fixed bottom-8 right-8 p-3 bg-foreground text-background rounded-md hover:bg-foreground/90 transition-colors duration-300 shadow-lg z-40"
           aria-label="Back to top"
         >
-          <ArrowUp className="h-5 w-5" />
+          <ArrowUp className="h-5 w-5 text-accent-green animate-pulse" />
         </MotionButton>
       )}
     </AnimatePresence>

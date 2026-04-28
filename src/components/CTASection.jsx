@@ -149,7 +149,7 @@ const CTASection = () => {
               </Button>
               <Button
                 variant="outline"
-                className="border-foreground/40 text-accent-green hover:bg-foreground/10 px-6 py-5 flex items-center gap-2 bg-transparent"
+                className="border-accent-green text-accent-green hover:bg-accent-green-light px-6 py-5 flex items-center gap-2 bg-transparent"
               >
                 View Reading List
                 <ArrowRight className="w-4 h-4 " />

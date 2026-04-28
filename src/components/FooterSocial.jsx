@@ -46,7 +46,7 @@ const SocialLinks = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: index * 0.1 }}
-            className={`text-muted-foreground hover:text-accent-green transition-colors duration-300`}
+            className={` text-muted-foreground hover:text-accent-green transition-colors duration-300`}
             aria-label={social.name}
           >
             <Icon className="h-5 w-5" />

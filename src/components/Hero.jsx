@@ -82,8 +82,8 @@ const Hero = () => {
           {/* Secondary Button */}
           <Button
             variant="outline"
-            className="px-8 py-6 text-base font-semibold text-accent-green rounded-xl
-            border-foreground/20 hover:bg-foreground/5
+            className="px-8 py-6 text-base font-semibold border-accent-green text-accent-green rounded-xl
+            hover:bg-foreground/5
             flex items-center gap-2 transition-all duration-300"
           >
             <BookOpen className="w-4 h-4 " />

@@ -27,7 +27,7 @@ const ListedBooks = () => {
             <span className="text-accent-green font-semibold">
               {listedBooks.length}
             </span>{" "}
-            book{listedBooks.length !== 0 ? "s" : ""} saved
+            book{listedBooks.length !== 1 ? "s" : ""} saved
           </p>
         </div>
 
