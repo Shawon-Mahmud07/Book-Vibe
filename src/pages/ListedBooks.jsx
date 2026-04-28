@@ -18,6 +18,7 @@ const ListedBooks = () => {
         transition={{ duration: 0.5 }}
         className="flex items-center justify-between mb-8"
       >
+        {/* Title and count */}
         <div>
           <h1 className="text-3xl font-bold text-foreground flex items-center gap-3">
             <BookMarked className="w-8 h-8 text-accent-green" />
@@ -30,7 +31,7 @@ const ListedBooks = () => {
             book{listedBooks.length !== 1 ? "s" : ""} saved
           </p>
         </div>
-
+        {/* Clear All Button */}
         {listedBooks.length > 0 && (
           <Button
             variant="outline"

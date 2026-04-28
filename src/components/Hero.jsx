@@ -25,7 +25,7 @@ const Hero = () => {
           className="inline-flex items-center gap-2 bg-foreground/10 text-foreground text-sm font-medium px-4 py-1.5 rounded-full"
         >
           <BookOpen className="w-4 h-4 text-accent-green" />
-          <span class="text-accent-green font-bold">62,000+</span> Free Classic
+          <span className="text-accent-green font-bold">62,000+</span> Free Classic
           Books
         </MotionDiv>
 

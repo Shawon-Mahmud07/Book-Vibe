@@ -3,6 +3,7 @@ import RootLayout from "@/layouts/RootLayout";
 import Home from "@/pages/Home";
 import ListedBooks from "@/pages/ListedBooks";
 import PagesToRead from "@/pages/PagesToRead";
+import BookDetail from "@/pages/BookDetail";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: "pages-to-read",
         element: <PagesToRead />,
+      },
+      {
+        path: "book/:id",
+        element: <BookDetail />
       },
     ],
   },

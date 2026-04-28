@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { BookmarkPlus, BookmarkCheck } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const MotionDiv = motion.div;
 
@@ -10,6 +11,11 @@ const BookCard = ({
   isListed,
   showListButton = true,
 }) => {
+   const navigate = useNavigate();
+
+   const handleCardClick = () => {
+     navigate(`/book/${book.id}`);
+   };
   const handleListToggle = (e) => {
     e.stopPropagation();
     onToggle();
@@ -17,6 +23,7 @@ const BookCard = ({
 
   return (
     <MotionDiv
+      onClick={handleCardClick}
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
