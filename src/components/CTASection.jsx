@@ -106,7 +106,7 @@ const CTASection = () => {
               transition={{ duration: 0.4 }}
               className="inline-flex items-center gap-2 bg-foreground/10 text-foreground text-sm font-medium px-4 py-1.5 rounded-full mb-6"
             >
-              <Sparkles className="w-4 h-4 text-foreground" />
+              <Sparkles className="w-4 h-4 text-accent-green" />
               100% Free, Always
             </MotionDiv>
 
@@ -144,15 +144,15 @@ const CTASection = () => {
               className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start"
             >
               <Button className="bg-foreground text-background hover:bg-foreground/90 font-semibold px-6 py-5 flex items-center gap-2">
-                <BookOpen className="w-4 h-4" />
+                <BookOpen className="w-4 h-4 text-accent-green" />
                 Explore Books
               </Button>
               <Button
                 variant="outline"
-                className="border-foreground/40 text-foreground hover:bg-foreground/10 px-6 py-5 flex items-center gap-2 bg-transparent"
+                className="border-foreground/40 text-accent-green hover:bg-foreground/10 px-6 py-5 flex items-center gap-2 bg-transparent"
               >
                 View Reading List
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 " />
               </Button>
             </MotionDiv>
           </div>

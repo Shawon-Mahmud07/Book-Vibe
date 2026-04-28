@@ -20,11 +20,14 @@ const ListedBooks = () => {
       >
         <div>
           <h1 className="text-3xl font-bold text-foreground flex items-center gap-3">
-            <BookMarked className="w-8 h-8" />
+            <BookMarked className="w-8 h-8 text-accent-green" />
             Listed Books
           </h1>
           <p className="text-muted-foreground mt-1">
-            {listedBooks.length} book{listedBooks.length !== 1 ? "s" : ""} saved
+            <span className="text-accent-green font-semibold">
+              {listedBooks.length}
+            </span>{" "}
+            book{listedBooks.length !== 0 ? "s" : ""} saved
           </p>
         </div>
 
@@ -48,8 +51,8 @@ const ListedBooks = () => {
           transition={{ duration: 0.4 }}
           className="flex flex-col items-center justify-center py-24 text-center"
         >
-          <div className="bg-muted rounded-full p-6 mb-6">
-            <BookOpen className="w-12 h-12 text-muted-foreground" />
+          <div className="bg-accent-green-light rounded-full p-6 mb-6">
+            <BookOpen className="w-12 h-12 text-accent-green animate-pulse" />
           </div>
           <h2 className="text-xl font-semibold text-foreground mb-2">
             No books yet
@@ -71,7 +74,7 @@ const ListedBooks = () => {
               <button
                 onClick={() => removeBook(book.id)}
                 className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1.5
-                  opacity-0 group-hover:opacity-100 transition-opacity duration-200
+                  md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-200
                   hover:bg-red-600 shadow-md"
                 title="Remove from list"
               >

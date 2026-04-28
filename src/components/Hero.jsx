@@ -24,8 +24,9 @@ const Hero = () => {
           transition={{ duration: 0.5 }}
           className="inline-flex items-center gap-2 bg-foreground/10 text-foreground text-sm font-medium px-4 py-1.5 rounded-full"
         >
-          <BookOpen className="w-4 h-4" />
-          62,000+ Free Classic Books
+          <BookOpen className="w-4 h-4 text-accent-green" />
+          <span class="text-accent-green font-bold">62,000+</span> Free Classic
+          Books
         </MotionDiv>
 
         {/* Heading */}
@@ -40,7 +41,7 @@ const Hero = () => {
             freshen up
             {/* Underline decoration */}
             <motion.span
-              className="absolute -bottom-1 left-0 h-0.75 bg-foreground rounded-full"
+              className="absolute -bottom-1 left-0 h-0.75 bg-foreground rounded-full "
               initial={{ width: 0 }}
               animate={{ width: "100%" }}
               transition={{ duration: 0.6, delay: 0.7 }}
@@ -75,17 +76,17 @@ const Hero = () => {
             flex items-center gap-2 transition-all duration-300"
           >
             View The List
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+            <ArrowRight className="w-4 h-4 text-accent-green group-hover:translate-x-1 transition-transform duration-300" />
           </Button>
 
           {/* Secondary Button */}
           <Button
             variant="outline"
-            className="px-8 py-6 text-base font-semibold rounded-xl
+            className="px-8 py-6 text-base font-semibold text-accent-green rounded-xl
             border-foreground/20 hover:bg-foreground/5
             flex items-center gap-2 transition-all duration-300"
           >
-            <BookOpen className="w-4 h-4" />
+            <BookOpen className="w-4 h-4 " />
             Browse Genres
           </Button>
         </MotionDiv>

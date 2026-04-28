@@ -26,7 +26,7 @@ const PagesToRead = () => {
         className="mb-10"
       >
         <h1 className="text-3xl font-bold text-foreground flex items-center gap-3 mb-2">
-          <Clock className="w-8 h-8" />
+          <Clock className="w-8 h-8 text-accent-green" />
           Pages to Read
         </h1>
         <p className="text-muted-foreground">Track your reading progress</p>
@@ -41,7 +41,7 @@ const PagesToRead = () => {
           className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10"
         >
           <div className="bg-muted rounded-2xl p-5 text-center border border-border">
-            <div className="text-3xl font-bold text-foreground">
+            <div className="text-3xl font-bold text-accent-green">
               {listedBooks.length}
             </div>
             <div className="text-sm text-muted-foreground mt-1">
@@ -49,7 +49,7 @@ const PagesToRead = () => {
             </div>
           </div>
           <div className="bg-muted rounded-2xl p-5 text-center border border-border">
-            <div className="text-3xl font-bold text-foreground">
+            <div className="text-3xl font-bold text-accent-green">
               {totalPages.toLocaleString()}
             </div>
             <div className="text-sm text-muted-foreground mt-1">
@@ -57,7 +57,7 @@ const PagesToRead = () => {
             </div>
           </div>
           <div className="bg-muted rounded-2xl p-5 text-center border border-border">
-            <div className="text-3xl font-bold text-foreground">
+            <div className="text-3xl font-bold text-accent-green">
               ~{daysToFinish}
             </div>
             <div className="text-sm text-muted-foreground mt-1">
@@ -75,8 +75,8 @@ const PagesToRead = () => {
           transition={{ duration: 0.4 }}
           className="flex flex-col items-center justify-center py-24 text-center"
         >
-          <div className="bg-muted rounded-full p-6 mb-6">
-            <BookOpen className="w-12 h-12 text-muted-foreground" />
+          <div className="bg-accent-green-light rounded-full p-6 mb-6">
+            <BookOpen className="w-12 h-12 text-accent-green animate-pulse" />
           </div>
           <h2 className="text-xl font-semibold text-foreground mb-2">
             Reading list is empty
@@ -135,13 +135,13 @@ const PagesToRead = () => {
 
               {/* Status + Remove */}
               <div className="flex items-center gap-3 shrink-0">
-                <div className="flex items-center gap-1.5 text-xs text-muted-foreground bg-muted px-3 py-1.5 rounded-full">
+                <div className="flex items-center gap-1.5 text-xs text-accent-green bg-accent-green-light px-3 py-1.5 rounded-full">
                   <Clock className="w-3 h-3" />
                   To Read
                 </div>
                 <button
                   onClick={() => removeBook(book.id)}
-                  className="text-muted-foreground hover:text-red-500 transition-colors duration-200 opacity-0 group-hover:opacity-100"
+                  className="text-red-500 transition-colors duration-200 md:opacity-0 md:group-hover:opacity-100"
                   title="Remove"
                 >
                   <Trash2 className="w-4 h-4" />

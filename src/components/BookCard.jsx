@@ -75,11 +75,11 @@ const BookCard = ({
 
       {/* Category Tags */}
       {book.categories?.length > 0 && (
-        <div className="flex gap-2 mb-2 flex-wrap">
+        <div className="flex gap-2 mb-2 flex-wrap ">
           {book.categories.slice(0, 2).map((cat, i) => (
             <span
               key={i}
-              className="text-xs text-foreground bg-muted px-2 py-1 rounded-full border border-border"
+              className="text-xs text-accent-green  bg-accent-green-light px-2 py-1 rounded-full border border-border"
             >
               {cat.length > 15 ? `${cat.slice(0, 15)}...` : cat}
             </span>
