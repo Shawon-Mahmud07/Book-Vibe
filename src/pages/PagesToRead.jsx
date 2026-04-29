@@ -42,7 +42,7 @@ const PagesToRead = () => {
 
   const daysToFinish = Math.ceil(totalPages / 20);
 
-  // Chart data prepare করছি
+  // Chart data (only books with pageCount)
   const chartData = useMemo(
     () =>
       listedBooks
@@ -50,7 +50,7 @@ const PagesToRead = () => {
         .map((b) => ({
           title:
             b.title.length > 15
-              ? b.title.slice(0, 15) + "…" // Long title cut করছি
+              ? b.title.slice(0, 15) + "…" 
               : b.title,
           pages: b.pageCount,
           fullTitle: b.title, // Tooltip এ full title দেখাবে
@@ -149,7 +149,7 @@ const PagesToRead = () => {
                   <CartesianGrid
                     strokeDasharray="3 3"
                     stroke="var(--border)"
-                    vertical={false} // শুধু horizontal lines
+                    vertical={false}
                   />
                   <XAxis
                     dataKey="title"
@@ -157,9 +157,9 @@ const PagesToRead = () => {
                       fill: "var(--muted-foreground)",
                       fontSize: 11,
                     }}
-                    angle={-35} // Label গুলো বাকা করলাম
+                    angle={-35} 
                     textAnchor="end"
-                    interval={0} // সব labels দেখাবে
+                    interval={0} 
                   />
                   <YAxis
                     tick={{
@@ -241,7 +241,7 @@ const PagesToRead = () => {
                           <div
                             className="bg-accent-green h-1.5 rounded-full transition-all duration-500"
                             style={{
-                              // বইটা total pages এর relative width
+                              // Adjust the width of the progress bar
                               width: `${Math.min(
                                 (book.pageCount / (totalPages || 1)) * 100 * 2,
                                 100,
