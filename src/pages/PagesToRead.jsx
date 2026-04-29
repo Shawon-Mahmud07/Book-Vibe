@@ -21,10 +21,14 @@ const CustomTooltip = ({ active, payload }) => {
     return (
       <div className="bg-card border border-border rounded-xl px-4 py-3 shadow-xl">
         <p className="text-sm font-semibold text-foreground">
-          {payload[0].payload.title}
+          {payload[0].payload.fullTitle}
         </p>
         <p className="text-accent-green text-sm font-bold mt-1">
-          {payload[0].value} pages
+          {
+            payload[0].value > 0
+              ? `${payload[0].value} pages`
+              : "Page count unavailable" 
+          }
         </p>
       </div>
     );
@@ -39,21 +43,29 @@ const PagesToRead = () => {
     () => listedBooks.reduce((sum, b) => sum + (b.pageCount || 0), 0),
     [listedBooks],
   );
-
+  // Count of books with known page counts
+const knownPages = useMemo(
+  () =>
+    listedBooks
+      .filter((b) => b.pageCount)
+      .reduce((sum, b) => sum + b.pageCount, 0),
+  [listedBooks],
+);
+// Count of books with unknown page counts
+const unknownCount = useMemo(
+  () => listedBooks.filter((b) => !b.pageCount).length,
+  [listedBooks],
+);
   const daysToFinish = Math.ceil(totalPages / 20);
 
   // Chart data (only books with pageCount)
   const chartData = useMemo(
     () =>
-      listedBooks
-        .filter((b) => b.pageCount)
+      [...new Map(listedBooks.map((b) => [b.id, b])).values()]
         .map((b) => ({
-          title:
-            b.title.length > 15
-              ? b.title.slice(0, 15) + "…" 
-              : b.title,
-          pages: b.pageCount,
-          fullTitle: b.title, // Tooltip এ full title দেখাবে
+          title: b.title.length > 12 ? b.title.slice(0, 12) + "…" : b.title,
+          pages: b.pageCount || 0, // ← null হলে 0 দেখাবে
+          fullTitle: b.title,
         })),
     [listedBooks],
   );
@@ -111,22 +123,36 @@ const PagesToRead = () => {
                 Books in List
               </div>
             </div>
-            <div className="bg-muted rounded-2xl p-5 text-center border border-border">
-              <div className="text-3xl font-bold text-accent-green">
-                {totalPages.toLocaleString()}
-              </div>
-              <div className="text-sm text-muted-foreground mt-1">
-                Total Pages
-              </div>
-            </div>
-            <div className="bg-muted rounded-2xl p-5 text-center border border-border">
-              <div className="text-3xl font-bold text-accent-green">
-                ~{daysToFinish}
-              </div>
-              <div className="text-sm text-muted-foreground mt-1">
-                Days to Finish
-              </div>
-            </div>
+           
+               {/* If any book has unknown page count, show "~" before total pages */}
+              {/* Total Pages Card */}
+<div className="bg-muted rounded-2xl p-5 text-center border border-border">
+  <div className="text-3xl font-bold text-accent-green flex items-center justify-center gap-1">
+    {unknownCount > 0 && (
+      <span className="text-lg text-yellow-500">~</span>
+    )}
+    {knownPages.toLocaleString()}
+  </div>
+  <div className="text-sm text-muted-foreground mt-1">Total Pages</div>
+  {unknownCount > 0 && (
+    <div className="text-xs text-yellow-500 mt-1">
+      {unknownCount} book{unknownCount > 1 ? "s" : ""} page unknown
+    </div>
+  )}
+</div>
+
+{/* Days to Finish Card */}
+<div className="bg-muted rounded-2xl p-5 text-center border border-border">
+  <div className="text-3xl font-bold text-accent-green">
+    ~{daysToFinish}
+  </div>
+  <div className="text-sm text-muted-foreground mt-1">Days to Finish</div>
+  {unknownCount > 0 && (
+    <div className="text-xs text-yellow-500 mt-1">
+      based on known pages
+    </div>
+  )}
+</div>
           </MotionDiv>
 
           {/* Bar Chart */}
@@ -157,9 +183,9 @@ const PagesToRead = () => {
                       fill: "var(--muted-foreground)",
                       fontSize: 11,
                     }}
-                    angle={-35} 
+                    angle={-35}
                     textAnchor="end"
-                    interval={0} 
+                    interval={0}
                   />
                   <YAxis
                     tick={{
@@ -173,19 +199,12 @@ const PagesToRead = () => {
                     content={<CustomTooltip />}
                     cursor={{ fill: "var(--muted)", opacity: 0.5 }}
                   />
-                  <Bar dataKey="pages" radius={[8, 8, 0, 0]}>
-                    {chartData.map((_, index) => (
-                      <Cell
-                        key={index}
-                        fill={
-                          index % 2 === 0
-                            ? "var(--accent-green)" // Even bars — green
-                            : "var(--muted-foreground)" // Odd bars — gray
-                        }
-                        opacity={0.85}
-                      />
-                    ))}
-                  </Bar>
+                  <Bar
+                    dataKey="pages"
+                    radius={[8, 8, 0, 0]}
+                    fill="var(--accent-green)"
+                    opacity={0.85}
+                  />
                 </BarChart>
               </ResponsiveContainer>
             </MotionDiv>
