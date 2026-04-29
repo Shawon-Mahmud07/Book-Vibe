@@ -32,10 +32,10 @@ const BackToTopButton = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 20 }}
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 p-3 bg-foreground text-background rounded-md hover:bg-foreground/90 transition-colors duration-300 shadow-lg z-40"
+          className="fixed bottom-8 right-8 p-3 bg-foreground text-background rounded-md hover:bg-foreground/90 transition-colors duration-300 shadow-lg z-40 group"
           aria-label="Back to top"
         >
-          <ArrowUp className="h-5 w-5 text-accent-green animate-pulse" />
+          <ArrowUp className="h-5 w-5 text-accent-green group-hover:-translate-y-0.5 transition-transform duration-200 " />
         </MotionButton>
       )}
     </AnimatePresence>

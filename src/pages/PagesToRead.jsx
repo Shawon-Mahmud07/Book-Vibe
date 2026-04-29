@@ -13,8 +13,8 @@ const PagesToRead = () => {
     [listedBooks],
   );
 
-  // Average reading speed: 300 pages per day (casual)
-  const daysToFinish = Math.ceil(totalPages / 50);
+  // Calculate days to finish based on 20 pages/day reading speed
+  const daysToFinish = Math.ceil(totalPages / 20);
 
   return (
     <div className="px-6 md:px-10 py-12 min-h-[60vh]">
