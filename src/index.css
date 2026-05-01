@@ -157,5 +157,9 @@
   .bg-accent-green-light {
     background-color: var(--accent-green-light);
   }
+  .toast-shadow {
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15),
+                0 1px 4px rgba(0, 0, 0, 0.1);
+  }
   
 }
