@@ -10,7 +10,6 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Cell,
 } from "recharts";
 
 const MotionDiv = motion.div;
@@ -56,7 +55,7 @@ const unknownCount = useMemo(
   () => listedBooks.filter((b) => !b.pageCount).length,
   [listedBooks],
 );
-  const daysToFinish = Math.ceil(totalPages / 20);
+  const daysToFinish = Math.ceil(knownPages / 20);
 
   // Chart data (only books with pageCount)
   const chartData = useMemo(
@@ -123,36 +122,40 @@ const unknownCount = useMemo(
                 Books in List
               </div>
             </div>
-           
-               {/* If any book has unknown page count, show "~" before total pages */}
-              {/* Total Pages Card */}
-<div className="bg-muted rounded-2xl p-5 text-center border border-border">
-  <div className="text-3xl font-bold text-accent-green flex items-center justify-center gap-1">
-    {unknownCount > 0 && (
-      <span className="text-lg text-yellow-500">~</span>
-    )}
-    {knownPages.toLocaleString()}
-  </div>
-  <div className="text-sm text-muted-foreground mt-1">Total Pages</div>
-  {unknownCount > 0 && (
-    <div className="text-xs text-yellow-500 mt-1">
-      {unknownCount} book{unknownCount > 1 ? "s" : ""} page unknown
-    </div>
-  )}
-</div>
 
-{/* Days to Finish Card */}
-<div className="bg-muted rounded-2xl p-5 text-center border border-border">
-  <div className="text-3xl font-bold text-accent-green">
-    ~{daysToFinish}
-  </div>
-  <div className="text-sm text-muted-foreground mt-1">Days to Finish</div>
-  {unknownCount > 0 && (
-    <div className="text-xs text-yellow-500 mt-1">
-      based on known pages
-    </div>
-  )}
-</div>
+            {/* If any book has unknown page count, show "~" before total pages */}
+            {/* Total Pages Card */}
+            <div className="bg-muted rounded-2xl p-5 text-center border border-border">
+              <div className="text-3xl font-bold text-accent-green flex items-center justify-center gap-1">
+                {unknownCount > 0 && (
+                  <span className="text-lg text-yellow-500">~</span>
+                )}
+                {knownPages.toLocaleString()}
+              </div>
+              <div className="text-sm text-muted-foreground mt-1">
+                Total Pages
+              </div>
+              {unknownCount > 0 && (
+                <div className="text-xs text-yellow-500 mt-1">
+                  {unknownCount} book{unknownCount > 1 ? "s" : ""} page unknown
+                </div>
+              )}
+            </div>
+
+            {/* Days to Finish Card */}
+            <div className="bg-muted rounded-2xl p-5 text-center border border-border">
+              <div className="text-3xl font-bold text-accent-green">
+                ~{daysToFinish}
+              </div>
+              <div className="text-sm text-muted-foreground mt-1">
+                Days to Finish
+              </div>
+              {unknownCount > 0 && (
+                <div className="text-xs text-yellow-500 mt-1">
+                  based on known pages
+                </div>
+              )}
+            </div>
           </MotionDiv>
 
           {/* Bar Chart */}
@@ -261,10 +264,7 @@ const unknownCount = useMemo(
                             className="bg-accent-green h-1.5 rounded-full transition-all duration-500"
                             style={{
                               // Adjust the width of the progress bar
-                              width: `${Math.min(
-                                (book.pageCount / (totalPages || 1)) * 100 * 2,
-                                100,
-                              )}%`,
+                              width: `${Math.min((book.pageCount / (totalPages || 1)) * 100, 100)}%`,
                             }}
                           />
                         </div>
