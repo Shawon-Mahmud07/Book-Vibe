@@ -5,6 +5,8 @@ import ListedBooks from "@/pages/ListedBooks";
 import PagesToRead from "@/pages/PagesToRead";
 import BookDetail from "@/pages/BookDetail";
 import NotFound from "@/pages/NotFound";
+import AboutUs from "@/pages/AboutUs";
+
 
 const router = createBrowserRouter([
   {
@@ -26,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: "book/:id",
         element: <BookDetail />,
+      },
+      {
+        path: "about",
+        element: <AboutUs />,
       },
       {
         path: "*",
