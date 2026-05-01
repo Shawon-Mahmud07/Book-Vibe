@@ -4,6 +4,28 @@ import { useNavigate } from "react-router-dom";
 
 const MotionDiv = motion.div;
 
+// StarRating component to display book ratings with stars
+const StarRating = ({ rating }) => {
+  if (!rating) return null;
+
+  return (
+    <div className="flex items-center gap-1">
+      {[1, 2, 3, 4, 5].map((star) => (
+        <Star
+          key={star}
+          className={`w-3 h-3 ${
+            star <= Math.round(rating)
+              ? "fill-yellow-400 text-yellow-400"
+              : "fill-none text-muted-foreground"
+          }`}
+        />
+      ))}
+      <span className="text-xs text-muted-foreground ml-1">
+        {rating.toFixed(1)}
+      </span>
+    </div>
+  );
+};
 const BookCard = ({
   book,
   index,
@@ -109,6 +131,16 @@ const BookCard = ({
             <span className="w-4 h-px bg-muted-foreground/30"></span>
             {book.authors?.[0] ?? "Unknown Author"}
           </p>
+          {/* Rating */}
+          <div className="mb-4">
+            {book.rating ? (
+              <StarRating rating={book.rating} />
+            ) : (
+              <span className="text-xs text-muted-foreground/50">
+                No ratings yet
+              </span>
+            )}
+          </div>
 
           <div className="flex items-center justify-between pt-4 border-t border-white/5">
             <div className="flex flex-col">
