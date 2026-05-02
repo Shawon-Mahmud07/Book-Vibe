@@ -39,7 +39,7 @@ const BookList = () => {
         </h2>
         {books && (
           <p className="text-muted-foreground">
-            Showing {startIndex + 1}–
+            Showing {startIndex + 1}-
             {Math.min(startIndex + BOOKS_PER_PAGE, books.length)} of{" "}
             {books.length} books
           </p>
@@ -77,7 +77,7 @@ const BookList = () => {
         <MotionDiv
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-center justify-center gap-1.5 mt-8 "
+          className="flex items-center justify-center gap-1.5 mt-8   overflow-x-auto max-w-full "
         >
           {/* Prev Button */}
           <button
@@ -111,7 +111,7 @@ const BookList = () => {
                   key={page}
                   className="w-8 h-10 flex items-end justify-center text-muted-foreground pb-1 text-lg tracking-widest"
                 >
-                  ···
+                  ...
                 </span>
               );
             }

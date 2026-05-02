@@ -41,7 +41,7 @@ const AboutUs = () => {
         label: "Your Listed Books",
       },
       {
-        value: avgRating !== "N/A" ? `${avgRating}★` : "N/A",
+        value: avgRating !== "N/A" ? `${avgRating} stars` : "N/A",
         label: "Avg Rating",
       },
     ]
@@ -69,7 +69,7 @@ const AboutUs = () => {
         <p className="text-muted-foreground text-lg leading-relaxed">
           Book Vibe is a free book discovery platform built with passion.
           Find your next favorite book, track your reading list, and
-          explore thousands of titles — all in one place.
+          explore thousands of titles - all in one place.
         </p>
       </MotionDiv>
 
@@ -111,7 +111,7 @@ const AboutUs = () => {
           </h2>
           <p className="text-muted-foreground leading-relaxed text-lg">
             We believe everyone deserves access to great books. Book Vibe
-            makes it easy to discover, organize, and enjoy reading —
+            makes it easy to discover, organize, and enjoy reading -
             completely free. No subscriptions, no paywalls. Just books
             and the joy of reading.
           </p>

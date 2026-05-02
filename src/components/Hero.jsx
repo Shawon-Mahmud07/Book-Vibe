@@ -62,7 +62,7 @@ const Hero = () => {
           transition={{ duration: 0.5, delay: 0.3 }}
         >
           Discover timeless classics, expand your reading list, and fall in love
-          with books — all for free.
+          with books - all for free.
         </MotionP>
 
         {/* Buttons - Slimmer and responsive */}

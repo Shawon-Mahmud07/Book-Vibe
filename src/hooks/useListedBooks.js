@@ -26,7 +26,6 @@ const useListedBooks = () => {
     }
     toast.success("Added to list!", {
       description: book.title,
-      icon: "📚",
     });
     setListedBooks((prev) => [...prev, book]);
   };

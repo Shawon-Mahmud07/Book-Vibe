@@ -67,7 +67,7 @@ const ListedBooks = () => {
 
       {/* Books Grid */}
       {listedBooks.length > 0 && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 l:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {listedBooks.map((book, index) => (
             <MotionDiv key={book.id} className="relative group">
               <BookCard book={book} index={index} showListButton={false} />

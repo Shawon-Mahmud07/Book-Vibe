@@ -22,7 +22,7 @@ const features = [
     icon: BookOpen, 
     title: "Vast Collection",
     description:
-      "Access thousands of free classic books from the world's greatest authors — all in one place.",
+      "Access thousands of free classic books from the world's greatest authors - all in one place.",
   },
   {
     icon: BookMarked,
@@ -34,7 +34,7 @@ const features = [
     icon: Star,
     title: "Curated Picks",
     description:
-      "Discover handpicked classics across genres — fiction, philosophy, science, and more.",
+      "Discover handpicked classics across genres - fiction, philosophy, science, and more.",
   },
   {
     icon: Clock,

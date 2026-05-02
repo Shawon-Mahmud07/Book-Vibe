@@ -21,7 +21,7 @@ const Footer = () => {
 
           {/* Main Content */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
-            {/* Left — Brand */}
+            {/* Left - Brand */}
             <MotionDiv
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -44,7 +44,7 @@ const Footer = () => {
               <SocialLinks />
             </MotionDiv>
 
-            {/* Right — Links */}
+            {/* Right - Links */}
             <MotionDiv
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
