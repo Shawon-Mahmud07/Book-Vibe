@@ -29,9 +29,19 @@ const Navbar = () => {
     return saved === "dark";
   });
 
+
+  //Sheet open/close control
+  const [isOpen, setIsOpen] = useState(false);
+
   // Active path state for link highlighting
   const location = useLocation();
   const activePath = location.pathname;
+
+  // Close mobile menu on route change
+ useEffect(() => {
+   const timer = setTimeout(() => setIsOpen(false), 0);
+   return () => clearTimeout(timer);
+ }, [location.pathname]);
 
   useEffect(() => {
     if (isDark) {
@@ -120,7 +130,7 @@ const Navbar = () => {
             <Moon className="h-5 w-5" />
           )}
         </Button>
-        <Sheet>
+        <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild>
             <Button variant="ghost" size="icon">
               <Menu className="h-5 w-5" />
@@ -144,6 +154,7 @@ const Navbar = () => {
                   <Link
                     key={link.name}
                     to={link.href}
+                    onClick={() => setIsOpen(false)}
                     className={`flex items-center gap-3 text-sm font-medium px-3 py-3 rounded-xl transition-all duration-200
                       ${isActive ? "bg-foreground text-background" : "text-foreground hover:bg-muted"}`}
                   >
