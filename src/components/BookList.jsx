@@ -77,7 +77,7 @@ const BookList = () => {
         <MotionDiv
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-center justify-center gap-1.5 mt-8   overflow-x-auto max-w-full "
+          className="flex items-center justify-center gap-1.5 mt-8  max-w-full "
         >
           {/* Prev Button */}
           <button
