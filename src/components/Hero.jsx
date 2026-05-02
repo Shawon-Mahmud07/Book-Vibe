@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { ArrowRight, BookOpen } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const MotionDiv = motion.div;
 const MotionH1 = motion.h1;
@@ -70,17 +71,20 @@ const Hero = () => {
           transition={{ duration: 0.5, delay: 0.4 }}
         >
           {/* Primary Button */}
-          <Button
+          <Link to="listed-books">
+            <Button
             className="group bg-foreground text-background hover:bg-foreground/90
             px-8 py-6 text-base font-semibold rounded-xl
             flex items-center gap-2 transition-all duration-300"
           >
             View The List
-            <ArrowRight className="w-4 h-4 text-accent-green group-hover:translate-x-1 transition-transform duration-300" />
-          </Button>
+              <ArrowRight className="w-4 h-4 text-accent-green group-hover:translate-x-1 transition-transform duration-300" />
+              </Button>
+          </Link>
 
           {/* Secondary Button */}
-          <Button
+          <a href="#books">
+            <Button 
             variant="outline"
             className="px-8 py-6 text-base font-semibold border-accent-green text-accent-green rounded-xl
             hover:bg-foreground/5
@@ -88,7 +92,8 @@ const Hero = () => {
           >
             <BookOpen className="w-4 h-4 " />
             Browse Genres
-          </Button>
+            </Button>
+          </a>
         </MotionDiv>
       </div>
 

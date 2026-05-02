@@ -2,6 +2,7 @@ import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { BookOpen, ArrowRight, Sparkles } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
 // Count up hook
 const useCountUp = (target, duration = 2) => {
@@ -143,17 +144,21 @@ const CTASection = () => {
               transition={{ duration: 0.5, delay: 0.3 }}
               className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start"
             >
-              <Button className="bg-foreground text-background hover:bg-foreground/90 font-semibold px-6 py-5 flex items-center gap-2">
-                <BookOpen className="w-4 h-4 text-accent-green" />
-                Explore Books
-              </Button>
-              <Button
-                variant="outline"
-                className="border-accent-green text-accent-green hover:bg-accent-green-light px-6 py-5 flex items-center gap-2 bg-transparent"
-              >
-                View Reading List
-                <ArrowRight className="w-4 h-4 " />
-              </Button>
+              <Link to="/listed-books">
+                <Button className="bg-foreground text-background hover:bg-foreground/90 font-semibold px-6 py-5 flex items-center gap-2">
+                  <BookOpen className="w-4 h-4 text-accent-green" />
+                  Explore Books
+                </Button>
+              </Link>
+              <Link to="/pages-to-read">
+                <Button
+                  variant="outline"
+                  className="border-accent-green text-accent-green hover:bg-accent-green-light px-6 py-5 flex items-center gap-2 bg-transparent"
+                >
+                  View Reading List
+                  <ArrowRight className="w-4 h-4 " />
+                </Button>
+              </Link>
             </MotionDiv>
           </div>
 

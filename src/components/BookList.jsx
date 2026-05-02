@@ -25,7 +25,7 @@ const BookList = () => {
   }, [books, sortBy]);
 
   return (
-    <section className="px-6 md:px-10 py-10">
+    <section id="books" className="px-6 md:px-10 py-10">
       {/* Header + Sort */}
       <div className="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4">
         <h2 className="text-3xl font-bold">Books</h2>
