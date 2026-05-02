@@ -3,8 +3,8 @@ import useListedBooks from "@/hooks/useListedBooks";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import BookCard from "./BookCard";
 import BookCardSkeleton from "./BookCardSkeleton";
-import { useState } from "react";
 import { motion } from "framer-motion";
+import { useSearchParams } from "react-router-dom";
 
 const MotionDiv = motion.div;
 
@@ -12,18 +12,23 @@ const BOOKS_PER_PAGE = 6;
 const BookList = () => {
   const { books, isLoading, isError } = useBooks();
   const { addBook, removeBook, isListed } = useListedBooks();
-  const [currentPage, setCurrentPage] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentPage = Number(searchParams.get("page") || 1);
   
   // Pagination calculation
   const totalPages = Math.ceil((books?.length || 0) / BOOKS_PER_PAGE);
   const startIndex = (currentPage - 1) * BOOKS_PER_PAGE;
   const currentBooks = books?.slice(startIndex, startIndex + BOOKS_PER_PAGE);
 
-  const goToPage = (page) => {
-    setCurrentPage(page);
-    // Scroll to top of book list on page change
-    document.getElementById("books")?.scrollIntoView({ behavior: "smooth" });
-  };
+ const goToPage = (page) => {
+   setSearchParams({ page });
+   setTimeout(() => {
+     document.getElementById("books")?.scrollIntoView({
+       behavior: "smooth",
+       block: "start",
+     });
+   }, 100);
+ };
 
   return (
     <section id="books" className="px-6 md:px-10 py-10">
@@ -72,7 +77,7 @@ const BookList = () => {
         <MotionDiv
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-center justify-center gap-1.5 mt-8 flex-wrap"
+          className="flex items-center justify-center gap-1.5 mt-8 "
         >
           {/* Prev Button */}
           <button
