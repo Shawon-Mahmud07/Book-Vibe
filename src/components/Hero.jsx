@@ -26,8 +26,8 @@ const Hero = () => {
           className="inline-flex items-center gap-2 bg-foreground/10 text-foreground text-sm font-medium px-4 py-1.5 rounded-full"
         >
           <BookOpen className="w-4 h-4 text-accent-green" />
-          <span className="text-accent-green font-bold">62,000+</span> Free Classic
-          Books
+          <span className="text-accent-green font-bold">Discover</span> Modern &
+          Classic Books
         </MotionDiv>
 
         {/* Heading */}
@@ -73,25 +73,25 @@ const Hero = () => {
           {/* Primary Button */}
           <Link to="listed-books">
             <Button
-            className="group bg-foreground text-background hover:bg-foreground/90
+              className="group bg-foreground text-background hover:bg-foreground/90
             px-8 py-6 text-base font-semibold rounded-xl
             flex items-center gap-2 transition-all duration-300"
-          >
-            View The List
+            >
+              View The List
               <ArrowRight className="w-4 h-4 text-accent-green group-hover:translate-x-1 transition-transform duration-300" />
-              </Button>
+            </Button>
           </Link>
 
           {/* Secondary Button */}
           <a href="#books">
-            <Button 
-            variant="outline"
-            className="px-8 py-6 text-base font-semibold border-accent-green text-accent-green rounded-xl
+            <Button
+              variant="outline"
+              className="px-8 py-6 text-base font-semibold border-accent-green text-accent-green rounded-xl
             hover:bg-foreground/5
             flex items-center gap-2 transition-all duration-300"
-          >
-            <BookOpen className="w-4 h-4 " />
-            Browse Genres
+            >
+              <BookOpen className="w-4 h-4 " />
+              Browse Genres
             </Button>
           </a>
         </MotionDiv>

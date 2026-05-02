@@ -1,22 +1,52 @@
 import { motion } from "framer-motion"
-import { BookOpen,  Heart } from "lucide-react"
-
+import { BookOpen, Heart, Code2 } from "lucide-react"
+import { Link } from "react-router-dom"
+import { Button } from "@/components/ui/button"
+import useBooks from "@/hooks/useBooks"
+import useListedBooks from "@/hooks/useListedBooks"
+import { useMemo } from "react"
 
 const MotionDiv = motion.div
 const MotionH1 = motion.h1
-const MotionSpan = motion.span
-
-
-const stats = [
-  { value: "12+", label: "Books Available" },
-  { value: "3", label: "Pages Built" },
-  { value: "100%", label: "Free Forever" },
-  { value: "∞", label: "Reading Joy" },
-]
-
-
 
 const AboutUs = () => {
+  const { books } = useBooks()
+  const { listedBooks } = useListedBooks()
+
+  // Real stats from actual data
+  const stats = useMemo(() => {
+    const categories = new Set(
+      books?.flatMap((b) => b.categories || []) || []
+    )
+    const ratedBooks = books?.filter((b) => b.rating) || []
+    const avgRating =
+      ratedBooks.length > 0
+        ? (
+            ratedBooks.reduce((sum, b) => sum + b.rating, 0) /
+            ratedBooks.length
+          ).toFixed(1)
+        : "N/A"
+
+    return [
+      {
+        value: books ? `${books.length}+` : "...",
+        label: "Books Available",
+      },
+      {
+        value: categories.size > 0 ? `${categories.size}+` : "...",
+        label: "Genres",
+      },
+      {
+        value: listedBooks.length > 0 ? `${listedBooks.length}` : "0",
+        label: "Your Listed Books",
+      },
+      {
+        value: avgRating !== "N/A" ? `${avgRating}★` : "N/A",
+        label: "Avg Rating",
+      },
+    ]
+  }, [books, listedBooks])
+
   return (
     <div className="px-6 md:px-10 py-16 min-h-[60vh]">
 
@@ -32,7 +62,7 @@ const AboutUs = () => {
           About Book Vibe
         </div>
         <MotionH1 className="text-4xl md:text-5xl font-bold text-foreground mb-6 leading-tight">
-          Discover Books,
+          Discover Books
           <br />
           <span className="text-accent-green">Love Reading</span>
         </MotionH1>
@@ -43,7 +73,7 @@ const AboutUs = () => {
         </p>
       </MotionDiv>
 
-      {/* Stats */}
+      {/* Real Stats */}
       <MotionDiv
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -88,10 +118,36 @@ const AboutUs = () => {
         </div>
       </MotionDiv>
 
-      
+      {/* CTA */}
+      <MotionDiv
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        className="text-center bg-muted border border-border rounded-3xl p-10"
+      >
+        <h2 className="text-2xl font-bold text-foreground mb-3">
+          Ready to Start Reading?
+        </h2>
+        <p className="text-muted-foreground mb-6">
+          Explore our collection and find your next favorite book.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          <Link to="/">
+            <Button className="bg-foreground text-background hover:bg-foreground/90 px-8">
+              Explore Books
+            </Button>
+          </Link>
+          <Link to="/contact">
+            <Button variant="outline" className="border-border px-8">
+              Get in Touch
+            </Button>
+          </Link>
+        </div>
+      </MotionDiv>
 
     </div>
   )
 }
 
-export default AboutUs;
+export default AboutUs
