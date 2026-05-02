@@ -67,7 +67,7 @@ const Navbar = () => {
       </Link>
 
       {/* Desktop Navigation */}
-      <div className="hidden md:flex">
+      <div className="hidden lg:flex">
         <NavigationMenu>
           <NavigationMenuList className="flex gap-10">
             {navLinks.map((link) => {
@@ -93,7 +93,7 @@ const Navbar = () => {
       </div>
 
       {/* Desktop Right Side */}
-      <div className="hidden md:flex items-center gap-3">
+      <div className="hidden lg:flex items-center gap-3">
         <Button
           variant="ghost"
           size="icon"
@@ -118,7 +118,7 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Menu */}
-      <div className="flex md:hidden items-center gap-2">
+      <div className="flex lg:hidden items-center gap-2">
         <Button
           variant="ghost"
           size="icon"
