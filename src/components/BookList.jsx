@@ -40,14 +40,12 @@ const BookList = () => {
           </p>
         )}
       </div>
-
       {/* Error */}
       {isError && (
         <div className="text-center text-red-500 py-10">
           Something went wrong! Please try again.
         </div>
       )}
-
       {/* Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-10">
         {isLoading &&
@@ -74,7 +72,7 @@ const BookList = () => {
         <MotionDiv
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-center justify-center gap-2"
+          className="flex items-center justify-center gap-1.5 mt-8 flex-wrap"
         >
           {/* Prev Button */}
           <button
@@ -85,19 +83,46 @@ const BookList = () => {
             <ChevronLeft className="w-5 h-5" />
           </button>
 
-          {/* Page Numbers */}
+          {/* Smart Page Numbers */}
           {Array.from({ length: totalPages }).map((_, i) => {
             const page = i + 1;
+
+            // Show first, last, current, and adjacent pages only
+            const showPage =
+              page === 1 ||
+              page === totalPages ||
+              page === currentPage ||
+              page === currentPage - 1 ||
+              page === currentPage + 1;
+
+            // Show dots .... if there's a gap of 2 pages before or after the current page
+            const showDotsBefore = page === currentPage - 2 && currentPage > 3;
+            const showDotsAfter =
+              page === currentPage + 2 && currentPage < totalPages - 2;
+
+            if (showDotsBefore || showDotsAfter) {
+              return (
+                <span
+                  key={page}
+                  className="w-8 h-10 flex items-end justify-center text-muted-foreground pb-1 text-lg tracking-widest"
+                >
+                  ···
+                </span>
+              );
+            }
+
+            if (!showPage) return null;
+
             return (
               <button
                 key={page}
                 onClick={() => goToPage(page)}
                 className={`w-10 h-10 rounded-xl text-sm font-semibold transition-all duration-200 border
-                  ${
-                    currentPage === page
-                      ? "bg-accent-green text-white border-accent-green"
-                      : "bg-muted border-border text-foreground hover:border-accent-green hover:text-accent-green"
-                  }`}
+            ${
+              currentPage === page
+                ? "bg-accent-green text-white border-accent-green scale-110"
+                : "bg-muted border-border text-foreground hover:border-accent-green hover:text-accent-green"
+            }`}
               >
                 {page}
               </button>

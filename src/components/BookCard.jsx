@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { BookmarkPlus, BookmarkCheck, ArrowUpRight } from "lucide-react";
+import { BookmarkPlus, BookmarkCheck, ArrowUpRight, Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const MotionDiv = motion.div;
