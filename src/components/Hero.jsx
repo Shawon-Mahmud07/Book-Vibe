@@ -44,7 +44,7 @@ const Hero = () => {
           <span className="relative inline-block">
             freshen up
             <MotionSpan
-              className="absolute -bottom-1 left-0 h-0.75 bg-foreground rounded-full"
+              className="absolute -bottom-1 left-0 h-1 bg-foreground rounded-full"
               initial={{ width: 0 }}
               animate={{ width: "100%" }}
               transition={{ duration: 0.6, delay: 0.7 }}
@@ -62,7 +62,7 @@ const Hero = () => {
           transition={{ duration: 0.5, delay: 0.3 }}
         >
           Discover timeless classics, expand your reading list, and fall in love
-          with books - all for free.
+          with books — all for free.
         </MotionP>
 
         {/* Buttons - Slimmer and responsive */}

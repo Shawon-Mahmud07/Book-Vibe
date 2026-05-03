@@ -42,7 +42,7 @@ const BookCard = ({
 
   return (
     <MotionDiv
-      onClick={() => navigate(`/book/${book.id}`, { state: { book } })}
+      onClick={() => navigate(`/book/${book.id}`)}
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       whileHover={{ y: -10 }}
@@ -51,7 +51,7 @@ const BookCard = ({
       className="relative group perspective-1000"
     >
       <div className="relative bg-secondary/30 backdrop-blur-md rounded-3xl border border-white/10 overflow-hidden cursor-pointer transition-all duration-500 group-hover:border-accent-green/50 group-hover:shadow-[0_20px_50px_rgba(0,0,0,0.3)] shadow-xl">
-        {/* Top Section - Fancy Display */}
+        {/* Top Section — Fancy Display */}
         <div className="relative h-72 w-full flex items-center justify-center p-6 bg-linear-to-br from-muted/50 to-secondary/20 overflow-hidden">
           {/* Animated Background Glow */}
           <div className="absolute -inset-1 bg-linear-to-r from-accent-green/20 to-blue-500/20 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
@@ -118,7 +118,7 @@ const BookCard = ({
           )}
         </div>
 
-        {/* Bottom Section - Information */}
+        {/* Bottom Section — Information */}
         <div className="p-5 bg-linear-to-b from-transparent to-black/20">
           <div className="flex justify-between items-start gap-2 mb-1">
             <h3 className="font-bold text-lg leading-tight text-foreground line-clamp-1 group-hover:text-accent-green transition-colors duration-300">

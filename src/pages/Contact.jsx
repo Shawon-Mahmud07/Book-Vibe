@@ -71,6 +71,7 @@ const Contact = () => {
       setIsLoading(false);
       toast.success("Message sent!", {
         description: "We'll get back to you soon.",
+        icon: "📬",
       });
       setForm({ name: "", email: "", subject: "", message: "" });
     }, 1500);
@@ -98,7 +99,7 @@ const Contact = () => {
       </MotionDiv>
 
       <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
-        {/* Left - Contact Info */}
+        {/* Left — Contact Info */}
         <MotionDiv
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -110,7 +111,7 @@ const Contact = () => {
               Let's talk!
             </h2>
             <p className="text-muted-foreground leading-relaxed">
-              Whether you have feedback, a bug report, or just want to say hi -
+              Whether you have feedback, a bug report, or just want to say hi —
               feel free to reach out. I'll try to respond as soon as possible.
             </p>
           </div>
@@ -160,7 +161,7 @@ const Contact = () => {
           </div>
         </MotionDiv>
 
-        {/* Right - Contact Form */}
+        {/* Right — Contact Form */}
         <MotionDiv
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}

@@ -97,7 +97,7 @@ const CTASection = () => {
 
         {/* Content */}
         <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-10">
-          {/* Left - Text */}
+          {/* Left — Text */}
           <div className="text-center lg:text-left max-w-xl">
             {/* Badge */}
             <MotionDiv
@@ -132,7 +132,7 @@ const CTASection = () => {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="text-muted-foreground text-base leading-relaxed mb-8"
             >
-              Thousands of classic books are waiting for you - completely free.
+              Thousands of classic books are waiting for you — completely free.
               No subscription, no sign up. Just read.
             </MotionP>
 
@@ -162,7 +162,7 @@ const CTASection = () => {
             </MotionDiv>
           </div>
 
-          {/* Right - Stats */}
+          {/* Right — Stats */}
           <MotionDiv
             className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-4 lg:gap-6"
             initial="hidden"

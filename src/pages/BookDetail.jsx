@@ -1,15 +1,14 @@
-import { useState } from "react";
-import { useLocation, useParams, useNavigate } from "react-router-dom";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useParams, useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { motion } from "framer-motion";
+import { useState } from "react";
 import {
   ArrowLeft,
   BookOpen,
   Calendar,
   FileText,
   ExternalLink,
-  Star,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import useListedBooks from "@/hooks/useListedBooks";
@@ -22,17 +21,8 @@ const API_KEY = import.meta.env.VITE_GOOGLE_BOOKS_API_KEY;
 const BookDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
-  const queryClient = useQueryClient();
-  const { listedBooks, addBook, removeBook, isListed } = useListedBooks();
-  const [failedCoverUrls, setFailedCoverUrls] = useState([]);
-
-  const routeBook = location.state?.book;
-  const cachedBook = queryClient
-    .getQueryData(["books"])
-    ?.find((book) => book.id === id);
-  const listedBook = listedBooks.find((book) => book.id === id);
-  const knownBook = routeBook || cachedBook || listedBook;
+  const [imgError, setImgError] = useState(false);
+  const { addBook, removeBook, isListed } = useListedBooks();
 
   const {
     data: book,
@@ -41,58 +31,47 @@ const BookDetail = () => {
   } = useQuery({
     queryKey: ["book", id],
     queryFn: async () => {
-      if (!id) throw new Error("Book ID is missing.");
-      if (!API_KEY) throw new Error("Google Books API key is not configured.");
-
       const res = await axios.get(
         `https://www.googleapis.com/books/v1/volumes/${id}?key=${API_KEY}`,
       );
       const item = res.data;
-      const volumeInfo = item.volumeInfo || {};
-      const imageLinks = volumeInfo.imageLinks || {};
-      const getImage = (url) =>
-        url?.replace("http://", "https://").replace("zoom=1", "zoom=4");
-      const coverCandidates = [
-        getImage(imageLinks?.thumbnail),
-        getImage(imageLinks?.smallThumbnail),
-        getImage(imageLinks?.extraLarge),
-        getImage(imageLinks?.large),
-        getImage(imageLinks?.medium),
-        getImage(imageLinks?.small),
-      ].filter(Boolean);
+      const imageLinks = item.volumeInfo.imageLinks;
 
+      // Helper to get the best available image and ensure it's HTTPS
+     const getImage = (url) => {
+       if (!url) return null;
+       return url
+         .replace("http://", "https://")
+         .replace("&edge=curl", "") 
+         .replace("zoom=1", "zoom=3"); 
+     };
       return {
         id: item.id,
-        title: volumeInfo.title || "Unknown Title",
-        authors: volumeInfo.authors || ["Unknown Author"],
-        cover: coverCandidates[0] || null,
-        coverCandidates,
-        rating: volumeInfo.averageRating || null,
-        ratingsCount: volumeInfo.ratingsCount || 0,
-        categories: volumeInfo.categories || [],
-        pageCount: volumeInfo.pageCount || null,
-        publishedDate: volumeInfo.publishedDate || null,
-        description: volumeInfo.description || null,
-        previewLink: volumeInfo.previewLink || null,
-        publisher: volumeInfo.publisher || null,
-        language: volumeInfo.language || null,
+        title: item.volumeInfo.title || "Unknown Title",
+        authors: item.volumeInfo.authors || ["Unknown Author"],
+        cover:
+          getImage(imageLinks?.thumbnail) ||
+          getImage(imageLinks?.smallThumbnail) ||
+          getImage(imageLinks?.small) ||
+          getImage(imageLinks?.medium) ||
+          getImage(imageLinks?.large) ||
+          getImage(imageLinks?.extraLarge) ||
+          null,
+        rating: item.volumeInfo.averageRating || null,
+        ratingsCount: item.volumeInfo.ratingsCount || 0,
+        categories: item.volumeInfo.categories || [],
+        pageCount: item.volumeInfo.pageCount || null,
+        publishedDate: item.volumeInfo.publishedDate || null,
+        description: item.volumeInfo.description || null,
+        previewLink: item.volumeInfo.previewLink || null,
+        publisher: item.volumeInfo.publisher || null,
+        language: item.volumeInfo.language || null,
       };
     },
-    enabled: Boolean(id),
     staleTime: 30 * 60 * 1000,
   });
 
   const listed = book ? isListed(book.id) : false;
-  const coverCandidates = [
-    knownBook?.cover,
-    ...(book?.coverCandidates || []),
-    book?.cover,
-  ].filter(Boolean);
-  const uniqueCoverCandidates = [...new Set(coverCandidates)];
-  const activeCover = uniqueCoverCandidates.find(
-    (cover) => !failedCoverUrls.includes(cover),
-  );
-  const bookForList = activeCover ? { ...book, cover: activeCover } : book;
 
   // Loading state
   if (isLoading)
@@ -126,28 +105,25 @@ const BookDetail = () => {
       </MotionButton>
 
       <div className="flex flex-col md:flex-row gap-8 md:gap-10">
-        {/* Left - Cover */}
+        {/* Left — Cover */}
         <MotionDiv
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className="flex flex-col items-center gap-4 md:w-64 shrink-0"
         >
+           {/* Cover section */}
           <div className="bg-muted rounded-2xl p-4 w-full max-w-xs md:max-w-none flex justify-center items-center shadow-xl min-h-70">
-            {activeCover ? (
+            {book.cover && !imgError ? (
               <img
-                src={activeCover}
+                src={book.cover}
                 alt={book.title}
                 className="w-full h-64 md:h-80 object-contain rounded-lg drop-shadow-xl"
-                onError={() =>
-                  setFailedCoverUrls((prev) =>
-                    prev.includes(activeCover) ? prev : [...prev, activeCover],
-                  )
-                }
+                onError={() => setImgError(true)} // ← clean fix!
               />
             ) : (
-              <div className="w-36 md:w-44 h-52 md:h-64 flex flex-col items-center justify-center gap-3 text-muted-foreground">
-                <BookOpen className="w-12 h-12 md:w-16 md:h-16 opacity-30" />
+              <div className="flex flex-col items-center justify-center gap-3 text-muted-foreground py-8">
+                <BookOpen className="w-16 h-16 opacity-30" />
                 <span className="text-xs text-center">No cover available</span>
               </div>
             )}
@@ -155,7 +131,7 @@ const BookDetail = () => {
 
           {/* Add to List */}
           <Button
-            onClick={() => (listed ? removeBook(book.id) : addBook(bookForList))}
+            onClick={() => (listed ? removeBook(book.id) : addBook(book))}
             className={`w-full max-w-xs md:max-w-none flex items-center gap-2 font-semibold
       ${
         listed
@@ -173,7 +149,6 @@ const BookDetail = () => {
               </>
             )}
           </Button>
-
           {/* Preview */}
           {book.previewLink && (
             <a
@@ -193,7 +168,7 @@ const BookDetail = () => {
           )}
         </MotionDiv>
 
-        {/* Right - Info */}
+        {/* Right — Info */}
         <MotionDiv
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -249,7 +224,7 @@ const BookDetail = () => {
             )}
             {book.rating && (
               <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
-                <Star className="w-4 h-4 fill-accent-green text-accent-green" />
+                <span className="text-accent-green">★</span>
                 {book.rating} ({book.ratingsCount.toLocaleString()} ratings)
               </div>
             )}
