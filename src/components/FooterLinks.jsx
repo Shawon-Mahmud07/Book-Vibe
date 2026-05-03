@@ -9,7 +9,7 @@ const FooterLinks = () => {
         { name: "Home", href: "/" },
         { name: "Listed Books", href: "/listed-books" },
         { name: "Pages to Read", href: "/pages-to-read" },
-      ]
+      ],
     },
     {
       title: "Company",
@@ -17,7 +17,7 @@ const FooterLinks = () => {
         { name: "About Us", href: "/about" },
         { name: "Contact", href: "/contact" },
         { name: "Blog", href: "/blog" },
-      ]
+      ],
     },
     {
       title: "Legal",
@@ -25,19 +25,19 @@ const FooterLinks = () => {
         { name: "Privacy Policy", href: "/privacy" },
         { name: "Terms of Service", href: "/terms" },
         { name: "Cookie Policy", href: "/cookies" },
-      ]
+      ],
     },
     {
       title: "Resources",
       links: [
-        { 
-          name: "Google Books API", 
+        {
+          name: "Google Books API",
           href: "https://developers.google.com/books",
-          external: true
+          external: true,
         },
-      ]
+      ],
     },
-  ]
+  ];
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-8">

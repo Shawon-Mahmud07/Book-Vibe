@@ -7,6 +7,7 @@ import BookDetail from "@/pages/BookDetail";
 import NotFound from "@/pages/NotFound";
 import AboutUs from "@/pages/AboutUs";
 import Contact from "@/pages/Contact";
+import PrivacyPolicy from "@/pages/static/PrivacyPolicy";
 
 
 
@@ -37,7 +38,11 @@ const router = createBrowserRouter([
       },
       {
         path: "contact",
-        element: <Contact/>
+        element: <Contact />,
+      },
+      {
+        path: "privacy",
+        element: <PrivacyPolicy />,
       },
       {
         path: "*",
