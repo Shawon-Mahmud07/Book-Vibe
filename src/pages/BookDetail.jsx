@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { motion } from "framer-motion";
@@ -21,9 +21,10 @@ const API_KEY = import.meta.env.VITE_GOOGLE_BOOKS_API_KEY;
 const BookDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const [imgError, setImgError] = useState(false);
   const { addBook, removeBook, isListed } = useListedBooks();
-
+  const cardCover = location.state?.cover;
   const {
     data: book,
     isLoading,
@@ -37,14 +38,16 @@ const BookDetail = () => {
       const item = res.data;
       const imageLinks = item.volumeInfo.imageLinks;
 
+      
+
       // Helper to get the best available image and ensure it's HTTPS
-     const getImage = (url) => {
-       if (!url) return null;
-       return url
-         .replace("http://", "https://")
-         .replace("&edge=curl", "") 
-         .replace("zoom=1", "zoom=3"); 
-     };
+      const getImage = (url) => {
+        if (!url) return null;
+        return url
+          .replace("http://", "https://")
+          .replace("&edge=curl", "")
+          .replace("zoom=1", "zoom=3");
+      };
       return {
         id: item.id,
         title: item.volumeInfo.title || "Unknown Title",
@@ -72,6 +75,8 @@ const BookDetail = () => {
   });
 
   const listed = book ? isListed(book.id) : false;
+  // Use cover from state if available (from card), otherwise use fetched cover
+  const displayCover = cardCover || book?.cover;
 
   // Loading state
   if (isLoading)
@@ -112,14 +117,14 @@ const BookDetail = () => {
           transition={{ duration: 0.5 }}
           className="flex flex-col items-center gap-4 md:w-64 shrink-0"
         >
-           {/* Cover section */}
+          {/* Cover section */}
           <div className="bg-muted rounded-2xl p-4 w-full max-w-xs md:max-w-none flex justify-center items-center shadow-xl min-h-70">
-            {book.cover && !imgError ? (
+            {displayCover && !imgError ? (
               <img
-                src={book.cover}
+                src={displayCover}
                 alt={book.title}
                 className="w-full h-64 md:h-80 object-contain rounded-lg drop-shadow-xl"
-                onError={() => setImgError(true)} // ← clean fix!
+                onError={() => setImgError(true)}
               />
             ) : (
               <div className="flex flex-col items-center justify-center gap-3 text-muted-foreground py-8">

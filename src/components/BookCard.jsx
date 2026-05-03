@@ -42,7 +42,11 @@ const BookCard = ({
 
   return (
     <MotionDiv
-      onClick={() => navigate(`/book/${book.id}`)}
+      onClick={() =>
+        navigate(`/book/${book.id}`, {
+          state: { cover: book.cover }, 
+        })
+      }
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       whileHover={{ y: -10 }}
