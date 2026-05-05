@@ -29,7 +29,7 @@ const useCountUp = (target, duration = 2) => {
     if (!inView) return;
     const controls = animate(count, target, { duration });
     return () => controls.stop();
-  }, [inView, target, duration, count ]);
+  }, [inView, target, duration, count]);
 
   return { rounded, ref };
 };
@@ -60,26 +60,14 @@ const StatCard = ({ stat }) => {
 
 const stats = [
   {
-    countTo: 62,
+    countTo: 79,
     prefix: "",
-    suffix: ",000+",
+    suffix: "+",
     label: "Free Books",
     duration: 2,
   },
-  {
-    countTo: 50,
-    prefix: "",
-    suffix: "+",
-    label: "Genres",
-    duration: 2,
-  },
-  {
-    countTo: 100,
-    prefix: "",
-    suffix: "%",
-    label: "Free Forever",
-    duration: 2,
-  },
+  { countTo: 19, prefix: "", suffix: "+", label: "Genres", duration: 2 },
+  { countTo: 100, prefix: "", suffix: "%", label: "Free Forever", duration: 2 },
 ];
 
 const MotionDiv = motion.div;
@@ -88,8 +76,8 @@ const MotionP = motion.p;
 
 const CTASection = () => {
   return (
-    <section className="px-6 md:px-10 py-14">
-      <div className="relative bg-muted dark:bg-card border border-border rounded-3xl px-8 md:px-16 py-16 overflow-hidden">
+    <section className="px-4 sm:px-6 md:px-10 py-14">
+      <div className="relative bg-muted dark:bg-card border border-border rounded-3xl px-5 sm:px-8 md:px-16 py-12 md:py-16 overflow-hidden">
         {/* Background decorative circles */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-foreground rounded-full opacity-5 translate-x-20 -translate-y-20" />
         <div className="absolute bottom-0 left-0 w-48 h-48 bg-foreground rounded-full opacity-5 -translate-x-16 translate-y-16" />
@@ -98,7 +86,7 @@ const CTASection = () => {
         {/* Content */}
         <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-10">
           {/* Left — Text */}
-          <div className="text-center lg:text-left max-w-xl">
+          <div className="text-center lg:text-left max-w-xl w-full">
             {/* Badge */}
             <MotionDiv
               initial={{ opacity: 0, y: 20 }}
@@ -119,9 +107,8 @@ const CTASection = () => {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="text-3xl md:text-4xl font-bold text-foreground leading-tight mb-4"
             >
-              Start Your Reading
-              <br />
-              Journey Today
+              Discover Your Next <br className="hidden sm:block" />
+              Favorite Book on Book Vibe
             </MotionH2>
 
             {/* Subtitle */}
@@ -132,8 +119,8 @@ const CTASection = () => {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="text-muted-foreground text-base leading-relaxed mb-8"
             >
-              Thousands of classic books are waiting for you — completely free.
-              No subscription, no sign up. Just read.
+              Discover books, build your personal reading list, and track your
+              progress — free forever. No subscription, no sign up. Just read.
             </MotionP>
 
             {/* Buttons */}
@@ -142,21 +129,21 @@ const CTASection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start"
+              className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start w-full"
             >
-              <Link to="/listed-books">
-                <Button className="bg-foreground text-background hover:bg-foreground/90 font-semibold px-6 py-5 flex items-center gap-2">
+              <Link to="/listed-books" className="w-full sm:w-auto">
+                <Button className="w-full sm:w-auto bg-foreground text-background hover:bg-foreground/90 font-semibold px-6 py-5 flex items-center justify-center gap-2">
                   <BookOpen className="w-4 h-4 text-accent-green" />
                   Explore Books
                 </Button>
               </Link>
-              <Link to="/pages-to-read">
+              <Link to="/pages-to-read" className="w-full sm:w-auto">
                 <Button
                   variant="outline"
-                  className="border-accent-green text-accent-green hover:bg-accent-green-light px-6 py-5 flex items-center gap-2 bg-transparent"
+                  className="w-full sm:w-auto border-accent-green text-accent-green hover:bg-accent-green-light px-6 py-5 flex items-center justify-center gap-2 bg-transparent"
                 >
                   View Reading List
-                  <ArrowRight className="w-4 h-4 " />
+                  <ArrowRight className="w-4 h-4" />
                 </Button>
               </Link>
             </MotionDiv>
@@ -164,7 +151,7 @@ const CTASection = () => {
 
           {/* Right — Stats */}
           <MotionDiv
-            className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-4 lg:gap-6"
+            className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-4 lg:gap-6 w-full lg:w-auto"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}

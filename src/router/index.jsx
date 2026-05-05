@@ -8,6 +8,7 @@ import NotFound from "@/pages/NotFound";
 import AboutUs from "@/pages/AboutUs";
 import Contact from "@/pages/Contact";
 import PrivacyPolicy from "@/pages/static/PrivacyPolicy";
+import TermsOfService from "@/pages/static/TermsOfService";
 
 
 
@@ -41,8 +42,12 @@ const router = createBrowserRouter([
         element: <Contact />,
       },
       {
-        path: "privacy",
+        path: "privacy-Policy",
         element: <PrivacyPolicy />,
+      },
+      {
+        path: "terms-of-service",
+        element: <TermsOfService />,
       },
       {
         path: "*",
