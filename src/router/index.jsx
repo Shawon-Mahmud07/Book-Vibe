@@ -11,6 +11,7 @@ import PrivacyPolicy from "@/pages/static/PrivacyPolicy";
 import TermsOfService from "@/pages/static/TermsOfService";
 import Blog from "@/pages/Blog";
 import BlogDetail from "@/pages/BlogDetail";
+import CookiePolicy from "@/pages/static/CookiePolicy";
 
 
 
@@ -53,6 +54,11 @@ const router = createBrowserRouter([
         path: "privacy-Policy",
         element: <PrivacyPolicy />,
       },
+      {
+        path: "cookies",
+        element: <CookiePolicy/>,
+      }
+      ,
       {
         path: "terms-of-service",
         element: <TermsOfService />,
