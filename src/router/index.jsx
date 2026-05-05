@@ -10,6 +10,7 @@ import Contact from "@/pages/Contact";
 import PrivacyPolicy from "@/pages/static/PrivacyPolicy";
 import TermsOfService from "@/pages/static/TermsOfService";
 import Blog from "@/pages/Blog";
+import BlogDetail from "@/pages/BlogDetail";
 
 
 
@@ -44,8 +45,9 @@ const router = createBrowserRouter([
       },
       {
         path: "blog",
-        element: <Blog/>,
-      }
+        element: <Blog />,
+      },
+      { path: "blog/:id", element: <BlogDetail /> }
       ,
       {
         path: "privacy-Policy",
