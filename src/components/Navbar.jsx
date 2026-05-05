@@ -21,6 +21,7 @@ const navLinks = [
   { name: "Pages to Read", href: "/pages-to-read" },
   { name: "About Us", href: "/about" },
   { name: "Contact", href: "/contact" },
+  { name: "Blog", href: "/blog" },
 ];
 
 const Navbar = () => {
