@@ -12,10 +12,28 @@ const useListedBooks = () => {
       return [];
     }
   });
+  const [readingStatus, setReadingStatus] = useState(() => {
+    try {
+      const stored = localStorage.getItem("book-vibe-status");
+      return stored ? JSON.parse(stored) : {};
+    } catch {
+      return {};
+    }
+  });
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(listedBooks));
   }, [listedBooks]);
+
+  useEffect(() => {
+    localStorage.setItem("book-vibe-status", JSON.stringify(readingStatus));
+  }, [readingStatus]);
+
+  const setStatus = (bookId, status) => {
+    setReadingStatus((prev) => ({ ...prev, [bookId]: status }));
+  };
+
+  const getStatus = (bookId) => readingStatus[bookId] || "want-to-read";
 
   const addBook = (book) => {
     if (listedBooks.find((b) => b.id === book.id)) {
@@ -50,7 +68,15 @@ const useListedBooks = () => {
     setListedBooks([]);
   };
 
-  return { listedBooks, addBook, removeBook, isListed, clearAll };
+  return {
+    listedBooks,
+    addBook,
+    removeBook,
+    isListed,
+    clearAll,
+    setStatus,
+    getStatus,
+  };
 };
 
 export default useListedBooks;
