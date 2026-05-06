@@ -12,8 +12,7 @@ import TermsOfService from "@/pages/static/TermsOfService";
 import Blog from "@/pages/Blog";
 import BlogDetail from "@/pages/BlogDetail";
 import CookiePolicy from "@/pages/static/CookiePolicy";
-
-
+import Search from "@/pages/Search";
 
 const router = createBrowserRouter([
   {
@@ -48,20 +47,22 @@ const router = createBrowserRouter([
         path: "blog",
         element: <Blog />,
       },
-      { path: "blog/:id", element: <BlogDetail /> }
-      ,
+      { path: "blog/:id", element: <BlogDetail /> },
       {
         path: "privacy",
         element: <PrivacyPolicy />,
       },
       {
         path: "cookies",
-        element: <CookiePolicy/>,
-      }
-      ,
+        element: <CookiePolicy />,
+      },
       {
         path: "terms",
         element: <TermsOfService />,
+      },
+      {
+        path: "search",
+        element: <Search />
       },
       {
         path: "*",
