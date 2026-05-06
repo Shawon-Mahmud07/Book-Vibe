@@ -51,7 +51,7 @@ const router = createBrowserRouter([
       { path: "blog/:id", element: <BlogDetail /> }
       ,
       {
-        path: "privacy-Policy",
+        path: "privacy",
         element: <PrivacyPolicy />,
       },
       {
@@ -60,7 +60,7 @@ const router = createBrowserRouter([
       }
       ,
       {
-        path: "terms-of-service",
+        path: "terms",
         element: <TermsOfService />,
       },
       {

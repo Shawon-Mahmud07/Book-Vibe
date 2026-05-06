@@ -1,4 +1,5 @@
 import { motion } from "framer-motion"
+import { Link } from "react-router-dom";
 
 const MotionDiv = motion.div;
 const FooterLinks = () => {
@@ -22,8 +23,8 @@ const FooterLinks = () => {
     {
       title: "Legal",
       links: [
-        { name: "Privacy Policy", href: "/privacy-Policy" },
-        { name: "Terms of Service", href: "/terms-of-service" },
+        { name: "Privacy Policy", href: "/privacy" },
+        { name: "Terms of Service", href: "/terms" },
         { name: "Cookie Policy", href: "/cookies" },
       ],
     },
@@ -55,14 +56,23 @@ const FooterLinks = () => {
           <ul className="space-y-2">
             {section.links.map((link) => (
               <li key={link.name}>
-                <a
-                  href={link.href}
-                  target={link.external ? "_blank" : "_self"}
-                  rel={link.external ? "noreferrer" : ""}
-                  className="text-sm text-muted-foreground hover:text-accent-green hover:underline transition-colors duration-200"
-                >
-                  {link.name}
-                </a>
+                {link.external ? (
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-sm text-muted-foreground hover:text-accent-green transition-colors duration-200"
+                  >
+                    {link.name}
+                  </a>
+                ) : (
+                  <Link  
+                    to={link.href}
+                    className="text-sm text-muted-foreground hover:text-accent-green transition-colors duration-200"
+                  >
+                    {link.name}
+                  </Link>
+                )}
               </li>
             ))}
           </ul>

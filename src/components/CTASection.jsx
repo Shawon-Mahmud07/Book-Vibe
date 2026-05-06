@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { BookOpen, ArrowRight, Sparkles } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import useBooks from "@/hooks/useBooks";
 
 // Count up hook
 const useCountUp = (target, duration = 2) => {
@@ -26,7 +27,7 @@ const useCountUp = (target, duration = 2) => {
   }, []);
 
   useEffect(() => {
-    if (!inView) return;
+      if (!inView || !target) return;
     const controls = animate(count, target, { duration });
     return () => controls.stop();
   }, [inView, target, duration, count]);
@@ -58,23 +59,40 @@ const StatCard = ({ stat }) => {
   );
 };
 
-const stats = [
-  {
-    countTo: 79,
-    prefix: "",
-    suffix: "+",
-    label: "Free Books",
-    duration: 2,
-  },
-  { countTo: 19, prefix: "", suffix: "+", label: "Genres", duration: 2 },
-  { countTo: 100, prefix: "", suffix: "%", label: "Free Forever", duration: 2 },
-];
-
 const MotionDiv = motion.div;
 const MotionH2 = motion.h2;
 const MotionP = motion.p;
 
 const CTASection = () => {
+  const { books, isLoading } = useBooks();
+  const totalBooks = books?.length ?? 0;
+  const totalGenres = books
+    ? new Set(books.flatMap((b) => b.categories)).size
+    : 0;
+
+  const stats = [
+    {
+      countTo: isLoading ? 0 : totalBooks,
+      prefix: "",
+      suffix: "+",
+      label: "Free Books",
+      duration: 2,
+    },
+    {
+      countTo: isLoading ? 0 : totalGenres,
+      prefix: "",
+      suffix: "+",
+      label: "Genres",
+      duration: 2,
+    },
+    {
+      countTo: 100,
+      prefix: "",
+      suffix: "%",
+      label: "Free Forever",
+      duration: 2,
+    },
+  ];
   return (
     <section className="px-4 sm:px-6 md:px-10 py-14">
       <div className="relative bg-muted dark:bg-card border border-border rounded-3xl px-5 sm:px-8 md:px-16 py-12 md:py-16 overflow-hidden">
