@@ -67,4 +67,7 @@ const useBooks = () => {
   return { books: data, isLoading, isError };
 };
 
+// Utility function to extract unique genres from the list of books
+export const getUniqueGenres = (books) =>
+  books ? [...new Set(books.flatMap((b) => b.categories))] : [];
 export default useBooks;
