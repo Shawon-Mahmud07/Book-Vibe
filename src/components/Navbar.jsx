@@ -96,6 +96,7 @@ const Navbar = () => {
 
       {/* Desktop Right Side */}
       <div className="hidden lg:flex items-center gap-3">
+         {/* Search Button */}
         <Link to="/search">
           <Button
             variant="ghost"
@@ -130,6 +131,16 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       <div className="flex lg:hidden items-center gap-2">
+        {/* Search Button */}
+        <Link to="/search">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="rounded-full hover:bg-foreground/10"
+          >
+            <Search className="h-5 w-5" />
+          </Button>
+        </Link>
         <Button
           variant="ghost"
           size="icon"
