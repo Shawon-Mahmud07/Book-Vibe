@@ -36,6 +36,24 @@ const CustomTooltip = ({ active, payload }) => {
   }
   return null;
 };
+// Status configuration for select options
+const statusConfig = {
+  "want-to-read": {
+    label: "Want to Read",
+    emoji: "📚",
+    color: "text-accent-green bg-accent-green/10",
+  },
+  reading: {
+    label: "Reading",
+    emoji: "📖",
+    color: "text-blue-500 bg-blue-500/10",
+  },
+  finished: {
+    label: "Finished",
+    emoji: "✅",
+    color: "text-green-600 bg-green-600/10",
+  },
+};
 
 const PagesToRead = () => {
   const { listedBooks, removeBook, setStatus, getStatus } = useListedBooks();
@@ -222,78 +240,83 @@ const unknownCount = useMemo(
             </h2>
 
             <div className="space-y-4">
-              {listedBooks.map((book, index) => (
-                <MotionDiv
-                  key={book.id}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.3, delay: index * 0.05 }}
-                  className="flex flex-col sm:flex-row items-start sm:items-center gap-4 bg-card border border-border rounded-2xl p-4 hover:shadow-md transition-shadow duration-300 group relative"
-                >
-                  {/* Cover and basic info row for mobile */}
-                  <div className="flex items-center gap-4 w-full sm:w-auto flex-1 min-w-0">
-                    {/* Cover */}
-                    <div className="bg-muted rounded-xl w-14 h-20 shrink-0 overflow-hidden">
-                      {book.cover ? (
-                        <img
-                          src={book.cover}
-                          alt={book.title}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center">
-                          <BookOpen className="w-5 h-5 text-muted-foreground" />
-                        </div>
-                      )}
+              {listedBooks.map((book, index) => {
+                const status = statusConfig[getStatus(book.id)];
+                return (
+                  <MotionDiv
+                    key={book.id}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.3, delay: index * 0.05 }}
+                    className="flex flex-col sm:flex-row items-start sm:items-center gap-4 bg-card border border-border rounded-2xl p-4 hover:shadow-md transition-shadow duration-300 group relative"
+                  >
+                    {/* Cover and basic info row for mobile */}
+                    <div className="flex items-center gap-4 w-full sm:w-auto flex-1 min-w-0">
+                      {/* Cover */}
+                      <div className="bg-muted rounded-xl w-14 h-20 shrink-0 overflow-hidden">
+                        {book.cover ? (
+                          <img
+                            src={book.cover}
+                            alt={book.title}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center">
+                            <BookOpen className="w-5 h-5 text-muted-foreground" />
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Info */}
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-semibold text-foreground truncate pr-6 sm:pr-0">
+                          {book.title}
+                        </h3>
+                        <p className="text-sm text-muted-foreground">
+                          {book.authors?.[0] ?? "Unknown"}
+                        </p>
+
+                        {/* Progress bar info */}
+                        {book.pageCount && (
+                          <div className="flex items-center gap-2 mt-1">
+                            <span className="text-xs text-muted-foreground shrink-0 font-medium">
+                              {book.pageCount} pages
+                            </span>
+                          </div>
+                        )}
+                      </div>
                     </div>
 
-                    {/* Info */}
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-semibold text-foreground truncate pr-6 sm:pr-0">
-                        {book.title}
-                      </h3>
-                      <p className="text-sm text-muted-foreground">
-                        {book.authors?.[0] ?? "Unknown"}
-                      </p>
+                    {/* Controls: Select and Status */}
+                    <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto pt-3 sm:pt-0 border-t sm:border-0 border-border/50">
+                      <select
+                        value={getStatus(book.id)}
+                        onChange={(e) => setStatus(book.id, e.target.value)}
+                        className="text-xs px-2 py-1.5 rounded-lg border border-border bg-muted text-foreground focus:ring-1 focus:ring-accent-green outline-none min-w-35"
+                      >
+                        <option value="want-to-read">📚 Want to Read</option>
+                        <option value="reading">📖 Currently Reading</option>
+                        <option value="finished">✅ Finished</option>
+                      </select>
 
-                      {/* Progress bar info */}
-                      {book.pageCount && (
-                        <div className="flex items-center gap-2 mt-1">
-                          <span className="text-xs text-muted-foreground shrink-0 font-medium">
-                            {book.pageCount} pages
-                          </span>
-                        </div>
-                      )}
+                      <div
+                        className={`flex items-center gap-1.5 text-[10px] uppercase tracking-wider font-bold px-3 py-1.5 rounded-full ${status.color}`}
+                      >
+                        <span>{status.emoji}</span>
+                        {status.label}
+                      </div>
+
+                      <button
+                        onClick={() => removeBook(book.id)}
+                        className="absolute top-4 right-4 sm:static text-red-500 hover:bg-red-50 p-2 rounded-full transition-all duration-200 md:opacity-0 md:group-hover:opacity-100"
+                        title="Remove"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
                     </div>
-                  </div>
-
-                  {/* Controls: Select and Status */}
-                  <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto pt-3 sm:pt-0 border-t sm:border-0 border-border/50">
-                    <select
-                      value={getStatus(book.id)}
-                      onChange={(e) => setStatus(book.id, e.target.value)}
-                      className="text-xs px-2 py-1.5 rounded-lg border border-border bg-muted text-foreground focus:ring-1 focus:ring-accent-green outline-none min-w-35"
-                    >
-                      <option value="want-to-read">📚 Want to Read</option>
-                      <option value="reading">📖 Currently Reading</option>
-                      <option value="finished">✅ Finished</option>
-                    </select>
-
-                    <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-wider font-bold text-accent-green bg-accent-green/10 px-3 py-1.5 rounded-full">
-                      <Clock className="w-3 h-3" />
-                      To Read
-                    </div>
-
-                    <button
-                      onClick={() => removeBook(book.id)}
-                      className="absolute top-4 right-4 sm:static text-red-500 hover:bg-red-50 p-2 rounded-full transition-all duration-200 md:opacity-0 md:group-hover:opacity-100"
-                      title="Remove"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  </div>
-                </MotionDiv>
-              ))}
+                  </MotionDiv>
+                );
+})}
             </div>
           </MotionDiv>
         </>
