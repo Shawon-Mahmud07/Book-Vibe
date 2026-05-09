@@ -116,7 +116,7 @@ const ListedBooks = () => {
                 </button>
                 <button
                   onClick={() => navigate(`/book/${book.id}`)}
-                  className="hidden sm:flex p-2 bg-accent-green/5 text-accent-green hover:bg-accent-green hover:text-white rounded-lg transition-all"
+                  className="sm:flex p-2 bg-accent-green/5 text-accent-green hover:bg-accent-green hover:text-white rounded-lg transition-all"
                 >
                   <ChevronRight className="w-5 h-5" />
                 </button>
