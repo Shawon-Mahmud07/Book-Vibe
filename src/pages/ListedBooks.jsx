@@ -53,6 +53,26 @@ const ListedBooks = () => {
         )}
       </MotionDiv>
 
+
+       {/* Empty State */}
+      {listedBooks.length === 0 && (
+        <MotionDiv
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="flex flex-col items-center justify-center py-24 text-center"
+        >
+          <div className="bg-accent-green/10 rounded-full p-6 mb-6">
+            <BookMarked className="w-12 h-12 text-accent-green animate-pulse" />
+          </div>
+          <h2 className="text-xl font-semibold text-foreground mb-2">
+            Your reading list is empty
+          </h2>
+          <p className="text-muted-foreground max-w-sm mb-6">
+            Browse books from the home page and save them here.
+          </p>
+          <Button onClick={() => navigate("/")}>Browse Books</Button>
+        </MotionDiv>
+      )}
       {/* Books List */}
       <div className="grid gap-4 sm:gap-6">
         <AnimatePresence mode="popLayout">
