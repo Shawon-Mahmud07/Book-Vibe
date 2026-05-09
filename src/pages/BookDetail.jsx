@@ -3,6 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import useBooks from "@/hooks/useBooks";
+import BookCard from "@/components/BookCard";
 import {
   ArrowLeft,
   BookOpen,
@@ -24,7 +26,9 @@ const BookDetail = () => {
   const location = useLocation();
   const [imgError, setImgError] = useState(false);
   const { addBook, removeBook, isListed } = useListedBooks();
+  const { books } = useBooks();
   const cardCover = location.state?.cover;
+
   const {
     data: book,
     isLoading,
@@ -37,8 +41,6 @@ const BookDetail = () => {
       );
       const item = res.data;
       const imageLinks = item.volumeInfo.imageLinks;
-
-      
 
       // Helper to get the best available image and ensure it's HTTPS
       const getImage = (url) => {
@@ -94,6 +96,22 @@ const BookDetail = () => {
         <Button onClick={() => navigate(-1)}>Go Back</Button>
       </div>
     );
+  
+ // Find related books based on shared categories (excluding current book)
+const relatedBooks = books
+  ?.filter((b) => {
+    if (b.id === book.id) return false;
+
+    return b.categories?.some((bCat) =>
+      book.categories.some(
+        (bookCat) =>
+          bCat.toLowerCase().includes(bookCat.toLowerCase()) ||
+          bookCat.toLowerCase().includes(bCat.toLowerCase()),
+      ),
+    );
+  })
+  .slice(0, 3);
+  
 
   return (
     <div className="px-6 md:px-10 py-12">
@@ -250,6 +268,26 @@ const BookDetail = () => {
           )}
         </MotionDiv>
       </div>
+      {relatedBooks?.length > 0 && (
+        <div className="mt-12">
+          <h2 className="text-lg font-semibold text-foreground mb-6">
+            You might also like
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            {relatedBooks.map((b, i) => (
+              <BookCard
+                key={b.id}
+                book={b}
+                index={i}
+                isListed={isListed(b.id)}
+                onToggle={() =>
+                  isListed(b.id) ? removeBook(b.id) : addBook(b)
+                }
+              />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
