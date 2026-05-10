@@ -64,25 +64,8 @@ const Footer = () => {
             className="border-t border-border pt-8 text-center"
           >
             <p className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} Book Vibe. Built with ❤️ using React,
-              <a
-                href="https://www.tailwindcss.com"
-                target="_blank"
-                rel="noreferrer"
-                className="hover:text-foreground transition-colors ml-1"
-              >
-                Tailwind CSS
-              </a>
-              , and
-              <a
-                href="https://developers.google.com/books"
-                target="_blank"
-                rel="noreferrer"
-                className="hover:text-foreground transition-colors ml-1"
-              >
-                Google Books API
-              </a>
-              .
+              Made for book lovers❤️, by a developer who loves to build. © {""}
+              {new Date().getFullYear()}.
             </p>
           </MotionDiv>
         </div>
