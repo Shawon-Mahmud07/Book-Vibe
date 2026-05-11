@@ -4,6 +4,7 @@ import App from "./App.jsx";
 import "./index.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ErrorBoundary from "./components/ErrorBoundary";
+import { AuthProvider } from "@/context/AuthContext";
 
 
 // Import the QueryClient and QueryClientProvider from react-query
