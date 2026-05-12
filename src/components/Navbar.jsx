@@ -15,6 +15,9 @@ import {
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 import { Menu, Moon, Sun, BookOpen } from "lucide-react";
+import { useAuth } from "@/context/AuthContext"
+import { LogOut, User2 } from "lucide-react"
+import { toast } from "sonner"
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -31,6 +34,18 @@ const Navbar = () => {
     // Default to dark if no preference is saved
     return saved ? saved === "dark" : true;
   });
+
+// Auth state
+  const { currentUser, logout } = useAuth()
+// Logout handler
+const handleLogout = async () => {
+  try {
+    await logout()
+    toast.success("Signed out successfully")
+  } catch {
+    toast.error("Failed to sign out")
+  }
+}
 
 
   //Sheet open/close control
@@ -95,39 +110,61 @@ const Navbar = () => {
       </div>
 
       {/* Desktop Right Side */}
-      <div className="hidden lg:flex items-center gap-3">
-         {/* Search Button */}
-        <Link to="/search">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="rounded-full hover:bg-foreground/10"
-          >
-            <Search className="h-5 w-5" />
-          </Button>
-        </Link>
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={toggleDark}
-          className="rounded-full hover:bg-foreground/10"
-        >
-          {isDark ? (
-            <Sun className="h-5 w-5 text-yellow-400" />
-          ) : (
-            <Moon className="h-5 w-5" />
-          )}
-        </Button>
-        <Button
-          variant="outline"
-          className="border-foreground/20 text-foreground hover:bg-foreground/5 font-medium px-5"
-        >
+     <div className="hidden lg:flex items-center gap-3">
+  <Link to="/search">
+    <Button variant="ghost" size="icon" className="rounded-full hover:bg-foreground/10">
+      <Search className="h-5 w-5" />
+    </Button>
+  </Link>
+  <Button variant="ghost" size="icon" onClick={toggleDark} className="rounded-full hover:bg-foreground/10">
+    {isDark ? <Sun className="h-5 w-5 text-yellow-400" /> : <Moon className="h-5 w-5" />}
+  </Button>
+
+  {currentUser ? (
+    // ← Logged in state
+    <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 bg-muted border border-border rounded-xl px-3 py-1.5">
+        {currentUser.photoURL ? (
+          <img
+            src={currentUser.photoURL}
+            alt={currentUser.displayName}
+            className="w-6 h-6 rounded-full"
+          />
+        ) : (
+          <div className="w-6 h-6 rounded-full bg-accent-green-light flex items-center justify-center">
+            <User2 className="w-3 h-3 text-accent-green" />
+          </div>
+        )}
+        <span className="text-sm font-medium text-foreground max-w-24 truncate">
+          {currentUser.displayName || currentUser.email?.split("@")[0]}
+        </span>
+      </div>
+      <Button
+        variant="outline"
+        size="icon"
+        onClick={handleLogout}
+        className="rounded-xl border-foreground/20 hover:border-red-500 hover:text-red-500"
+        title="Sign Out"
+      >
+        <LogOut className="w-4 h-4" />
+      </Button>
+    </div>
+  ) : (
+    // ← Logged out state
+    <>
+      <Link to="/signin">
+        <Button variant="outline" className="border-foreground/20 text-foreground hover:bg-foreground/5 font-medium px-5">
           Sign In
         </Button>
+      </Link>
+      <Link to="/signup">
         <Button className="bg-foreground text-background hover:bg-foreground/90 font-medium px-5">
           Sign Up
         </Button>
-      </div>
+      </Link>
+    </>
+  )}
+</div>
 
       {/* Mobile Menu */}
       <div className="flex lg:hidden items-center gap-2">
@@ -190,18 +227,44 @@ const Navbar = () => {
               })}
             </div>
             <div className="absolute bottom-0 left-0 right-0 p-5 border-t border-border bg-background">
-              <div className="flex flex-col gap-2">
-                <Button
-                  variant="outline"
-                  className="w-full border-foreground/20 text-foreground hover:bg-foreground/5"
-                >
-                  Sign In
-                </Button>
-                <Button className="w-full bg-foreground text-background hover:bg-foreground/90">
-                  Sign Up
-                </Button>
-              </div>
-            </div>
+  {currentUser ? (
+    <div className="flex flex-col gap-2">
+      <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-xl">
+        {currentUser.photoURL ? (
+          <img src={currentUser.photoURL} alt="" className="w-7 h-7 rounded-full" />
+        ) : (
+          <div className="w-7 h-7 rounded-full bg-accent-green-light flex items-center justify-center">
+            <User2 className="w-4 h-4 text-accent-green" />
+          </div>
+        )}
+        <span className="text-sm font-medium text-foreground truncate">
+          {currentUser.displayName || currentUser.email?.split("@")[0]}
+        </span>
+      </div>
+      <Button
+        variant="outline"
+        onClick={handleLogout}
+        className="w-full border-red-500/30 text-red-500 hover:bg-red-500/10 flex items-center gap-2"
+      >
+        <LogOut className="w-4 h-4" />
+        Sign Out
+      </Button>
+    </div>
+  ) : (
+    <div className="flex flex-col gap-2">
+      <Link to="/signin" onClick={() => setIsOpen(false)}>
+        <Button variant="outline" className="w-full border-foreground/20 text-foreground hover:bg-foreground/5">
+          Sign In
+        </Button>
+      </Link>
+      <Link to="/signup" onClick={() => setIsOpen(false)}>
+        <Button className="w-full bg-foreground text-background hover:bg-foreground/90">
+          Sign Up
+        </Button>
+      </Link>
+    </div>
+  )}
+</div>
           </SheetContent>
         </Sheet>
       </div>
