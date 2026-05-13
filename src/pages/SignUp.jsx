@@ -82,14 +82,6 @@ const SignUp = () => {
       >
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-2 mb-4">
-            <div className="bg-foreground text-background p-2 rounded-xl">
-              <BookOpen className="w-6 h-6" />
-            </div>
-            <span className="text-2xl font-bold text-foreground">
-              Book Vibe
-            </span>
-          </div>
           <h1 className="text-3xl font-bold text-foreground mb-2">
             Create account
           </h1>

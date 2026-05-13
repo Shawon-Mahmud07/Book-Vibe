@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
-import { BookOpen, Mail, Lock, Eye, EyeOff, Chrome } from "lucide-react";
+import { BookOpen, Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
 import { toast } from "sonner";
@@ -66,22 +66,10 @@ const SignIn = () => {
         transition={{ duration: 0.5 }}
         className="w-full max-w-md"
       >
-        {/* Logo */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-2 mb-4">
-            <div className="bg-foreground text-background p-2 rounded-xl">
-              <BookOpen className="w-6 h-6" />
-            </div>
-            <span className="text-2xl font-bold text-foreground">
-              Book Vibe
-            </span>
-          </div>
-          <h1 className="text-3xl font-bold text-foreground mb-2">
-            Welcome back
-          </h1>
-          <p className="text-muted-foreground">
+          <h2 className="lg:text-lg font-medium text-muted-foreground">
             Sign in to continue your reading journey
-          </p>
+          </h2>
         </div>
 
         {/* Card */}
