@@ -15,7 +15,7 @@ import {
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 import { Menu, Moon, Sun, BookOpen } from "lucide-react";
-import { useAuth } from "@/context/AuthContext"
+import useAuth from "@/hooks/useAuth";
 import { LogOut, User2 } from "lucide-react"
 import { toast } from "sonner"
 

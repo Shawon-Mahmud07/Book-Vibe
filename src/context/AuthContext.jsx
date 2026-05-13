@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   signInWithPopup,
   signInWithEmailAndPassword,
@@ -8,14 +8,8 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth, googleProvider } from "@/firebase/firebase";
+import { AuthContext } from "./AuthContext";
 
-const AuthContext = createContext(null);
-
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) throw new Error("useAuth must be used within AuthProvider");
-  return context;
-};
 
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
