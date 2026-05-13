@@ -13,6 +13,8 @@ import Blog from "@/pages/Blog";
 import BlogDetail from "@/pages/BlogDetail";
 import CookiePolicy from "@/pages/static/CookiePolicy";
 import Search from "@/pages/Search";
+import SignIn from "@/pages/SignIn";
+import SignUp from "@/pages/SignUp";
 
 const router = createBrowserRouter([
   {
@@ -62,11 +64,19 @@ const router = createBrowserRouter([
       },
       {
         path: "search",
-        element: <Search />
+        element: <Search />,
       },
       {
         path: "*",
         element: <NotFound />,
+      },
+      {
+        path: "signin",
+        element: <SignIn />
+      },
+      {
+        path: "signup",
+        element: <SignUp />
       },
     ],
   },
