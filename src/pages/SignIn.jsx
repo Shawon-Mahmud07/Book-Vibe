@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import useAuth from "@/hooks/useAuth";
 import { toast } from "sonner";
+
 
 const MotionDiv = motion.div;
 
@@ -17,6 +18,9 @@ const SignIn = () => {
 
   const { loginWithEmail, loginWithGoogle } = useAuth();
   const navigate = useNavigate();
+// Get the "from" location state for redirect after login
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const handleEmailSignIn = async (e) => {
     e.preventDefault();
@@ -28,7 +32,7 @@ const SignIn = () => {
     try {
       await loginWithEmail(email, password);
       toast.success("Welcome back! 📚");
-      navigate("/");
+     navigate(from, { replace: true });
     } catch (error) {
       const messages = {
         "auth/user-not-found": "No account found with this email",
@@ -48,7 +52,7 @@ const SignIn = () => {
     try {
       await loginWithGoogle();
       toast.success("Welcome! 📚");
-      navigate("/");
+      navigate(from, { replace: true });
     } catch (error) {
       if (error.code !== "auth/popup-closed-by-user") {
         toast.error("Google sign in failed. Please try again.");

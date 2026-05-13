@@ -15,6 +15,7 @@ import CookiePolicy from "@/pages/static/CookiePolicy";
 import Search from "@/pages/Search";
 import SignIn from "@/pages/SignIn";
 import SignUp from "@/pages/SignUp";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -24,14 +25,6 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
-      },
-      {
-        path: "listed-books",
-        element: <ListedBooks />,
-      },
-      {
-        path: "pages-to-read",
-        element: <PagesToRead />,
       },
       {
         path: "book/:id",
@@ -72,11 +65,27 @@ const router = createBrowserRouter([
       },
       {
         path: "signin",
-        element: <SignIn />
+        element: <SignIn />,
       },
       {
         path: "signup",
-        element: <SignUp />
+        element: <SignUp />,
+      },
+      {
+        path: "listed-books",
+        element: (
+          <ProtectedRoute>
+            <ListedBooks />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "pages-to-read",
+        element: (
+          <ProtectedRoute>
+            <PagesToRead />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
