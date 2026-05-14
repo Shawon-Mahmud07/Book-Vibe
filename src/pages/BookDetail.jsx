@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import useBooks from "@/hooks/useBooks";
 import BookCard from "@/components/BookCard";
+import { toast } from "sonner"; 
 import {
   ArrowLeft,
   BookOpen,
@@ -15,6 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import useListedBooks from "@/hooks/useListedBooks";
 import { BookmarkPlus, BookmarkCheck } from "lucide-react";
+import useAuth from "@/hooks/useAuth";
 
 const MotionDiv = motion.div;
 const MotionButton = motion.button;
@@ -28,6 +30,7 @@ const BookDetail = () => {
   const { addBook, removeBook, isListed } = useListedBooks();
   const { books } = useBooks();
   const cardCover = location.state?.cover;
+  const { currentUser } = useAuth();
 
   const {
     data: book,
@@ -154,13 +157,27 @@ const relatedBooks = books
 
           {/* Add to List */}
           <Button
-            onClick={() => (listed ? removeBook(book.id) : addBook(book))}
+            onClick={() => {
+              // If user is not signed in, prompt them to sign in to save books
+              if (!currentUser) {
+                toast.info("Please sign in to save books", {
+                  description:
+                    "Create a free account to build your reading list",
+                  action: {
+                    label: "Sign In",
+                    onClick: () => navigate("/signin"),
+                  },
+                });
+                return;
+              }
+              listed ? removeBook(book.id) : addBook(book);
+            }}
             className={`w-full max-w-xs md:max-w-none flex items-center gap-2 font-semibold
-      ${
-        listed
-          ? "bg-accent-green hover:bg-accent-green/90 text-white"
-          : "bg-foreground text-background hover:bg-foreground/90"
-      }`}
+    ${
+      listed
+        ? "bg-accent-green hover:bg-accent-green/90 text-white"
+        : "bg-foreground text-background hover:bg-foreground/90"
+    }`}
           >
             {listed ? (
               <>
@@ -172,6 +189,7 @@ const relatedBooks = books
               </>
             )}
           </Button>
+
           {/* Preview */}
           {book.previewLink && (
             <a

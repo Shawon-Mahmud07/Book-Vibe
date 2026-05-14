@@ -4,12 +4,12 @@ import { ArrowLeft, Clock, Calendar, User, BookOpen } from "lucide-react";
 import { blogPosts } from "@/data/blogPosts";
 import { Link } from "react-router-dom";
 
+
 const MotionDiv = motion.div;
 
 const BlogDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-
   const post = blogPosts.find((p) => p.id === Number(id));
 
   // Not found
