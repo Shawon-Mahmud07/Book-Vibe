@@ -1,6 +1,8 @@
+import useAuth from "@/hooks/useAuth";
 import { motion } from "framer-motion";
 import { BookmarkPlus, BookmarkCheck, ArrowUpRight, Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const MotionDiv = motion.div;
 
@@ -25,17 +27,24 @@ const StarRating = ({ rating }) => {
   );
 };
 
-const BookCard = ({
-  book,
-  index,
-  onToggle,
-  isListed,
-  showListButton = true,
-}) => {
+const BookCard = ({ book, index, onToggle, isListed, showListButton = true }) => {
   const navigate = useNavigate();
-
+const { currentUser } = useAuth();
+  // onClick:
   const handleListToggle = (e) => {
     e.stopPropagation();
+    // If user is not signed in, prompt them to sign in
+    if (!currentUser) {
+      toast.info("Please sign in to save books", {
+        description: "Create a free account to build your reading list",
+        action: {
+          label: "Sign In",
+          onClick: () => navigate("/signin"),
+        },
+      });
+      return;
+    }
+    // Toggle the book in the user's list
     onToggle();
   };
 
