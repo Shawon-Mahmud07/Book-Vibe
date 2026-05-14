@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Mail, Lock, Eye, EyeOff, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import useAuth from "@/hooks/useAuth";
@@ -19,6 +19,10 @@ const SignUp = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
 
+  // Get the "from" location state for redirect after registration
+const location = useLocation;
+const from = location.state?.from?.pathname || "/";
+  
   const { register, loginWithGoogle } = useAuth();
   const navigate = useNavigate();
 
@@ -44,7 +48,7 @@ const SignUp = () => {
     try {
       await register(form.email, form.password, form.displayName);
       toast.success("Account created! Welcome to Book Vibe 📚");
-      navigate("/");
+     navigate(from, { replace: true });
     } catch (error) {
       const messages = {
         "auth/email-already-in-use": "Email already in use",
@@ -62,7 +66,7 @@ const SignUp = () => {
     try {
       await loginWithGoogle();
       toast.success("Welcome to Book Vibe! 📚");
-      navigate("/");
+     navigate(from, { replace: true });
     } catch (error) {
       if (error.code !== "auth/popup-closed-by-user") {
         toast.error("Google sign up failed. Please try again.");
