@@ -4,74 +4,6 @@ import { Link } from "react-router-dom";
 import { blogPosts } from "@/data/blogPosts"; 
 
 const MotionDiv = motion.div;
-const posts = [
-  {
-    id: 1,
-    title: "Top 10 Must-Read Books of 2025",
-    excerpt:
-      "Discover the most talked-about books of the year, from gripping thrillers to heartwarming fiction that captured readers worldwide.",
-    category: "Recommendations",
-    readTime: "5 min read",
-    date: "December 15, 2025",
-    cover:
-      "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&h=250&fit=crop",
-  },
-  {
-    id: 2,
-    title: "How to Build a Reading Habit That Sticks",
-    excerpt:
-      "Struggling to read consistently? Here are proven strategies from avid readers that will help you build a sustainable reading routine.",
-    category: "Tips & Tricks",
-    readTime: "4 min read",
-    date: "November 28, 2025",
-    cover:
-      "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=250&fit=crop",
-  },
-  {
-    id: 3,
-    title: "Classic Books That Every Reader Should Experience",
-    excerpt:
-      "From Tolstoy to Austen, these timeless classics have shaped literature and continue to resonate with modern readers around the world.",
-    category: "Classics",
-    readTime: "6 min read",
-    date: "November 10, 2025",
-    cover:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=250&fit=crop",
-  },
-  {
-    id: 4,
-    title: "Science Fiction Books That Predicted the Future",
-    excerpt:
-      "These remarkable sci-fi novels foresaw technologies and social changes that became reality. A fascinating look at literature's prophetic power.",
-    category: "Science Fiction",
-    readTime: "7 min read",
-    date: "October 22, 2025",
-    cover:
-      "https://images.unsplash.com/photo-1465101162946-4377e57745c3?w=400&h=250&fit=crop",
-  },
-  {
-    id: 5,
-    title: "The Best Biographies to Read Right Now",
-    excerpt:
-      "Learn from the world's most fascinating people through these compelling biographies that read like the best fiction.",
-    category: "Biography",
-    readTime: "5 min read",
-    date: "October 5, 2025",
-    cover:
-      "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400&h=250&fit=crop",
-  },
-  {
-    id: 6,
-    title: "Why Reading Before Bed Changes Everything",
-    excerpt:
-      "Science backs it up: reading before sleep improves memory, reduces stress, and helps you fall asleep faster. Here's what you need to know.",
-    category: "Lifestyle",
-    readTime: "3 min read",
-    date: "September 18, 2025",
-    cover:
-      "https://images.unsplash.com/photo-1519682337058-a94d519337bc?w=400&h=250&fit=crop",
-  },
-];
 
 const Blog = () => {
   return (
@@ -108,27 +40,27 @@ const Blog = () => {
             <div className="grid grid-cols-1 md:grid-cols-2">
               <div className="h-64 md:h-auto overflow-hidden">
                 <img
-                  src={posts[0].cover}
-                  alt={posts[0].title}
+                  src={blogPosts[0].cover}
+                  alt={blogPosts[0].title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
               <div className="p-8 md:p-10 flex flex-col justify-center">
                 <span className="text-xs text-accent-green bg-accent-green-light px-3 py-1 rounded-full w-fit mb-4">
-                  {posts[0].category}
+                  {blogPosts[0].category}
                 </span>
                 <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4 group-hover:text-accent-green transition-colors duration-300">
-                  {posts[0].title}
+                  {blogPosts[0].title}
                 </h2>
                 <p className="text-muted-foreground leading-relaxed mb-6">
-                  {posts[0].excerpt}
+                  {blogPosts[0].excerpt}
                 </p>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3 text-sm text-muted-foreground">
                     <Clock className="w-4 h-4" />
-                    {posts[0].readTime}
+                    {blogPosts[0].readTime}
                     <span>·</span>
-                    {posts[0].date}
+                    {blogPosts[0].date}
                   </div>
                   <ArrowRight className="w-5 h-5 text-accent-green group-hover:translate-x-1 transition-transform duration-300" />
                 </div>
@@ -140,7 +72,7 @@ const Blog = () => {
 
       {/* Posts Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {posts.slice(1).map((post, index) => (
+        {blogPosts.slice(1).map((post, index) => (
           <Link key={post.id} to={`/blog/${post.id}`}>
             <MotionDiv
               key={post.id}

@@ -60,10 +60,6 @@ const router = createBrowserRouter([
         element: <Search />,
       },
       {
-        path: "*",
-        element: <NotFound />,
-      },
-      {
         path: "signin",
         element: <SignIn />,
       },
@@ -71,6 +67,7 @@ const router = createBrowserRouter([
         path: "signup",
         element: <SignUp />,
       },
+
       {
         path: "listed-books",
         element: (
@@ -86,6 +83,10 @@ const router = createBrowserRouter([
             <PagesToRead />
           </ProtectedRoute>
         ),
+      },
+      {
+        path: "*",
+        element: <NotFound />,
       },
     ],
   },
