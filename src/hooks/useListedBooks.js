@@ -1,4 +1,4 @@
-import { useState, useEffect, startTransition } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import {
   doc,
@@ -11,95 +11,55 @@ import {
 import { db } from "@/firebase/firebase";
 import useAuth from "@/hooks/useAuth";
 
-const STORAGE_KEY = "book-vibe-listed";
-const STATUS_KEY = "book-vibe-status";
-
 const useListedBooks = () => {
   const { currentUser } = useAuth();
-
-  const [listedBooks, setListedBooks] = useState(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      return stored ? JSON.parse(stored) : [];
-    } catch {
-      return [];
-    }
-  });
-
-  const [readingStatus, setReadingStatus] = useState(() => {
-    try {
-      const stored = localStorage.getItem(STATUS_KEY);
-      return stored ? JSON.parse(stored) : {};
-    } catch {
-      return {};
-    }
-  });
+  const [listedBooks, setListedBooks] = useState([]);
+  const [readingStatus, setReadingStatus] = useState({});
+  const [isLoadingBooks, setIsLoadingBooks] = useState(false);
 
   // ─── Load from Firestore when user logs in ───
   useEffect(() => {
-    if (!currentUser) return;
+    // If no user, clear local state immediately
+    if (!currentUser) {
+      setTimeout(() => {
+        setListedBooks([]);
+        setReadingStatus({});
+      }, 0);
+      return;
+    }
 
     const loadFromFirestore = async () => {
+      setIsLoadingBooks(true);
       try {
         const ref = doc(db, "users", currentUser.uid);
         const snap = await getDoc(ref);
 
         if (snap.exists()) {
           const data = snap.data();
-          startTransition(() => {
-            setListedBooks(data.listedBooks || []);
-            setReadingStatus(data.readingStatus || {});
-          });
+         // Ensure we have arrays/objects even if Firestore fields are missing
+          setListedBooks(data.listedBooks || []);
+          setReadingStatus(data.readingStatus || {});
         } else {
-          const storedBooks = localStorage.getItem(STORAGE_KEY);
-          const storedStatus = localStorage.getItem(STATUS_KEY);
-          const books = storedBooks ? JSON.parse(storedBooks) : [];
-          const status = storedStatus ? JSON.parse(storedStatus) : {};
-
-          await setDoc(ref, { listedBooks: books, readingStatus: status });
-
-          startTransition(() => {
-            setListedBooks(books);
-            setReadingStatus(status);
-          });
+          // If no document exists, create one with empty fields
+          await setDoc(ref, { listedBooks: [], readingStatus: {} });
+          setListedBooks([]);
+          setReadingStatus({});
         }
       } catch (error) {
         console.error("Firestore load error:", error);
+        toast.error("Failed to load your reading list");
+      } finally {
+        setIsLoadingBooks(false);
       }
     };
 
     loadFromFirestore();
   }, [currentUser]);
 
-  // ─── Reset when user logs out ───
-  useEffect(() => {
-    if (currentUser) return;
-
-    const storedBooks = localStorage.getItem(STORAGE_KEY);
-    const storedStatus = localStorage.getItem(STATUS_KEY);
-
-    startTransition(() => {
-      try {
-        setListedBooks(storedBooks ? JSON.parse(storedBooks) : []);
-        setReadingStatus(storedStatus ? JSON.parse(storedStatus) : {});
-      } catch {
-        setListedBooks([]);
-        setReadingStatus({});
-      }
-    });
-  }, [currentUser]);
-
-  // ─── Save to localStorage ───
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(listedBooks));
-  }, [listedBooks]);
-
-  useEffect(() => {
-    localStorage.setItem(STATUS_KEY, JSON.stringify(readingStatus));
-  }, [readingStatus]);
-
   // ─── Add Book ───
   const addBook = async (book) => {
+    if (!currentUser) return;
+
     if (listedBooks.find((b) => b.id === book.id)) {
       toast.info("Already in your list!", { description: book.title });
       return;
@@ -108,48 +68,46 @@ const useListedBooks = () => {
     setListedBooks((prev) => [...prev, book]);
     toast.success("Added to list!", { description: book.title, icon: "📚" });
 
-    if (currentUser) {
-      try {
-        const ref = doc(db, "users", currentUser.uid);
-        await updateDoc(ref, { listedBooks: arrayUnion(book) });
-      } catch {
-        await setDoc(doc(db, "users", currentUser.uid), {
-          listedBooks: [book],
-          readingStatus,
-        });
-      }
+    try {
+      const ref = doc(db, "users", currentUser.uid);
+      await updateDoc(ref, { listedBooks: arrayUnion(book) });
+    } catch {
+      setListedBooks((prev) => prev.filter((b) => b.id !== book.id));
+      toast.error("Failed to save book. Please try again.");
     }
   };
 
   // ─── Remove Book ───
   const removeBook = async (bookId) => {
+    if (!currentUser) return;
+
     const book = listedBooks.find((b) => b.id === bookId);
     if (!book) return;
 
     setListedBooks((prev) => prev.filter((b) => b.id !== bookId));
     toast.error("Removed from list", { description: book.title });
 
-    if (currentUser) {
-      try {
-        const ref = doc(db, "users", currentUser.uid);
-        await updateDoc(ref, { listedBooks: arrayRemove(book) });
-      } catch (error) {
-        console.error("Firestore remove error:", error);
-      }
+    try {
+      const ref = doc(db, "users", currentUser.uid);
+      await updateDoc(ref, { listedBooks: arrayRemove(book) });
+    } catch {
+      setListedBooks((prev) => [...prev, book]);
+      toast.error("Failed to remove book. Please try again.");
     }
   };
 
   // ─── Set Reading Status ───
   const setStatus = async (bookId, status) => {
+    if (!currentUser) return;
+
     setReadingStatus((prev) => ({ ...prev, [bookId]: status }));
 
-    if (currentUser) {
-      try {
-        const ref = doc(db, "users", currentUser.uid);
-        await updateDoc(ref, { [`readingStatus.${bookId}`]: status });
-      } catch (error) {
-        console.error("Firestore status error:", error);
-      }
+    try {
+      const ref = doc(db, "users", currentUser.uid);
+      await updateDoc(ref, { [`readingStatus.${bookId}`]: status });
+    } catch (error) {
+      console.error("Firestore status error:", error);
+      toast.error("Failed to update reading status");
     }
   };
 
@@ -158,17 +116,18 @@ const useListedBooks = () => {
 
   // ─── Clear All ───
   const clearAll = async () => {
+    if (!currentUser) return;
+
     setListedBooks([]);
     setReadingStatus({});
     toast.error("Reading list cleared", { description: "All books removed" });
 
-    if (currentUser) {
-      try {
-        const ref = doc(db, "users", currentUser.uid);
-        await updateDoc(ref, { listedBooks: [], readingStatus: {} });
-      } catch (error) {
-        console.error("Firestore clear error:", error);
-      }
+    try {
+      const ref = doc(db, "users", currentUser.uid);
+      await updateDoc(ref, { listedBooks: [], readingStatus: {} });
+    } catch (error) {
+      console.error("Firestore clear error:", error);
+      toast.error("Failed to clear list. Please try again.");
     }
   };
 
@@ -182,7 +141,8 @@ const useListedBooks = () => {
     clearAll,
     setStatus,
     getStatus,
+    isLoadingBooks,
   };
-};
+};;
 
 export default useListedBooks;

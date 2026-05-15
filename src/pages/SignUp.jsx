@@ -20,7 +20,7 @@ const SignUp = () => {
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
 
   // Get the "from" location state for redirect after registration
-const location = useLocation;
+const location = useLocation();
 const from = location.state?.from?.pathname || "/";
   
   const { register, loginWithGoogle } = useAuth();
