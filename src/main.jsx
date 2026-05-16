@@ -5,6 +5,7 @@ import "./index.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { AuthProvider } from "@/context/AuthContext.jsx";
+import { ListedBooksProvider } from "./context/ListedBooksContext.jsx";
 
 
 // Import the QueryClient and QueryClientProvider from react-query
@@ -15,7 +16,9 @@ createRoot(document.getElementById("root")).render(
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
-          <App />
+          <ListedBooksProvider>
+            <App />
+          </ListedBooksProvider>
         </AuthProvider>
       </QueryClientProvider>
     </ErrorBoundary>

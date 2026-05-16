@@ -14,7 +14,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import useListedBooks from "@/hooks/useListedBooks";
+import useListedBooks from "@/context/ListedBooksContext";
 import { BookmarkPlus, BookmarkCheck } from "lucide-react";
 import useAuth from "@/hooks/useAuth";
 

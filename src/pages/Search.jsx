@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Search as SearchIcon, X, Sparkles, BookCopy } from "lucide-react";
 import BookCard from "@/components/BookCard";
 import BookCardSkeleton from "@/components/BookCardSkeleton";
-import useListedBooks from "@/hooks/useListedBooks";
+import useListedBooks from "@/context/ListedBooksContext";
 
 const API_KEY = import.meta.env.VITE_GOOGLE_BOOKS_API_KEY;
 const MotionDiv = motion.div;
