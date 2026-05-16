@@ -4,7 +4,6 @@ import {
   doc,
   setDoc,
   getDoc,
-  updateDoc,
   arrayUnion,
   arrayRemove,
 } from "firebase/firestore";
@@ -19,7 +18,6 @@ const useListedBooks = () => {
 
   // ─── Load from Firestore when user logs in ───
   useEffect(() => {
-    // If no user, clear local state immediately
     if (!currentUser) {
       setTimeout(() => {
         setListedBooks([]);
@@ -36,11 +34,9 @@ const useListedBooks = () => {
 
         if (snap.exists()) {
           const data = snap.data();
-         // Ensure we have arrays/objects even if Firestore fields are missing
           setListedBooks(data.listedBooks || []);
           setReadingStatus(data.readingStatus || {});
         } else {
-          // If no document exists, create one with empty fields
           await setDoc(ref, { listedBooks: [], readingStatus: {} });
           setListedBooks([]);
           setReadingStatus({});
@@ -70,7 +66,8 @@ const useListedBooks = () => {
 
     try {
       const ref = doc(db, "users", currentUser.uid);
-      await updateDoc(ref, { listedBooks: arrayUnion(book) });
+   
+      await setDoc(ref, { listedBooks: arrayUnion(book) }, { merge: true });
     } catch {
       setListedBooks((prev) => prev.filter((b) => b.id !== book.id));
       toast.error("Failed to save book. Please try again.");
@@ -89,7 +86,8 @@ const useListedBooks = () => {
 
     try {
       const ref = doc(db, "users", currentUser.uid);
-      await updateDoc(ref, { listedBooks: arrayRemove(book) });
+      
+      await setDoc(ref, { listedBooks: arrayRemove(book) }, { merge: true });
     } catch {
       setListedBooks((prev) => [...prev, book]);
       toast.error("Failed to remove book. Please try again.");
@@ -104,7 +102,11 @@ const useListedBooks = () => {
 
     try {
       const ref = doc(db, "users", currentUser.uid);
-      await updateDoc(ref, { [`readingStatus.${bookId}`]: status });
+      await setDoc(
+        ref,
+        { readingStatus: { [bookId]: status } },
+        { merge: true },
+      );
     } catch (error) {
       console.error("Firestore status error:", error);
       toast.error("Failed to update reading status");
@@ -124,7 +126,12 @@ const useListedBooks = () => {
 
     try {
       const ref = doc(db, "users", currentUser.uid);
-      await updateDoc(ref, { listedBooks: [], readingStatus: {} });
+      
+      await setDoc(
+        ref,
+        { listedBooks: [], readingStatus: {} },
+        { merge: true },
+      );
     } catch (error) {
       console.error("Firestore clear error:", error);
       toast.error("Failed to clear list. Please try again.");
@@ -143,6 +150,6 @@ const useListedBooks = () => {
     getStatus,
     isLoadingBooks,
   };
-};;
+};
 
 export default useListedBooks;
