@@ -8,12 +8,13 @@ import { useState } from "react";
 
 const MotionDiv = motion.div;
 const ITEMS_PER_PAGE = 6;
+
 const BookList = () => {
   const { books, isLoading, isError } = useBooks();
   const { addBook, removeBook, isListed } = useListedBooks();
   const [currentPage, setCurrentPage] = useState(1);
-
   const [activeGenre, setActiveGenre] = useState("All");
+
   const genres =
     books?.length > 0 ? ["All", ...getUniqueGenres(books)] : ["All"];
 
@@ -22,30 +23,32 @@ const BookList = () => {
       ? books
       : books?.filter((b) => b.categories?.includes(activeGenre));
 
-  // Pagination slice
   const totalPages = Math.ceil((filteredBooks?.length || 0) / ITEMS_PER_PAGE);
   const paginatedBooks = filteredBooks?.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE,
   );
-// Handle genre change and reset to first page
+  
+// Smooth scroll to top of book list on page change
+  const scrollToBooks = () => {
+    document.getElementById("books")?.scrollIntoView({ behavior: "smooth" });
+  };
+
+// ─── Set Reading Status ───
   const handleGenreChange = (genre) => {
     setActiveGenre(genre);
     setCurrentPage(1);
+    scrollToBooks(); 
   };
 
   const getPageNumbers = (current, total) => {
-// If total pages are 5 or less, show all
     if (total <= 5) return Array.from({ length: total }, (_, i) => i + 1);
 
-    // Always show first, last, current, and neighbors
     const pages = new Set([1, total, current]);
     if (current - 1 > 1) pages.add(current - 1);
     if (current + 1 < total) pages.add(current + 1);
-// Sort and insert ellipses
-    const sorted = [...pages].sort((a, b) => a - b);
 
-    // Insert "..." where there are gaps
+    const sorted = [...pages].sort((a, b) => a - b);
     const result = [];
     for (let i = 0; i < sorted.length; i++) {
       if (i > 0 && sorted[i] - sorted[i - 1] > 1) {
@@ -69,9 +72,9 @@ const BookList = () => {
         </h2>
       </MotionDiv>
 
-      {/* Optimized Genre Buttons for Mobile */}
+      {/* Genre Buttons */}
       <div className="relative mb-10">
-        <div className="flex gap-3 overflow-x-auto  lg:pb-4 sm:pb-0 sm:flex-wrap sm:justify-center no-scrollbar items-center">
+        <div className="flex gap-3 overflow-x-auto lg:pb-4 sm:pb-0 sm:flex-wrap sm:justify-center no-scrollbar items-center">
           {genres.map((g) => (
             <button
               key={g}
@@ -94,7 +97,6 @@ const BookList = () => {
             </button>
           ))}
         </div>
-        {/* Mobile Scroll Indicator Gradient */}
         <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-linear-to-l from-background to-transparent sm:hidden" />
       </div>
 
@@ -115,7 +117,7 @@ const BookList = () => {
         </MotionDiv>
       )}
 
-      {/* Grid with Motion */}
+      {/* Books Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-10">
         <AnimatePresence mode="popLayout">
           {isLoading
@@ -143,19 +145,23 @@ const BookList = () => {
               ))}
         </AnimatePresence>
       </div>
-      {/* Smart Pagination */}
+
+      {/* Pagination */}
       {totalPages > 1 && (
         <div className="flex justify-center items-center gap-1.5 mt-8 flex-wrap">
           {/* Prev */}
           <button
-            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+            onClick={() => {
+              setCurrentPage((p) => Math.max(1, p - 1));
+              scrollToBooks(); 
+            }}
             disabled={currentPage === 1}
             className="px-3 py-2 rounded-xl border border-border text-sm font-medium disabled:opacity-40 hover:border-accent-green transition"
           >
             ←
           </button>
 
-          {/* Smart page numbers */}
+          {/* Page Numbers */}
           {getPageNumbers(currentPage, totalPages).map((page, index) =>
             page === "..." ? (
               <span
@@ -167,13 +173,16 @@ const BookList = () => {
             ) : (
               <button
                 key={page}
-                onClick={() => setCurrentPage(page)}
+                onClick={() => {
+                  setCurrentPage(page);
+                  scrollToBooks();
+                }}
                 className={`w-9 h-9 rounded-xl text-sm font-semibold border transition
-            ${
-              currentPage === page
-                ? "bg-accent-green text-white border-accent-green"
-                : "border-border hover:border-accent-green text-foreground"
-            }`}
+                  ${
+                    currentPage === page
+                      ? "bg-accent-green text-white border-accent-green"
+                      : "border-border hover:border-accent-green text-foreground"
+                  }`}
               >
                 {page}
               </button>
@@ -182,7 +191,10 @@ const BookList = () => {
 
           {/* Next */}
           <button
-            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+            onClick={() => {
+              setCurrentPage((p) => Math.min(totalPages, p + 1));
+              scrollToBooks(); 
+            }}
             disabled={currentPage === totalPages}
             className="px-3 py-2 rounded-xl border border-border text-sm font-medium disabled:opacity-40 hover:border-accent-green transition"
           >
