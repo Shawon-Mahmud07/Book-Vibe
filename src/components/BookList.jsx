@@ -28,17 +28,17 @@ const BookList = () => {
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE,
   );
-  
-// Smooth scroll to top of book list on page change
+
+  // Smooth scroll to top of book list on page change
   const scrollToBooks = () => {
     document.getElementById("books")?.scrollIntoView({ behavior: "smooth" });
   };
 
-// ─── Set Reading Status ───
+  // ─── Handle Genre Tab Change ───
   const handleGenreChange = (genre) => {
     setActiveGenre(genre);
     setCurrentPage(1);
-    scrollToBooks(); 
+    scrollToBooks();
   };
 
   const getPageNumbers = (current, total) => {
@@ -153,7 +153,7 @@ const BookList = () => {
           <button
             onClick={() => {
               setCurrentPage((p) => Math.max(1, p - 1));
-              scrollToBooks(); 
+              scrollToBooks();
             }}
             disabled={currentPage === 1}
             className="px-3 py-2 rounded-xl border border-border text-sm font-medium disabled:opacity-40 hover:border-accent-green transition"
@@ -193,7 +193,7 @@ const BookList = () => {
           <button
             onClick={() => {
               setCurrentPage((p) => Math.min(totalPages, p + 1));
-              scrollToBooks(); 
+              scrollToBooks();
             }}
             disabled={currentPage === totalPages}
             className="px-3 py-2 rounded-xl border border-border text-sm font-medium disabled:opacity-40 hover:border-accent-green transition"

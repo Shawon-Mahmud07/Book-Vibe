@@ -71,7 +71,7 @@ const unknownCount = useMemo(
   () => listedBooks.filter((b) => !b.pageCount).length,
   [listedBooks],
 );
-  const daysToFinish = Math.ceil(knownPages / 20);
+  const daysToFinish = Math.ceil(knownPages / 30);
 
   // Chart data (only books with pageCount)
   const chartData = useMemo(

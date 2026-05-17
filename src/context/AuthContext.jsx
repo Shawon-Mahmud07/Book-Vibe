@@ -10,7 +10,6 @@ import {
 import { auth, googleProvider } from "@/firebase/firebase";
 import { AuthContext } from "./AuthContext";
 
-
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -29,8 +28,6 @@ export const AuthProvider = ({ children }) => {
   const register = async (email, password, displayName) => {
     const result = await createUserWithEmailAndPassword(auth, email, password);
     await updateProfile(result.user, { displayName });
-    await result.user.reload();
-    setCurrentUser({ ...auth.currentUser });
     return result;
   };
 
@@ -57,9 +54,5 @@ export const AuthProvider = ({ children }) => {
     logout,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {!loading && children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
