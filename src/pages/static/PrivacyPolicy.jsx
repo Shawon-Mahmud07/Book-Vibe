@@ -6,23 +6,23 @@ const MotionDiv = motion.div;
 const sections = [
   {
     title: "Information We Collect",
-    content: `Book Vibe collects minimal information to provide you with the best reading experience. We collect information you provide directly, such as when you save books to your reading list. This data is stored locally on your device using browser localStorage and is never transmitted to our servers.`,
+    content: `Book Vibe collects minimal information to provide you with the best reading experience. When you create an account, we collect your email address and display name through Firebase Authentication. Your reading list and reading status are securely stored in Firebase Firestore, linked to your authenticated account.`,
   },
   {
     title: "How We Use Your Information",
-    content: `We use the information we collect to provide, maintain, and improve Book Vibe. Your reading list and preferences are stored locally on your device. We use Google Books API to fetch book information — please refer to Google's Privacy Policy for information about how Google handles data.`,
+    content: `We use the information we collect to provide, maintain, and improve Book Vibe. Your reading list and reading status are stored securely in Firebase Firestore and synced across devices when you are signed in. We use Google Books API to fetch book information — please refer to Google's Privacy Policy for information about how Google handles data.`,
   },
   {
     title: "Data Storage",
-    content: `All personal data including your reading list and theme preferences are stored locally in your browser's localStorage. This means your data never leaves your device. Clearing your browser data will remove all saved preferences.`,
+    content: `Your reading list and reading status are stored in Firebase Firestore, a secure cloud database provided by Google. Your theme preference (dark/light mode) is stored in your browser's localStorage on your device only. Deleting your account will remove your data from our database. Clearing browser data will reset your theme preference.`,
   },
   {
     title: "Third-Party Services",
-    content: `Book Vibe uses Google Books API to provide book information and cover images. By using Book Vibe, you agree to Google's Terms of Service and Privacy Policy. We do not share your personal information with any other third parties.`,
+    content: `Book Vibe uses Firebase (by Google) for authentication and data storage, and Google Books API to provide book information and cover images. By using Book Vibe, you agree to Google's Terms of Service and Privacy Policy. We do not share your personal information with any other third parties.`,
   },
   {
-    title: "Cookies",
-    content: `Book Vibe uses minimal browser storage (localStorage) to remember your preferences such as dark/light mode and your reading list. We do not use tracking cookies or advertising cookies. See our Cookie Policy for more details.`,
+    title: "Cookies & Browser Storage",
+    content: `Book Vibe uses browser localStorage only to remember your theme preference (dark/light mode). Your reading list and account data are stored in Firebase Firestore — not in your browser. We do not use tracking cookies or advertising cookies. See our Cookie Policy for more details.`,
   },
   {
     title: "Changes to This Policy",

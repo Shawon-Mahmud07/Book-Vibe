@@ -9,36 +9,35 @@ const cookies = [
     type: "Preference",
     duration: "Persistent",
     description:
-      "Stores your dark/light mode preference so it persists across visits.",
+      "Stores your dark/light mode preference in localStorage so it persists across visits. This stays on your device only.",
   },
   {
-    name: "book-vibe-listed",
+    name: "Firebase Auth",
     type: "Functional",
-    duration: "Persistent",
+    duration: "Session / Persistent",
     description:
-      "Stores your reading list locally so your saved books persist across sessions.",
+      "Firebase Authentication uses secure tokens to keep you signed in. Managed by Google Firebase — not stored in localStorage.",
   },
 ];
 
 const sections = [
   {
     title: "What Are Cookies?",
-    content: `Cookies are small text files stored on your device. Book Vibe uses browser localStorage (similar to cookies) to remember your preferences and reading list.`,
+    content: `Cookies are small text files stored on your device. Book Vibe uses browser localStorage only for your theme preference (dark/light mode). Your reading list and account data are securely stored in Firebase Firestore — not in your browser.`,
   },
   {
     title: "How We Use Storage",
-    content: `We use localStorage exclusively for functional purposes — to remember your theme preference and reading list. We do not use tracking, advertising, or analytics cookies.`,
+    content: `We use localStorage only for your theme preference. Your reading list, reading status, and account information are stored in Firebase Firestore, a secure cloud database by Google. We do not use tracking, advertising, or analytics cookies.`,
   },
   {
     title: "Managing Your Preferences",
-    content: `You can clear your localStorage data at any time through your browser settings. This will reset your theme to default and clear your reading list. Go to browser Settings → Privacy → Clear browsing data.`,
+    content: `You can clear your localStorage data at any time through your browser settings — this will only reset your theme preference. Your reading list is safely stored in the cloud and will remain intact. To delete your account data, please contact us.`,
   },
   {
     title: "Third-Party Cookies",
-    content: `Google Books API may set its own cookies when fetching book data. Please refer to Google's Cookie Policy for information about how Google uses cookies.`,
+    content: `Firebase Authentication and Google Books API may use their own cookies or tokens when handling requests. Please refer to Google's Cookie Policy for information about how Google uses cookies and storage.`,
   },
 ];
-
 const CookiePolicy = () => {
   return (
     <div className="px-6 md:px-10 py-16 max-w-3xl mx-auto">
