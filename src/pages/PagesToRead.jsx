@@ -70,16 +70,19 @@ const knownPages = useMemo(
 const unknownCount = useMemo(
   () => listedBooks.filter((b) => !b.pageCount).length,
   [listedBooks],
-);
-  const daysToFinish = Math.ceil(knownPages / 30);
+  );
+
+  // Estimate days to finish based on known pages (assuming 30 pages/day)
+const daysToFinish = knownPages > 0 ? Math.ceil(knownPages / 30) : null;
 
   // Chart data (only books with pageCount)
   const chartData = useMemo(
     () =>
       [...new Map(listedBooks.map((b) => [b.id, b])).values()]
+        .filter((b) => b.pageCount) // ← only include books with known pages
         .map((b) => ({
           title: b.title.length > 12 ? b.title.slice(0, 12) + "…" : b.title,
-          pages: b.pageCount || 0, 
+          pages: b.pageCount,
           fullTitle: b.title,
         })),
     [listedBooks],
@@ -161,7 +164,7 @@ const unknownCount = useMemo(
             {/* Days to Finish Card */}
             <div className="bg-muted rounded-2xl p-5 text-center border border-border">
               <div className="text-3xl font-bold text-accent-green">
-                ~{daysToFinish}
+                {daysToFinish ? `~${daysToFinish}` : "N/A"}
               </div>
               <div className="text-sm text-muted-foreground mt-1">
                 Days to Finish
@@ -316,7 +319,7 @@ const unknownCount = useMemo(
                     </div>
                   </MotionDiv>
                 );
-})}
+              })}
             </div>
           </MotionDiv>
         </>
