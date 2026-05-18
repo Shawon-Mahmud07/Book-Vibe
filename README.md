@@ -3,7 +3,7 @@
 A modern book discovery and reading list management web app built with React and Firebase. Browse books, save your favorites, track your reading progress, and explore curated blog posts — all in one place.
 
 ![Book Vibe](https://img.shields.io/badge/React-19-61DAFB?style=flat&logo=react)
-![Firebase](https://img.shields.io/badge/Firebase-12-FFCA28?style=flat&logo=firebase)
+![Firebase](https://img.shields.io/badge/Firebase-11-FFCA28?style=flat&logo=firebase)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38BDF8?style=flat&logo=tailwindcss)
 ![Vite](https://img.shields.io/badge/Vite-8-646CFF?style=flat&logo=vite)
 
@@ -19,11 +19,11 @@ A modern book discovery and reading list management web app built with React and
 
 - 🔍 **Book Discovery** — Browse books powered by the Google Books API
 - 🎯 **Genre Filtering** — Filter books by genre with smart pagination
-- 📖 **Reading List** — Save books and manage your personal reading list
-- 📊 **Reading Status** — Track books as "Want to Read", "Reading", or "Finished"
+- 📖 **Reading List** — Save books and manage your personal reading list `🔐 Auth Required`
+- 📊 **Reading Status** — Track books as "Want to Read", "Reading", or "Finished" `🔐 Auth Required`
 - 📈 **Pages Chart** — Visual bar chart of your saved books' page counts
 - 🔐 **Authentication** — Sign in with Google or Email/Password via Firebase Auth
-- 🌙 **Dark / Light Mode** — Toggle between themes, preference saved locally
+- 🌙 **Dark / Light Mode** — Toggle between themes, preference saved in localStorage
 - 📱 **Fully Responsive** — Optimized for mobile, tablet, and desktop
 - 📝 **Blog** — Curated reading tips and book recommendations
 - 🔎 **Search** — Search for any book by title, author, or keyword
@@ -128,8 +128,11 @@ VITE_FIREBASE_APP_ID=your_app_id
 
 **Enable Authentication:**
 
+
 - Go to Firebase Console → Authentication → Sign-in method
 - Enable **Google** and **Email/Password**
+
+
 
 **Set Firestore Security Rules:**
 
