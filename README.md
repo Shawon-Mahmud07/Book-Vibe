@@ -19,9 +19,9 @@ A modern book discovery and reading list management web app built with React and
 
 <div align="center">
 
-| Home | Book Detail | Reading List |
-|:----:|:-----------:|:------------:|
-| <img src="screenshots/home.png" width="280"/> | <img src="screenshots/detail.png" width="280"/> | <img src="screenshots/listed.png" width="280"/> |
+| Home | Book Detail | Pages to Read |
+|:----:|:-----------:|:-------------:|
+| <img src="public/screenshots/home.png" width="280"/> | <img src="public/screenshots/detail.png" width="280"/> | <img src="public/screenshots/PagestoRead.png" width="280"/> |
 
 </div>
 
