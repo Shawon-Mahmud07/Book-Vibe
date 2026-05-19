@@ -88,6 +88,8 @@ src/
 
 ---
 
+
+
 ## ⚙️ Getting Started
 
 ### Prerequisites
@@ -197,6 +199,15 @@ The following routes require authentication:
 | `/pages-to-read` | Reading progress tracker |
 
 Unauthenticated users are redirected to `/signin` and returned to their intended page after login.
+
+---
+
+## 🗺️ Roadmap
+
+- [ ] Book reviews and ratings
+- [ ] Social sharing of reading lists
+- [ ] Email notifications for reading goals
+- [ ] PWA support for offline reading
 
 ---
 
