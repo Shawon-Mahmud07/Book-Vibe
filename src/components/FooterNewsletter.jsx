@@ -1,18 +1,29 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Mail, Check, AlertCircle } from "lucide-react";
+import { Mail, Check, AlertCircle, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
+import { db } from "@/firebase/firebase";
+import {
+  collection,
+  addDoc,
+  query,
+  where,
+  getDocs,
+  serverTimestamp,
+} from "firebase/firestore";
 
 const MotionDiv = motion.div;
+
 const NewsletterSignup = () => {
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState(null); // 'idle', 'loading', 'success', 'error'
+  const [status, setStatus] = useState(null); // null | 'loading' | 'success' | 'error' | 'duplicate'
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Email validation
-    if (!email.includes("@")) {
+    // Basic validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
       setStatus("error");
       setTimeout(() => setStatus(null), 3000);
       return;
@@ -20,12 +31,34 @@ const NewsletterSignup = () => {
 
     setStatus("loading");
 
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      // Check if email already exists
+      const q = query(
+        collection(db, "subscribers"),
+        where("email", "==", email.toLowerCase().trim()),
+      );
+      const existing = await getDocs(q);
+
+      if (!existing.empty) {
+        setStatus("duplicate");
+        setTimeout(() => setStatus(null), 3000);
+        return;
+      }
+
+      // Save to Firestore
+      await addDoc(collection(db, "subscribers"), {
+        email: email.toLowerCase().trim(),
+        subscribedAt: serverTimestamp(),
+      });
+
       setStatus("success");
       setEmail("");
+      setTimeout(() => setStatus(null), 4000);
+    } catch (err) {
+      console.error("Subscription error:", err);
+      setStatus("error");
       setTimeout(() => setStatus(null), 3000);
-    }, 1000);
+    }
   };
 
   return (
@@ -44,7 +77,10 @@ const NewsletterSignup = () => {
           Get weekly book recommendations delivered to your inbox
         </p>
 
-        <form className="flex flex-col sm:flex-row gap-2">
+        <form
+          className="flex flex-col sm:flex-row gap-2"
+          onSubmit={handleSubmit}
+        >
           <div className="flex-1 relative">
             <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-accent-green" />
             <input
@@ -57,12 +93,15 @@ const NewsletterSignup = () => {
             />
           </div>
           <Button
-            onClick={handleSubmit}
             type="submit"
             className="h-12 px-6 sm:px-8 bg-foreground text-background hover:bg-foreground/90 font-semibold transition-all duration-200"
             disabled={status === "loading"}
           >
-            {status === "loading" ? "..." : "Subscribe"}
+            {status === "loading" ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              "Subscribe"
+            )}
           </Button>
         </form>
 
@@ -74,7 +113,18 @@ const NewsletterSignup = () => {
             className="flex items-center gap-2 text-accent-green mt-3 justify-center"
           >
             <Check className="h-4 w-4" />
-            <span className="text-sm">Successfully subscribed!</span>
+            <span className="text-sm">Successfully subscribed! 🎉</span>
+          </MotionDiv>
+        )}
+
+        {status === "duplicate" && (
+          <MotionDiv
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex items-center gap-2 text-yellow-500 mt-3 justify-center"
+          >
+            <AlertCircle className="h-4 w-4" />
+            <span className="text-sm">This email is already subscribed!</span>
           </MotionDiv>
         )}
 
@@ -82,10 +132,10 @@ const NewsletterSignup = () => {
           <MotionDiv
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex items-center gap-2 text-red-600 mt-3 justify-center"
+            className="flex items-center gap-2 text-red-500 mt-3 justify-center"
           >
             <AlertCircle className="h-4 w-4" />
-            <span className="text-sm">Please enter a valid email</span>
+            <span className="text-sm">Please enter a valid email address</span>
           </MotionDiv>
         )}
       </div>

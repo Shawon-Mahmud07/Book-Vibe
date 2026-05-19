@@ -15,6 +15,18 @@ A modern book discovery and reading list management web app built with React and
 
 ---
 
+## 📸 Screenshots
+
+<div align="center">
+
+| Home | Book Detail | Reading List |
+|:----:|:-----------:|:------------:|
+| <img src="screenshots/home.png" width="280"/> | <img src="screenshots/detail.png" width="280"/> | <img src="screenshots/listed.png" width="280"/> |
+
+</div>
+
+---
+
 ## ✨ Features
 
 - 🔍 **Book Discovery** — Browse books powered by the Google Books API
