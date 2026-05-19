@@ -1,6 +1,8 @@
 # 📚 Book Vibe
 
-A modern book discovery and reading list management web app built with React and Firebase. Browse books, save your favorites, track your reading progress, and explore curated blog posts — all in one place.
+A modern book discovery and reading list management web app built with React and
+Firebase. Browse books, save your favorites, track your reading progress, and
+explore curated blog posts — all in one place.
 
 ![Book Vibe](https://img.shields.io/badge/React-19-61DAFB?style=flat&logo=react)
 ![Firebase](https://img.shields.io/badge/Firebase-11-FFCA28?style=flat&logo=firebase)
@@ -17,13 +19,9 @@ A modern book discovery and reading list management web app built with React and
 
 ## 📸 Screenshots
 
-<div align="center">
-
-| Home | Book Detail | Pages to Read |
-|:----:|:-----------:|:-------------:|
-| <img src="public/screenshots/home.png" width="280"/> | <img src="public/screenshots/detail.png" width="280"/> | <img src="public/screenshots/PagestoRead.png" width="280"/> |
-
-</div>
+|                 Home                 |                  Book Detail                  |                    Pages to Read                     |
+| :----------------------------------: | :-------------------------------------------: | :--------------------------------------------------: |
+| ![Home](public/screenshots/home.png) | ![Book Detail](public/screenshots/detail.png) | ![Pages to Read](public/screenshots/PagestoRead.png) |
 
 ---
 
@@ -31,11 +29,15 @@ A modern book discovery and reading list management web app built with React and
 
 - 🔍 **Book Discovery** — Browse books powered by the Google Books API
 - 🎯 **Genre Filtering** — Filter books by genre with smart pagination
-- 📖 **Reading List** — Save books and manage your personal reading list `🔐 Auth Required`
-- 📊 **Reading Status** — Track books as "Want to Read", "Reading", or "Finished" `🔐 Auth Required`
+- 📖 **Reading List** — Save books and manage your personal reading list
+  `🔐 Auth Required`
+- 📊 **Reading Status** — Track books as "Want to Read", "Reading", or
+  "Finished" `🔐 Auth Required`
 - 📈 **Pages Chart** — Visual bar chart of your saved books' page counts
-- 🔐 **Authentication** — Sign in with Google or Email/Password via Firebase Auth
-- 🌙 **Dark / Light Mode** — Toggle between themes, preference saved in localStorage
+- 🔐 **Authentication** — Sign in with Google or Email/Password via Firebase
+  Auth
+- 🌙 **Dark / Light Mode** — Toggle between themes, preference saved in
+  localStorage
 - 📱 **Fully Responsive** — Optimized for mobile, tablet, and desktop
 - 📝 **Blog** — Curated reading tips and book recommendations
 - 🔎 **Search** — Search for any book by title, author, or keyword
@@ -45,26 +47,26 @@ A modern book discovery and reading list management web app built with React and
 
 ## 🛠️ Tech Stack
 
-| Category | Technology |
-| --------- | ----------- |
-| Frontend | React 19, Vite 8 |
-| Styling | Tailwind CSS 4, Framer Motion |
-| UI Components | shadcn/ui, Lucide React |
+| Category       | Technology                     |
+| -------------- | ------------------------------ |
+| Frontend       | React 19, Vite 8               |
+| Styling        | Tailwind CSS 4, Framer Motion  |
+| UI Components  | shadcn/ui, Lucide React        |
 | Authentication | Firebase Auth (Google + Email) |
-| Database | Cloud Firestore |
-| Data Fetching | TanStack Query (React Query) |
-| HTTP Client | Axios |
-| Book Data | Google Books API |
-| Charts | Recharts |
-| Notifications | Sonner |
-| Routing | React Router DOM v7 |
-| Deployment | Netlify |
+| Database       | Cloud Firestore                |
+| Data Fetching  | TanStack Query (React Query)   |
+| HTTP Client    | Axios                          |
+| Book Data      | Google Books API               |
+| Charts         | Recharts                       |
+| Notifications  | Sonner                         |
+| Routing        | React Router DOM v7            |
+| Deployment     | Netlify                        |
 
 ---
 
 ## 📁 Project Structure
 
-``` plain text
+```plain text
 src/
 ├── components/          # Reusable UI components
 │   ├── ui/              # shadcn/ui base components
@@ -99,8 +101,6 @@ src/
 ```
 
 ---
-
-
 
 ## ⚙️ Getting Started
 
@@ -142,11 +142,8 @@ VITE_FIREBASE_APP_ID=your_app_id
 
 **Enable Authentication:**
 
-
 - Go to Firebase Console → Authentication → Sign-in method
 - Enable **Google** and **Email/Password**
-
-
 
 **Set Firestore Security Rules:**
 
@@ -205,12 +202,13 @@ This project includes a `netlify.toml` for automatic SPA routing.
 
 The following routes require authentication:
 
-| Route | Description |
-| ------- | ------------- |
-| `/listed-books` | Your saved reading list |
+| Route            | Description              |
+| ---------------- | ------------------------ |
+| `/listed-books`  | Your saved reading list  |
 | `/pages-to-read` | Reading progress tracker |
 
-Unauthenticated users are redirected to `/signin` and returned to their intended page after login.
+Unauthenticated users are redirected to `/signin` and returned to their intended
+page after login.
 
 ---
 
