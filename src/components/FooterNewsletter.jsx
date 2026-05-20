@@ -3,14 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Mail, Check, AlertCircle, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { db } from "@/firebase/firebase";
-import {
-  collection,
-  addDoc,
-  query,
-  where,
-  getDocs,
-  serverTimestamp,
-} from "firebase/firestore";
+import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
 
 const MotionDiv = motion.div;
 
@@ -18,48 +11,42 @@ const NewsletterSignup = () => {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState(null); // null | 'loading' | 'success' | 'error' | 'duplicate'
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+ const handleSubmit = async (e) => {
+   e.preventDefault();
 
-    // Basic validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setStatus("error");
-      setTimeout(() => setStatus(null), 3000);
-      return;
-    }
+   if (!email.trim()) {
+     setStatus("error");
+     setTimeout(() => setStatus(null), 3000);
+     return;
+   }
 
-    setStatus("loading");
+   setStatus("loading");
 
-    try {
-      // Check if email already exists
-      const q = query(
-        collection(db, "subscribers"),
-        where("email", "==", email.toLowerCase().trim()),
-      );
-      const existing = await getDocs(q);
+   try {
+     // Use email as document ID — automatically prevents duplicates
+     const docRef = doc(db, "subscribers", email.toLowerCase().trim());
+     const existing = await getDoc(docRef);
 
-      if (!existing.empty) {
-        setStatus("duplicate");
-        setTimeout(() => setStatus(null), 3000);
-        return;
-      }
+     if (existing.exists()) {
+       setStatus("duplicate");
+       setTimeout(() => setStatus(null), 3000);
+       return;
+     }
 
-      // Save to Firestore
-      await addDoc(collection(db, "subscribers"), {
-        email: email.toLowerCase().trim(),
-        subscribedAt: serverTimestamp(),
-      });
+     await setDoc(docRef, {
+       email: email.toLowerCase().trim(),
+       subscribedAt: serverTimestamp(),
+     });
 
-      setStatus("success");
-      setEmail("");
-      setTimeout(() => setStatus(null), 4000);
-    } catch (err) {
-      console.error("Subscription error:", err);
-      setStatus("error");
-      setTimeout(() => setStatus(null), 3000);
-    }
-  };
+     setStatus("success");
+     setEmail("");
+     setTimeout(() => setStatus(null), 4000);
+   } catch (err) {
+     console.error("Subscription error:", err);
+     setStatus("error");
+     setTimeout(() => setStatus(null), 3000);
+   }
+ };
 
   return (
     <MotionDiv
