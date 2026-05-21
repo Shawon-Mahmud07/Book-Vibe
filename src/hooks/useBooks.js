@@ -54,12 +54,13 @@ const fetchBooks = async () => {
     }));
 };
 
+// Custom hook to fetch books using React Query
 const useBooks = () => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["books"],
     queryFn: fetchBooks,
-    staleTime: 30 * 60 * 1000,
-    gcTime: 60 * 60 * 1000,
+    staleTime: Infinity, 
+    gcTime: 24 * 60 * 60 * 1000, 
     retry: 3,
     retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
   });
