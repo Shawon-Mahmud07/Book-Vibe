@@ -18,6 +18,15 @@ import { Menu, Moon, Sun, BookOpen } from "lucide-react";
 import useAuth from "@/hooks/useAuth";
 import { LogOut, User2 } from "lucide-react"
 import { toast } from "sonner"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Settings } from "lucide-react";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -136,31 +145,57 @@ const handleLogout = async () => {
         {currentUser ? (
           // ← Logged in state
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 bg-muted border border-border rounded-xl px-3 py-1.5">
-              {currentUser.photoURL ? (
-                <img
-                  src={currentUser.photoURL}
-                  alt={currentUser.displayName}
-                  className="w-6 h-6 rounded-full"
-                />
-              ) : (
-                <div className="w-6 h-6 rounded-full bg-accent-green-light flex items-center justify-center">
-                  <User2 className="w-3 h-3 text-accent-green" />
-                </div>
-              )}
-              <span className="text-sm font-medium text-foreground max-w-24 truncate">
-                {currentUser.displayName || currentUser.email?.split("@")[0]}
-              </span>
-            </div>
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={handleLogout}
-              className="rounded-xl border-foreground/20 hover:border-red-500 hover:text-red-500"
-              title="Sign Out"
-            >
-              <LogOut className="w-4 h-4" />
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="flex items-center gap-2 bg-muted border border-border rounded-xl px-3 py-1.5 hover:bg-foreground/10 transition-colors duration-200">
+                  {currentUser.photoURL ? (
+                    <img
+                      src={currentUser.photoURL}
+                      alt={currentUser.displayName}
+                      className="w-6 h-6 rounded-full"
+                    />
+                  ) : (
+                    <div className="w-6 h-6 rounded-full bg-accent-green-light flex items-center justify-center">
+                      <User2 className="w-3 h-3 text-accent-green" />
+                    </div>
+                  )}
+                  <span className="text-sm font-medium text-foreground max-w-24 truncate">
+                    {currentUser.displayName ||
+                      currentUser.email?.split("@")[0]}
+                  </span>
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuLabel>
+                  <div className="flex flex-col gap-0.5">
+                    <span className="font-medium text-foreground">
+                      {currentUser.displayName || "User"}
+                    </span>
+                    <span className="text-xs text-muted-foreground font-normal truncate">
+                      {currentUser.email}
+                    </span>
+                  </div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link
+                    to="/profile"
+                    className="flex items-center gap-2 cursor-pointer"
+                  >
+                    <Settings className="w-4 h-4" />
+                    Profile Settings
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={handleLogout}
+                  className="text-red-500 focus:text-red-500 focus:bg-red-500/10 flex items-center gap-2 cursor-pointer"
+                >
+                  <LogOut className="w-4 h-4" />
+                  Sign Out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         ) : (
           // ← Logged out state
