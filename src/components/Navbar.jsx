@@ -274,15 +274,19 @@ const Navbar = () => {
             <div className="absolute bottom-0 left-0 right-0 p-5 border-t border-border bg-background">
               {currentUser ? (
                 <div className="flex flex-col gap-2">
-                  <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-xl">
+                  <Link
+                    to="/profile"
+                    onClick={() => setIsOpen(false)}
+                    className="flex items-center gap-2 px-3 py-2 bg-muted rounded-xl hover:bg-muted/80 transition-colors cursor-pointer"
+                  >
                     {currentUser.photoURL ? (
                       <img
                         src={currentUser.photoURL}
                         alt=""
-                        className="w-7 h-7 rounded-full object-cover"
+                        className="w-7 h-7 rounded-full"
                       />
                     ) : (
-                      <div className="w-7 h-7 rounded-full bg-accent-green/10 flex items-center justify-center">
+                      <div className="w-7 h-7 rounded-full bg-accent-green-light flex items-center justify-center">
                         <User2 className="w-4 h-4 text-accent-green" />
                       </div>
                     )}
@@ -290,7 +294,7 @@ const Navbar = () => {
                       {currentUser.displayName ||
                         currentUser.email?.split("@")[0]}
                     </span>
-                  </div>
+                  </Link>
                   <Button
                     variant="outline"
                     onClick={handleLogout}

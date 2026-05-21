@@ -17,7 +17,16 @@ export const AuthProvider = ({ children }) => {
 
   // Google Login
   const loginWithGoogle = async () => {
-    return signInWithPopup(auth, googleProvider);
+    try {
+      return await signInWithPopup(auth, googleProvider);
+    } catch (error) {
+      if (
+        error.code !== "auth/popup-closed-by-user" &&
+        error.code !== "auth/cancelled-popup-request"
+      ) {
+        throw error;
+      }
+    }
   };
 
   // Email Login
@@ -26,11 +35,13 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Register
-  const register = async (email, password, displayName) => {
-    const result = await createUserWithEmailAndPassword(auth, email, password);
-    await updateProfile(result.user, { displayName });
-    return result;
-  };
+const register = async (email, password, displayName) => {
+  const result = await createUserWithEmailAndPassword(auth, email, password);
+  await updateProfile(result.user, { displayName });
+  await result.user.reload();
+  setCurrentUser({ ...auth.currentUser }); // ← displayName সাথে সাথে update হবে
+  return result;
+};
 
   // Logout
   const logout = async () => {
@@ -67,5 +78,9 @@ export const AuthProvider = ({ children }) => {
     deleteAccount,
   };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={value}>
+      {!loading && children}
+    </AuthContext.Provider>
+  );
 };
