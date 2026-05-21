@@ -16,14 +16,14 @@ const RootLayout = () => {
   return (
     <div className="max-w-360 mx-auto">
       <Navbar />
-      <AnimatePresence mode="wait">
+      <AnimatePresence mode="sync">
         <MotionDiv
           key={location.pathname}
           variants={pageVariants}
           initial="initial"
           animate="animate"
           exit="exit"
-          transition={{ duration: 0.3, ease: "easeInOut" }}
+          transition={{ duration: 0.15, ease: "easeInOut" }}
         >
           <Outlet />
         </MotionDiv>
