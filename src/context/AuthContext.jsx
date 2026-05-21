@@ -6,6 +6,7 @@ import {
   signOut,
   onAuthStateChanged,
   updateProfile,
+  deleteUser,
 } from "firebase/auth";
 import { auth, googleProvider } from "@/firebase/firebase";
 import { AuthContext } from "./AuthContext";
@@ -36,6 +37,16 @@ export const AuthProvider = ({ children }) => {
     return signOut(auth);
   };
 
+  // Update display name & photo
+  const updateUserProfile = async (displayName, photoURL) => {
+    return updateProfile(auth.currentUser, { displayName, photoURL });
+  };
+
+  // Delete account
+  const deleteAccount = async () => {
+    return deleteUser(auth.currentUser);
+  };
+
   // Auth state listener
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -52,6 +63,8 @@ export const AuthProvider = ({ children }) => {
     loginWithEmail,
     register,
     logout,
+    updateUserProfile,
+    deleteAccount,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
