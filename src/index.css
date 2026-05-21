@@ -172,3 +172,16 @@
   }
   
 }
+
+[data-close-button] {
+  background-color: var(--background) !important;
+  color: var(--foreground) !important;
+  border-color: var(--border) !important;
+}
+
+[data-close-button]:hover {
+  background-color: var(--muted) !important;
+}
+[data-sonner-toast] [data-close-button] ~ [data-close-button] {
+  display: none !important;
+}

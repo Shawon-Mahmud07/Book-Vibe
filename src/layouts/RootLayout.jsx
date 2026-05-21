@@ -36,17 +36,15 @@ const RootLayout = () => {
         position="top-right"
         closeButton
         toastOptions={{
+          duration: 4000,
           classNames: {
             toast:
               "bg-card text-foreground border border-border shadow-[0_8px_30px_rgba(0,0,0,0.12)] rounded-xl",
             title: "text-foreground font-semibold text-sm",
             description: "!text-foreground/70 text-xs",
-
             closeButton:
-              "bg-red-50 text-red-600 border-red-200 hover:bg-red-100 hover:text-red-700 transition-colors",
-
-            error: "border-l-4 !border-l-red-600 bg-red-50/30",
-
+              "!bg-background !text-foreground !border !border-border hover:!bg-muted",
+            error: "border-l-4 !border-l-red-600",
             success: "border-l-4 !border-l-[#23BE0A]",
             info: "border-l-4 border-l-blue-500",
           },
