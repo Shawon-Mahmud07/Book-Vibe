@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Search } from "lucide-react";
+import { 
+  Search, Menu, Moon, Sun, BookOpen, LogOut, User2, Settings 
+} from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -14,10 +16,6 @@ import {
   NavigationMenuItem,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
-import { Menu, Moon, Sun, BookOpen } from "lucide-react";
-import useAuth from "@/hooks/useAuth";
-import { LogOut, User2 } from "lucide-react"
-import { toast } from "sonner"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,7 +24,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Settings } from "lucide-react";
+import useAuth from "@/hooks/useAuth";
+import { toast } from "sonner";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -38,38 +37,27 @@ const navLinks = [
 ];
 
 const Navbar = () => {
+  // ─── States & Hooks ───
+  const { currentUser, logout } = useAuth();
+  const location = useLocation();
+  const activePath = location.pathname;
+  const [isOpen, setIsOpen] = useState(false);
+
   const [isDark, setIsDark] = useState(() => {
     const saved = localStorage.getItem("theme");
-    // Default to dark if no preference is saved
     return saved ? saved === "dark" : true;
   });
 
-// Auth state
-  const { currentUser, logout } = useAuth()
-// Logout handler
-const handleLogout = async () => {
-  try {
-    await logout()
-    toast.success("Signed out successfully")
-  } catch {
-    toast.error("Failed to sign out")
-  }
-}
+  // ─── Close mobile menu on route change safely ───
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsOpen(false);
+    }, 0);
 
+    return () => clearTimeout(timer);
+  }, [location.pathname]);
 
-  //Sheet open/close control
-  const [isOpen, setIsOpen] = useState(false);
-
-  // Active path state for link highlighting
-  const location = useLocation();
-  const activePath = location.pathname;
-
-  // Close mobile menu on route change
- useEffect(() => {
-   const timer = setTimeout(() => setIsOpen(false), 0);
-   return () => clearTimeout(timer);
- }, [location.pathname]);
-
+  // ─── Theme Toggler Logic ───
   useEffect(() => {
     if (isDark) {
       document.documentElement.classList.add("dark");
@@ -81,6 +69,16 @@ const handleLogout = async () => {
   }, [isDark]);
 
   const toggleDark = () => setIsDark((prev) => !prev);
+
+  // ─── Logout Handler ───
+  const handleLogout = async () => {
+    try {
+      await logout();
+      toast.success("Signed out successfully");
+    } catch {
+      toast.error("Failed to sign out");
+    }
+  };
 
   return (
     <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border flex items-center justify-between px-6 md:px-10 py-4 transition-colors duration-300">
@@ -107,8 +105,8 @@ const handleLogout = async () => {
                   >
                     {link.name}
                     <span
-                      className={`absolute -bottom-1 left-0 h-0.5 bg-foreground rounded-full transition-all duration-300
-                        ${isActive ? "w-full bg-accent-green" : "w-0 "}`}
+                      className={`absolute -bottom-1 left-0 h-0.5 rounded-full transition-all duration-300
+                        ${isActive ? "w-full bg-accent-green" : "w-0 bg-foreground"}`}
                     />
                   </Link>
                 </NavigationMenuItem>
@@ -143,7 +141,6 @@ const handleLogout = async () => {
         </Button>
 
         {currentUser ? (
-          // ← Logged in state
           <div className="flex items-center gap-3">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -151,11 +148,11 @@ const handleLogout = async () => {
                   {currentUser.photoURL ? (
                     <img
                       src={currentUser.photoURL}
-                      alt={currentUser.displayName}
-                      className="w-6 h-6 rounded-full"
+                      alt={currentUser.displayName || "User"}
+                      className="w-6 h-6 rounded-full object-cover"
                     />
                   ) : (
-                    <div className="w-6 h-6 rounded-full bg-accent-green-light flex items-center justify-center">
+                    <div className="w-6 h-6 rounded-full bg-accent-green/10 flex items-center justify-center">
                       <User2 className="w-3 h-3 text-accent-green" />
                     </div>
                   )}
@@ -165,10 +162,10 @@ const handleLogout = async () => {
                   </span>
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuContent align="end" className="w-56 rounded-xl mt-1">
                 <DropdownMenuLabel>
                   <div className="flex flex-col gap-0.5">
-                    <span className="font-medium text-foreground">
+                    <span className="font-bold text-foreground">
                       {currentUser.displayName || "User"}
                     </span>
                     <span className="text-xs text-muted-foreground font-normal truncate">
@@ -180,7 +177,7 @@ const handleLogout = async () => {
                 <DropdownMenuItem asChild>
                   <Link
                     to="/profile"
-                    className="flex items-center gap-2 cursor-pointer"
+                    className="flex items-center gap-2 cursor-pointer w-full"
                   >
                     <Settings className="w-4 h-4" />
                     Profile Settings
@@ -198,28 +195,26 @@ const handleLogout = async () => {
             </DropdownMenu>
           </div>
         ) : (
-          // ← Logged out state
-          <>
+          <div className="flex items-center gap-2">
             <Link to="/signin">
               <Button
                 variant="outline"
-                className="border-foreground/20 text-foreground hover:bg-foreground/5 font-medium px-5"
+                className="border-border text-foreground hover:bg-foreground/5 font-medium px-5 rounded-xl"
               >
                 Sign In
               </Button>
             </Link>
             <Link to="/signup">
-              <Button className="bg-foreground text-background hover:bg-foreground/90 font-medium px-5">
+              <Button className="bg-foreground text-background hover:bg-foreground/90 font-medium px-5 rounded-xl">
                 Sign Up
               </Button>
             </Link>
-          </>
+          </div>
         )}
       </div>
 
       {/* Mobile Menu */}
       <div className="flex lg:hidden items-center gap-2">
-        {/* Search Button */}
         <Link to="/search">
           <Button
             variant="ghost"
@@ -243,10 +238,10 @@ const handleLogout = async () => {
         </Button>
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild>
-            <Button variant="ghost" size="icon">
+            <Button variant="ghost" size="icon" className="rounded-full">
               <Menu className="h-5 w-5" />
             </Button>
-          </SheetTrigger>
+          </SheetTrigger>{" "}
           <SheetContent side="right" className="w-72 bg-background p-0">
             <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
             <SheetDescription className="sr-only">
@@ -265,7 +260,6 @@ const handleLogout = async () => {
                   <Link
                     key={link.name}
                     to={link.href}
-                    onClick={() => setIsOpen(false)}
                     className={`flex items-center gap-3 text-sm font-medium px-3 py-3 rounded-xl transition-all duration-200
                       ${isActive ? "bg-foreground text-background" : "text-foreground hover:bg-muted"}`}
                   >
@@ -285,10 +279,10 @@ const handleLogout = async () => {
                       <img
                         src={currentUser.photoURL}
                         alt=""
-                        className="w-7 h-7 rounded-full"
+                        className="w-7 h-7 rounded-full object-cover"
                       />
                     ) : (
-                      <div className="w-7 h-7 rounded-full bg-accent-green-light flex items-center justify-center">
+                      <div className="w-7 h-7 rounded-full bg-accent-green/10 flex items-center justify-center">
                         <User2 className="w-4 h-4 text-accent-green" />
                       </div>
                     )}
@@ -300,7 +294,7 @@ const handleLogout = async () => {
                   <Button
                     variant="outline"
                     onClick={handleLogout}
-                    className="w-full border-red-500/30 text-red-500 hover:bg-red-500/10 flex items-center gap-2"
+                    className="w-full border-red-500/30 text-red-500 hover:bg-red-500/10 flex items-center gap-2 rounded-xl"
                   >
                     <LogOut className="w-4 h-4" />
                     Sign Out
@@ -308,19 +302,21 @@ const handleLogout = async () => {
                 </div>
               ) : (
                 <div className="flex flex-col gap-2">
-                  <Link to="/signin" onClick={() => setIsOpen(false)}>
-                    <Button
-                      variant="outline"
-                      className="w-full border-foreground/20 text-foreground hover:bg-foreground/5"
-                    >
-                      Sign In
-                    </Button>
-                  </Link>
-                  <Link to="/signup" onClick={() => setIsOpen(false)}>
-                    <Button className="w-full bg-foreground text-background hover:bg-foreground/90">
-                      Sign Up
-                    </Button>
-                  </Link>
+                  <div className="flex flex-col gap-2">
+                    <Link to="/signin">
+                      <Button
+                        variant="outline"
+                        className="w-full border-border text-foreground hover:bg-foreground/5 rounded-xl"
+                      >
+                        Sign In
+                      </Button>
+                    </Link>
+                    <Link to="/signup">
+                      <Button className="w-full bg-foreground text-background hover:bg-foreground/90 rounded-xl">
+                        Sign Up
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
               )}
             </div>

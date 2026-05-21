@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { User2, Camera, Save, Trash2, Eye, EyeOff } from "lucide-react";
+import { User2, Camera, Save, Trash2, } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import useAuth from "@/hooks/useAuth";
