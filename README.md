@@ -38,6 +38,8 @@ explore curated blog posts — all in one place.
   Auth
 - 🌙 **Dark / Light Mode** — Toggle between themes, preference saved in
   localStorage
+- 👤 **User Profile** — Update display name and photo, delete account
+- 🛡️ **Protected Routes** — Listed Books and Pages to Read require sign in
 - 📱 **Fully Responsive** — Optimized for mobile, tablet, and desktop
 - 📝 **Blog** — Curated reading tips and book recommendations
 - 🔎 **Search** — Search for any book by title, author, or keyword
@@ -85,6 +87,7 @@ src/
 │   ├── BookDetail.jsx
 │   ├── ListedBooks.jsx
 │   ├── PagesToRead.jsx
+│   ├── Profile.jsx
 │   ├── Search.jsx
 │   ├── Blog.jsx
 │   ├── SignIn.jsx
@@ -209,15 +212,6 @@ The following routes require authentication:
 
 Unauthenticated users are redirected to `/signin` and returned to their intended
 page after login.
-
----
-
-## 🗺️ Roadmap
-
-- [ ] Book reviews and ratings
-- [ ] Social sharing of reading lists
-- [ ] Email notifications for reading goals
-- [ ] PWA support for offline reading
 
 ---
 
