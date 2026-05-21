@@ -22,10 +22,11 @@ export const ListedBooksProvider = ({ children }) => {
   useEffect(() => {
     // If no user, clear state and exit
     if (!currentUser) {
-      setTimeout(() => {
+      // Use a microtask to avoid synchronous setState inside effect
+      Promise.resolve().then(() => {
         setListedBooks([]);
         setReadingStatus({});
-      }, 0);
+      });
       return;
     }
 

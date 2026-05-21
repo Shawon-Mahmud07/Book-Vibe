@@ -83,16 +83,23 @@ const Hero = () => {
             </Button>
           </Link>
 
-          <a href="#books" className="w-full sm:w-auto">
+          <button
+            onClick={() => {
+              document
+                .getElementById("books")
+                ?.scrollIntoView({ behavior: "smooth" });
+            }}
+            className="w-full sm:w-auto"
+          >
             <Button
               variant="outline"
               className="w-full sm:w-auto px-6 py-5 text-sm sm:text-base font-semibold border-border text-foreground rounded-xl
-              hover:bg-foreground/5 flex items-center justify-center gap-2 transition-all duration-300"
+    hover:bg-foreground/5 flex items-center justify-center gap-2 transition-all duration-300"
             >
               <BookOpen className="w-4 h-4 text-accent-green" />
               Browse Genres
             </Button>
-          </a>
+          </button>
         </MotionDiv>
       </div>
 
