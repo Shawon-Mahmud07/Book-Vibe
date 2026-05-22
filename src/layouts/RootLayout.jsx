@@ -5,32 +5,40 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 const MotionDiv = motion.div;
+
 const pageVariants = {
-  initial: { opacity: 0, y: 20 },
+  initial: { opacity: 0, y: 16 },
   animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: -10 },
+  exit: { opacity: 0, y: -8 },
 };
+
+const AnimatedPage = ({ children, locationKey }) => (
+  <AnimatePresence mode="wait" initial={false}>
+    <MotionDiv
+      key={locationKey}
+      variants={pageVariants}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      transition={{ duration: 0.18, ease: "easeInOut" }}
+    >
+      {children}
+    </MotionDiv>
+  </AnimatePresence>
+);
 
 const RootLayout = () => {
   const location = useLocation();
+
   return (
     <div className="max-w-360 mx-auto">
       <Navbar />
-      <AnimatePresence mode="sync">
-        <MotionDiv
-          key={location.pathname}
-          variants={pageVariants}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-          transition={{ duration: 0.15, ease: "easeInOut" }}
-        >
-          <Outlet />
-        </MotionDiv>
-      </AnimatePresence>
+
+      <AnimatedPage locationKey={location.key}>
+        <Outlet />
+      </AnimatedPage>
 
       <Footer />
-      {/* Ensures that when navigating back to a page, the scroll position is restored to where the user left off, providing a smoother user experience. */}
       <ScrollRestoration />
       <Toaster
         position="top-right"
