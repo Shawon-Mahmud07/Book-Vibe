@@ -9,7 +9,14 @@ import { ListedBooksProvider } from "./context/ListedBooksContext.jsx";
 
 
 // Import the QueryClient and QueryClientProvider from react-query
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: Infinity,
+      gcTime: Infinity,
+    },
+  },
+});
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
