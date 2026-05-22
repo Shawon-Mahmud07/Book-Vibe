@@ -1,13 +1,27 @@
-import { Outlet, ScrollRestoration } from "react-router-dom";
+import { Outlet, ScrollRestoration, useLocation } from "react-router-dom";
 import { Toaster } from "@/components/ui/sonner";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { motion, AnimatePresence } from "framer-motion";
 
+
+const MotionDiv = motion.div;
 const RootLayout = () => {
+  const location = useLocation(); 
+
   return (
     <div className="max-w-360 mx-auto">
       <Navbar />
-      <Outlet />
+      <AnimatePresence>
+        <MotionDiv
+          key={location.pathname}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.25 }}
+        >
+          <Outlet />
+        </MotionDiv>
+      </AnimatePresence>
       <Footer />
       <ScrollRestoration />
       <Toaster
