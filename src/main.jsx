@@ -8,12 +8,14 @@ import { AuthProvider } from "@/context/AuthContext.jsx";
 import { ListedBooksProvider } from "./context/ListedBooksContext.jsx";
 
 
-// Import the QueryClient and QueryClientProvider from react-query
+// Create a QueryClient with default options
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: Infinity,
-      gcTime: Infinity,
+      staleTime: 1000 * 60 * 5, 
+      gcTime: 1000 * 60 * 10, 
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
     },
   },
 });

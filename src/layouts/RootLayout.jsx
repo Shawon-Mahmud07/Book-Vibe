@@ -1,43 +1,13 @@
-import { Outlet, ScrollRestoration, useLocation } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
+import { Outlet, ScrollRestoration } from "react-router-dom";
 import { Toaster } from "@/components/ui/sonner";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-const MotionDiv = motion.div;
-
-const pageVariants = {
-  initial: { opacity: 0, y: 16 },
-  animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: -8 },
-};
-
-const AnimatedPage = ({ children, locationKey }) => (
-  <AnimatePresence mode="sync" initial={false}>
-    <MotionDiv
-      key={locationKey}
-      variants={pageVariants}
-      initial="initial"
-      animate="animate"
-      exit="exit"
-      transition={{ duration: 0.15, ease: "easeInOut" }}
-    >
-      {children}
-    </MotionDiv>
-  </AnimatePresence>
-);
-
 const RootLayout = () => {
-  const location = useLocation();
-
   return (
     <div className="max-w-360 mx-auto">
       <Navbar />
-
-      <AnimatedPage locationKey={location.key}>
-        <Outlet />
-      </AnimatedPage>
-
+      <Outlet />
       <Footer />
       <ScrollRestoration />
       <Toaster
