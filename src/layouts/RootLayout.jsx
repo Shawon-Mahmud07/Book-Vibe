@@ -13,14 +13,14 @@ const pageVariants = {
 };
 
 const AnimatedPage = ({ children, locationKey }) => (
-  <AnimatePresence mode="wait" initial={false}>
+  <AnimatePresence mode="sync" initial={false}>
     <MotionDiv
       key={locationKey}
       variants={pageVariants}
       initial="initial"
       animate="animate"
       exit="exit"
-      transition={{ duration: 0.18, ease: "easeInOut" }}
+      transition={{ duration: 0.15, ease: "easeInOut" }}
     >
       {children}
     </MotionDiv>
