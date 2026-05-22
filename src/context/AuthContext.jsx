@@ -78,15 +78,15 @@
       deleteAccount,
     };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-      // Fullscreen loading overlay while auth state is being determined
-      {loading && (
-        <div className="fixed inset-0 z-[9999] bg-background flex items-center justify-center">
-          <div className="w-8 h-8 rounded-full border-2 border-accent-green border-t-transparent animate-spin" />
-        </div>
-      )}
-    </AuthContext.Provider>
-  );
+ return (
+   <AuthContext.Provider value={value}>
+     {children}
+     {/* Fullscreen loading overlay while auth state is being determined */}
+     {loading && (
+       <div className="fixed inset-0 z-[9999] bg-background flex items-center justify-center">
+         <div className="w-8 h-8 rounded-full border-2 border-accent-green border-t-transparent animate-spin" />
+       </div>
+     )}
+   </AuthContext.Provider>
+ );
   };
